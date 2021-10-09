@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "b66dLuKa3V1WC9RhGvw9pQRF/9sWCu9R9ULaorXAdOovpJas7W5SNlfZ796FM90uVvfPyQyb3oVDWR4HqqP26w==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\zheru\\source\\repos\\CA-Assignment\\ShoppingCartWebApp\\ShoppingCartWebApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\zheru\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.18\\microsoft.netcore.app.host.win-x64.3.1.18.nupkg.sha512"
+  ],
+  "logs": []
+}
