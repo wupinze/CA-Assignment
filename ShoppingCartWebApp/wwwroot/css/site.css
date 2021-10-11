@@ -69,3 +69,20 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+/*Self defined styles*/
+.login_table {
+    display: inline-block;
+    padding: 0.5em;
+    border: 2px solid #46a7e0;
+    width: 50%;
+}
+
+.login_row {
+    display: table-row;
+}
+
+.login_cell {
+    display: table-cell;
+    padding: 0.5em;
+}
