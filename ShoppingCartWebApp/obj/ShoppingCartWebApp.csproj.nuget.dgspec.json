@@ -1,31 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\zheru\\source\\repos\\CA-Assignment\\ShoppingCartWebApp\\ShoppingCartWebApp.csproj": {}
+    "/Users/smartsport/Desktop/CA-Web/ShoppingCartWebApp/ShoppingCartWebApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\zheru\\source\\repos\\CA-Assignment\\ShoppingCartWebApp\\ShoppingCartWebApp.csproj": {
+    "/Users/smartsport/Desktop/CA-Web/ShoppingCartWebApp/ShoppingCartWebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\zheru\\source\\repos\\CA-Assignment\\ShoppingCartWebApp\\ShoppingCartWebApp.csproj",
+        "projectUniqueName": "/Users/smartsport/Desktop/CA-Web/ShoppingCartWebApp/ShoppingCartWebApp.csproj",
         "projectName": "ShoppingCartWebApp",
-        "projectPath": "C:\\Users\\zheru\\source\\repos\\CA-Assignment\\ShoppingCartWebApp\\ShoppingCartWebApp.csproj",
-        "packagesPath": "C:\\Users\\zheru\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\zheru\\source\\repos\\CA-Assignment\\ShoppingCartWebApp\\obj\\",
+        "projectPath": "/Users/smartsport/Desktop/CA-Web/ShoppingCartWebApp/ShoppingCartWebApp.csproj",
+        "packagesPath": "/Users/smartsport/.nuget/packages/",
+        "outputPath": "/Users/smartsport/Desktop/CA-Web/ShoppingCartWebApp/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\zheru\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/smartsport/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -71,12 +65,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[3.1.18, 3.1.18]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -85,7 +73,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.303\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.401/RuntimeIdentifierGraph.json"
         }
       }
     }

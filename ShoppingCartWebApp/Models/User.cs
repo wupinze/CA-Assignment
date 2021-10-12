@@ -11,7 +11,8 @@ namespace ShoppingCartWebApp.Models
         public User()
         {
             Id = new Guid();
-            
+            carts = new List<Cart>();
+            purHistories = new List<PurchaseHistory>();
         }
 
         public Guid Id { get; set; }
@@ -19,8 +20,15 @@ namespace ShoppingCartWebApp.Models
         [Required]
         public string Username { get; set; }
 
+        //[Required]
+        //public string Name { get; set; }
+
         [Required]
         public byte[] PassHash { get; set; }
 
+
+        public virtual ICollection<Cart> carts { get; set;}
+
+        public virtual ICollection<PurchaseHistory> purHistories { get; set;}
     }
 }

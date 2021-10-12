@@ -67,12 +67,20 @@ namespace ShoppingCartWebApp
                     pattern: "{controller=Login}/{action=Index}/{id?}");
             });
 
+            DB db = new DB(dbContext);
             if (!dbContext.Database.CanConnect())
             {
                 dbContext.Database.EnsureCreated();
 
-                //DB db = new DBContext(dbContext);
+                db.Seed();
             }
+            else {
+
+                //List<Product> products = db.GetProductsList();
+                //Console.WriteLine("123");
+
+            }
+
         }
     }
 }

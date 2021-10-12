@@ -13,9 +13,11 @@ namespace ShoppingCartWebApp.Models
         {
 
         }
-
         public DbSet<User> Users { get; set; }
         public DbSet<Session> Sessions { get; set; }
+        public DbSet<Cart> carts { get; set;}
+        public DbSet<PurchaseHistory> purHistories { get; set;}
+        public DbSet<Product> products { get; set;}
 
     }
 }
