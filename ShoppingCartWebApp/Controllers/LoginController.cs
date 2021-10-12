@@ -5,11 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ShoppingCartWebApp.Models;
 using Microsoft.AspNetCore.Http;
-<<<<<<< Updated upstream
-=======
 using System.Security.Cryptography;
 using System.Text;
->>>>>>> Stashed changes
 
 namespace ShoppingCartWebApp.Controllers
 {
@@ -28,14 +25,6 @@ namespace ShoppingCartWebApp.Controllers
             ViewData["loginError"] = errorMessage;
             return View();
         }
-<<<<<<< Updated upstream
-        /*
-        public IActionResult Login(IFormCollection form)
-        {
-
-        }
-        */
-=======
 
         public IActionResult Login(IFormCollection form)
         {
@@ -67,6 +56,5 @@ namespace ShoppingCartWebApp.Controllers
             return RedirectToAction("", "");
         }
         
->>>>>>> Stashed changes
     }
 }
