@@ -8,6 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ShoppingCartWebApp.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ShoppingCartWebApp
 {
@@ -24,10 +27,17 @@ namespace ShoppingCartWebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            // add our database context into DI container
+            services.AddDbContext<DBContext>(opt =>
+                opt.UseLazyLoadingProxies().UseSqlServer(
+                    Configuration.GetConnectionString("db_conn"))
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+             [FromServices] DBContext dbContext)
         {
             if (env.IsDevelopment())
             {
@@ -52,6 +62,13 @@ namespace ShoppingCartWebApp
                     name: "default",
                     pattern: "{controller=Login}/{action=Index}/{id?}");
             });
+
+            if (!dbContext.Database.CanConnect())
+            {
+                dbContext.Database.EnsureCreated();
+
+                //DB db = new DBContext(dbContext);
+            }
         }
     }
 }

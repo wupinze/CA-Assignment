@@ -149,3 +149,4 @@ C:\Users\zheru\source\repos\CA-Assignment\ShoppingCartWebApp\obj\Debug\netcoreap
 C:\Users\zheru\source\repos\CA-Assignment\ShoppingCartWebApp\obj\Debug\netcoreapp3.1\ShoppingCartWebApp.pdb
 C:\Users\zheru\source\repos\CA-Assignment\ShoppingCartWebApp\obj\Debug\netcoreapp3.1\ShoppingCartWebApp.genruntimeconfig.cache
 C:\Users\zheru\source\repos\CA-Assignment\ShoppingCartWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Login\Index.cshtml.g.cs
+C:\Users\zheru\source\repos\CA-Assignment\ShoppingCartWebApp\obj\Debug\netcoreapp3.1\ShoppingCartWebApp.csproj.AssemblyReference.cache
