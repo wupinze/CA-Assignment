@@ -50,7 +50,12 @@ namespace ShoppingCartWebApp
             return data is a List of Product Object
 
          5) method: SearchProducts(string searchStr)
-            
+
+
+         6) method: AddLibraryToCart(Guid userId,Guid ProductId)
+
+
+         7) method: getCartViewList(Guid userId)   return a list of cart object
         */
 
         //1) checkUser whether exist
@@ -179,6 +184,57 @@ namespace ShoppingCartWebApp
 
         }
 
+        public void AddLibraryToCart(Guid userId,Guid ProductId) {
+
+            User user = dbContext.Users.FirstOrDefault(
+                x => x.Id == userId
+                );
+
+            Product productData = dbContext.products.FirstOrDefault(
+                x => x.Id == ProductId
+                );
+
+            if (user == null || productData == null)
+            {
+                Debug.WriteLine("user or product not exist");
+                return;
+            }
+
+            Cart cart = new Cart
+            {
+            };
+
+            productData.carts.Add(cart);
+            user.carts.Add(cart);
+
+            dbContext.SaveChanges();
+
+        }
+
+
+        //get getCartViewList
+        public void getCartViewList(Guid userId) {
+
+            List<List<Cart>> carts = (List<List<Cart>>)dbContext.carts.Where(
+                x => x.user.Id == userId
+                ).GroupBy(
+                x => x.product
+                );
+
+            foreach (var item in carts)
+            {
+
+            }
+
+            if (carts == null)
+            {
+                //return carts;
+            }
+            else {
+               // return new List<Cart>();
+            }
+
+        }
 
 
         //seedUsers
