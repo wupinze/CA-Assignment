@@ -21,8 +21,27 @@ namespace ShoppingCartWebApp.Controllers
 
         public IActionResult Index()
         {
+            if (Request.Cookies["SessionId"] != null)
+            {
+                Guid sessionId = Guid.Parse(Request.Cookies["sessionId"]);
+                Session session = dbContext.Sessions.FirstOrDefault(x =>
+                    x.Id == sessionId
+                );
+
+                if (session == null)
+                {
+                    return RedirectToAction("Index", "Logout");
+                }
+
+                return RedirectToAction("", "");
+            }
+
             string errorMessage = (string)TempData["loginError"];
-            ViewData["loginError"] = errorMessage;
+            if (errorMessage != null)
+            {
+                ViewData["loginError"] = errorMessage;
+            }
+
             return View();
         }
 
