@@ -1,4 +1,17 @@
-﻿<form action="/Login/Login" method="POST">
+﻿@{ 
+    string loginError = (string) ViewData["loginError"];
+}
+
+@if (loginError != null)
+{
+<script type="text/javascript">
+var message = '@loginError';
+if(message)
+    alert(message);
+</script>
+}
+
+<form action="/Login/Login" method="POST">
     <div style="text-align:center">
         <div class="login_table">
             <div class="login_row">

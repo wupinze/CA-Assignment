@@ -5,6 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using ShoppingCartWebApp.Models;
 using Microsoft.AspNetCore.Http;
+<<<<<<< Updated upstream
+=======
+using System.Security.Cryptography;
+using System.Text;
+>>>>>>> Stashed changes
 
 namespace ShoppingCartWebApp.Controllers
 {
@@ -19,13 +24,49 @@ namespace ShoppingCartWebApp.Controllers
 
         public IActionResult Index()
         {
+            string errorMessage = (string)TempData["loginError"];
+            ViewData["loginError"] = errorMessage;
             return View();
         }
+<<<<<<< Updated upstream
         /*
         public IActionResult Login(IFormCollection form)
         {
 
         }
         */
+=======
+
+        public IActionResult Login(IFormCollection form)
+        {
+            string username = form["username"];
+            string password = form["password"];
+
+            HashAlgorithm sha = SHA256.Create();
+            byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(username + password));
+
+            User user = dbContext.Users.FirstOrDefault(x =>
+               x.Username == username && x.PassHash == hash);
+
+            if (user == null)
+            {
+                TempData["loginError"] = "Invalid username or password";
+                return RedirectToAction("Index", "Login");
+            }
+
+            Session session = new Session()
+            {
+                User = user
+            };
+            dbContext.Sessions.Add(session);
+            dbContext.SaveChanges();
+
+            Response.Cookies.Append("SessionId", session.Id.ToString());
+            Response.Cookies.Append("Username", user.Username);
+
+            return RedirectToAction("", "");
+        }
+        
+>>>>>>> Stashed changes
     }
 }
