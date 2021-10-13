@@ -18,7 +18,7 @@ namespace ShoppingCartWebApp
     {
         public Startup(IConfiguration configuration)
         {
-            
+
             Configuration = configuration;
         }
 

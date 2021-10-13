@@ -8,7 +8,6 @@ namespace ShoppingCartWebApp.Models
         public Cart()
         {
             Id = new Guid();
-            products = new List<Product>();
         }
 
 
@@ -16,9 +15,9 @@ namespace ShoppingCartWebApp.Models
 
 
         public virtual User user { get; set;}
-        public virtual string productId { get; set;}
+        public virtual Product product { get; set;}
 
-        public virtual ICollection<Product> products { get; set;}
+        
 
     }
 }

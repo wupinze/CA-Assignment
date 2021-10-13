@@ -9,7 +9,8 @@ namespace ShoppingCartWebApp.Models
         public Product()
         {
             Id = new Guid();
-            PurHistories = new List<PurchaseHistory>(); 
+            PurHistories = new List<PurchaseHistory>();
+            carts = new List<Cart>();
         }
 
         public Guid Id { get; set; }
@@ -30,5 +31,6 @@ namespace ShoppingCartWebApp.Models
         public string imageUrl { get; set;} 
 
         public virtual ICollection<PurchaseHistory> PurHistories { get; set;}
+        public virtual ICollection<Cart> carts { get; set; }
     }
 }
