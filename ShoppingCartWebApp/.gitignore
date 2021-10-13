@@ -6,17 +6,20 @@
 
 
 # ignore editorconfig
+**.config
 **.editorconfig
 
-#ignore binaries
+# ignore binaries
 **.dll
 
-#ignore json
+# ignore json
 **.json
 
-
+# ignore props
 **.props
 
+
+## ignore these directories
 bin/
 obj/
 debug/
