@@ -1,3 +1,4 @@
+
 # ignore suo file
 **.suo
 
@@ -18,6 +19,10 @@
 # ignore props
 **.props
 
+# ignore .vs
+**.vs
+../.vs/
+**/.vs
 
 ## ignore these directories
 bin/
