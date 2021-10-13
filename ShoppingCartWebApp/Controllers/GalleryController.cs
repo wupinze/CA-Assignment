@@ -21,11 +21,19 @@ namespace ShoppingCartWebApp.Controllers
         {
 
             List<Product> products = db.GetProductsList();
-            foreach (var product in products)
-                Debug.WriteLine(product.ProductName);
+           
 
             ViewData["products"] = products;
             return View();
+        }
+
+        public IActionResult Search(string searchStr)
+        {
+            List<Product> products = db.SearchProducts(searchStr);
+            ViewData["products"] = products;
+            ViewData["searchStr"] = searchStr;
+            return View();
+
         }
     }
 }
