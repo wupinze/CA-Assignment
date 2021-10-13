@@ -251,7 +251,7 @@ namespace ShoppingCartWebApp
                 imageUrl = "../Image/Logger.png"
             });
 
-
+      
             dbContext.Add(new Product
             {
                 ProductName = ".NET Numerics",
