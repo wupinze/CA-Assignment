@@ -1,0 +1,23 @@
+# ignore suo file
+**.suo
+
+# ignore cache
+**.cache
+
+
+# ignore editorconfig
+**.editorconfig
+
+#ignore binaries
+**.dll
+
+#ignore json
+**.json
+
+
+**.props
+
+bin/
+obj/
+debug/
+release/
