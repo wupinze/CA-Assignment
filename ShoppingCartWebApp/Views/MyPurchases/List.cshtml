@@ -2,6 +2,9 @@
     List<PurchaseHistory> phList = (List<PurchaseHistory>)ViewData["phList"];
     List<Product> productList = (List<Product>)ViewData["productList"];
 
+    var grpByProduct = from ph in phList
+                       group ph by ph.ProductId; 
+
     ViewData["title"] = "My Purchases";
 }
 
@@ -16,21 +19,19 @@
         <th>[Purchased Date / Quantity / Actv Code]</th>
     </tr>
     @{
-        foreach (PurchaseHistory ph in phList)
+        foreach (var grp in grpByProduct)
         {
             Product currProduct = null;
-            int count = 0; 
             for (int i = 0; i < productList.Count(); i++)
             {
-                if (ph.ProductId == productList[i].Id)
+                if (grp.Key == productList[i].Id)
                 {
                     currProduct = productList[i];
-                    count++; 
                 }
             }
             <tr>
                 <td align="center">
-                    <img src="/Image/@String.Concat(currProduct.ProductName.Substring(5),".png")" width="200" height="200">
+                    <img src="/Image/@String.Concat(currProduct.ProductName.Substring(5),".png")" width="100" height="100">
                     <br />
                     @currProduct.ProductName
                     <br />
@@ -38,12 +39,16 @@
                     <br />
                     <button class="btn btn-primary btn-block">Download</button>
                 </td>
-                <td>
-                    Purchased On: @ph.PurchaseDate.ToShortDateString()
+                <td valign="middle">
+                    Purchased On: @grp.FirstOrDefault(x => x.ProductId == currProduct.Id).PurchaseDate.ToShortDateString() 
                     <br />
-                    Quantity: @count
+                    Quantity: @grp.Count()
                     <br />
-                    Activation Code: @ph.ActivationCode
+                    Activation Code:
+                    @foreach(var product in grp)
+                    {
+                        <p>@product.ActivationCode</p>
+                    }
                 </td>
             </tr>
         }

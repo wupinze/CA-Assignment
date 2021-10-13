@@ -27,7 +27,7 @@ namespace ShoppingCartWebApp.Controllers
 
         public IActionResult List(/*string username*/)
         {
-            string username = "john"; 
+            string username = "kate";
             User user = dbContext.Users.FirstOrDefault(x => x.Username == username);
             List<PurchaseHistory> phList = dbContext.purHistories.Where(x => x.UserId == user.Id).ToList();
 
@@ -40,7 +40,8 @@ namespace ShoppingCartWebApp.Controllers
             }
 
             ViewData["phList"] = phList;
-            ViewData["productList"] = productList; 
+            ViewData["productList"] = productList;
+      
 
             return View();
         }
