@@ -5,13 +5,16 @@
 
     List < Product > products = (List<Product>)ViewData["Products"];
 }
-<div class="card-container">
-    @{ 
-    foreach (var product in products)
-    {
-        <div class="card">
 
-            <img src="@product.imageUrl"" alt="">
+<h1>Products</h1>
+<div class="card-container">
+    @{
+        foreach (var product in products)
+        {
+        <div class="card">
+            
+            <img src="/image/@String.Concat(product.ProductName.Substring(5),".png")"  alt="">
+           
             <h3>"@product.ProductName" </h3>
             <p>"@product.Description"</p>
             <p>
@@ -22,11 +25,14 @@
                 <input name="" id="" type="number" value="1" min="1" max="10"><br>
             </div>
             <button class="add-to-cart" type="button" onclick="">Add to cart</button>
+        </div>
 
 
 
+            }
+
+
+
+            }
 
         </div>
-    }
-     }
-</div>
