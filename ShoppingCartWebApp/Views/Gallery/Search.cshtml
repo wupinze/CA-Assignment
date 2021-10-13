@@ -4,9 +4,20 @@
 @{
     List<Product> products = (List<Product>)ViewData["products"];
     string searchStr = (string)ViewData["searchStr"];
+    int cartQuantity = 5; 
+    string nameOfUser = "Glendon Tan";
 }
 
-<h1>Products</h1>
+<div class="gallery-header">
+    <div class="greeting-div">
+        <h3>Hello, @nameOfUser</h3>
+        <p><a href="#">My Purchases</a> | <a href="#">Logout</a></p>
+    </div>
+    <div class="cart-div">
+        <img src="../image/cart_logo.png" class="cart-logo" alt="Alternate Text" />
+        <p class="cart-quantity">(@cartQuantity)</p>
+    </div>
+</div>
 <div class="searchbar-div">
     <form action="/Gallery/Search" method="POST">
         <input class="searchbar-input" type="text" value = "@searchStr" placeholder="Search" name="searchStr" />

@@ -4,9 +4,20 @@
 @{
 
     List < Product > products = (List<Product>)ViewData["Products"];
+    int cartQuantity = 5;
+    string nameOfUser = "Glendon Tan";
 }
+<div class="gallery-header">
+    <div class="greeting-div">
+        <h3>Hello, @nameOfUser</h3>
+        <p><a href="#">My Purchases</a> | <a href="#">Logout</a></p>
+    </div>
+    <div class="cart-div">
+        <img src="../image/cart_logo.png" class="cart-logo" alt="Alternate Text" />
+        <p class="cart-quantity">(@cartQuantity)</p>
+    </div>
+</div>
 
-<h1>Products</h1>
 <div class="searchbar-div">
     <form action ="/Gallery/Search" method="POST">
         <input class="searchbar-input" type="text" placeholder="Search" name="searchStr" />
@@ -22,8 +33,8 @@
          
             <img src="@product.imageUrl" alt="">
 
-            <h3>"@product.ProductName" </h3>
-            <p>"@product.Description"</p>
+            <h3>@product.ProductName</h3>
+            <p>@product.Description</p>
             
             <button class="add-to-cart" type="button" onclick=""><span>$@product.Price</span> - Add to cart</button>
         </div>
