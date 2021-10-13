@@ -17,8 +17,8 @@ namespace ShoppingCartWebApp.Models
 
         public string ActivationCode { get; set;}
 
-        public virtual User user { get; set; }
-        public virtual Product product { get; set; }
+        public virtual Guid UserId { get; set; }
+        public virtual Guid ProductId { get; set; }
 
     }
 }

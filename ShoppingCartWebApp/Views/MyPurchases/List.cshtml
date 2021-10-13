@@ -1,4 +1,51 @@
 ﻿@{
+    List<PurchaseHistory> phList = (List<PurchaseHistory>)ViewData["phList"];
+    List<Product> productList = (List<Product>)ViewData["productList"];
+
+    ViewData["title"] = "My Purchases";
 }
 
-<h2>List</h2>
+
+<h2>My Purchases - Details</h2>
+<br />
+<br />
+
+<table border="0" cellpadding="20">
+    <tr>
+        <th>[Product Image / Name / Desc]</th>
+        <th>[Purchased Date / Quantity / Actv Code]</th>
+    </tr>
+    @{
+        foreach (PurchaseHistory ph in phList)
+        {
+            Product currProduct = null;
+            int count = 0; 
+            for (int i = 0; i < productList.Count(); i++)
+            {
+                if (ph.ProductId == productList[i].Id)
+                {
+                    currProduct = productList[i];
+                    count++; 
+                }
+            }
+            <tr>
+                <td align="center">
+                    <img src="/Image/@String.Concat(currProduct.ProductName.Substring(5),".png")" width="200" height="200">
+                    <br />
+                    @currProduct.ProductName
+                    <br />
+                    @currProduct.Description
+                    <br />
+                    <button class="btn btn-primary btn-block">Download</button>
+                </td>
+                <td>
+                    Purchased On: @ph.PurchaseDate.ToShortDateString()
+                    <br />
+                    Quantity: @count
+                    <br />
+                    Activation Code: @ph.ActivationCode
+                </td>
+            </tr>
+        }
+    }
+</table>

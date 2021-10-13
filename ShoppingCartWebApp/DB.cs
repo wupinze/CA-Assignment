@@ -22,6 +22,7 @@ namespace ShoppingCartWebApp
         {
             SeedUsersTable();
             SeedProductsTable();
+            SeedPurchaseHistory();
         }
 
         // Data Function List, choose function to use in your controller
@@ -317,11 +318,80 @@ namespace ShoppingCartWebApp
             });
 
             dbContext.SaveChanges();
-
-
         }
 
 
+        // Seed purHistories for testing purpose
+        public void SeedPurchaseHistory()
+        {
+            User user1 = dbContext.Users.FirstOrDefault(x =>
+                x.Username == "john");
+
+            User user2 = dbContext.Users.FirstOrDefault(x =>
+                x.Username == "kate");
+
+            Product product1 = dbContext.products.FirstOrDefault(x =>
+                x.ProductName == ".NET Charts");
+
+            Product product2 = dbContext.products.FirstOrDefault(x =>
+                x.ProductName == ".NET Logger");
+
+            Product product3 = dbContext.products.FirstOrDefault(x =>
+                x.ProductName == ".NET ML");
+
+            if (user1 != null)
+            {
+                PurchaseHistory ph1 = new PurchaseHistory
+                {
+                    PurchaseDate = DateTime.Now,
+                    ActivationCode = Guid.NewGuid().ToString()
+                };
+
+                user1.purHistories.Add(ph1);
+                product1.PurHistories.Add(ph1);
+
+                PurchaseHistory ph2 = new PurchaseHistory
+                {
+                    PurchaseDate = DateTime.Now,
+                    ActivationCode = Guid.NewGuid().ToString()
+                };
+
+                user1.purHistories.Add(ph2);
+                product2.PurHistories.Add(ph2);
+
+                PurchaseHistory ph3 = new PurchaseHistory
+                {
+                    PurchaseDate = DateTime.Now, 
+                    ActivationCode = Guid.NewGuid().ToString()
+                };
+
+                user1.purHistories.Add(ph3);
+                product2.PurHistories.Add(ph3);
+            }
+
+            if (user2 != null)
+            {
+                PurchaseHistory ph1 = new PurchaseHistory
+                {
+                    PurchaseDate = DateTime.Now.AddDays(-20),
+                    ActivationCode = Guid.NewGuid().ToString()
+                };
+
+                user2.purHistories.Add(ph1);
+                product2.PurHistories.Add(ph1);
+
+                PurchaseHistory ph2 = new PurchaseHistory
+                {
+                    PurchaseDate = DateTime.Now.AddDays(-20),
+                    ActivationCode = Guid.NewGuid().ToString()
+                };
+
+                user2.purHistories.Add(ph2);
+                product3.PurHistories.Add(ph2);
+            }
+
+            dbContext.SaveChanges();
+        }
 
     }
 }

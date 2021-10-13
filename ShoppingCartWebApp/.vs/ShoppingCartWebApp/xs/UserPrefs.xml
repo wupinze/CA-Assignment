@@ -1,12 +1,12 @@
 ﻿<Properties StartupConfiguration="{586028A9-FE08-4B60-B4A8-E2356223E8CB}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="appsettings.json">
     <Files>
-      <File FileName="appsettings.json" Line="16" Column="1" />
-      <File FileName="Program.cs" Line="1" Column="1" />
-      <File FileName="Startup.cs" Line="70" Column="46" />
-      <File FileName="Controllers/MyPurchasesController.cs" Line="20" Column="10" />
-      <File FileName="Views/MyPurchases/List.cshtml" Line="4" Column="14" />
-      <File FileName="Views/MyPurchases/Summary.cshtml" Line="4" Column="17" />
+      <File FileName="appsettings.json" Line="7" Column="6" />
+      <File FileName="DB.cs" />
+      <File FileName="Controllers/MyPurchasesController.cs" Line="34" Column="61" />
+      <File FileName="Views/MyPurchases/Summary.cshtml" />
+      <File FileName="Views/MyPurchases/List.cshtml" />
+      <File FileName="Startup.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -17,7 +17,9 @@
               <Node name="Models" expanded="True" />
               <Node name="Views" expanded="True">
                 <Node name="MyPurchases" expanded="True" />
-                <Node name="Shared" expanded="True" />
+              </Node>
+              <Node name="wwwroot" expanded="True">
+                <Node name="Image" expanded="True" />
               </Node>
               <Node name="appsettings.json" selected="True" />
             </Node>
@@ -30,9 +32,7 @@
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/Startup.cs" relfile="Startup.cs" line="85" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

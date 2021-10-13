@@ -18,5 +18,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Image\" />
+    <Folder Include="wwwroot\Image\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\Image\" />
   </ItemGroup>
 </Project>

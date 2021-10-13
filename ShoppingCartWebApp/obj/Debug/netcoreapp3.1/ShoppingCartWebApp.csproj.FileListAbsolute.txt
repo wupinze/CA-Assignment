@@ -301,6 +301,9 @@ C:/Users/zheru/source/repos/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreap
 C:/Users/zheru/source/repos/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/ShoppingCartWebApp.dll
 C:/Users/zheru/source/repos/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/ShoppingCartWebApp.pdb
 C:/Users/zheru/source/repos/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/ShoppingCartWebApp.genruntimeconfig.cache
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
 /Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/bin/Debug/netcoreapp3.1/appsettings.Development.json
 /Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/bin/Debug/netcoreapp3.1/appsettings.json
 /Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/bin/Debug/netcoreapp3.1/ShoppingCartWebApp.deps.json
@@ -424,7 +427,6 @@ C:/Users/zheru/source/repos/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreap
 /Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/bin/Debug/netcoreapp3.1/runtimes/win-x86/native/Microsoft.Data.SqlClient.SNI.pdb
 /Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Runtime.Caching.dll
 /Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
-/Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/ShoppingCartWebApp.csproj.AssemblyReference.cache
 /Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/ShoppingCartWebApp.GeneratedMSBuildEditorConfig.editorconfig
 /Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/ShoppingCartWebApp.AssemblyInfoInputs.cache
 /Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/ShoppingCartWebApp.AssemblyInfo.cs
@@ -441,6 +443,8 @@ C:/Users/zheru/source/repos/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreap
 /Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/Razor/Views/Home/Index.cshtml.g.cs
 /Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/Razor/Views/Home/Privacy.cshtml.g.cs
 /Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/Razor/Views/Login/Index.cshtml.g.cs
+/Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/Razor/Views/MyPurchases/List.cshtml.g.cs
+/Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/Razor/Views/MyPurchases/Summary.cshtml.g.cs
 /Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Error.cshtml.g.cs
 /Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_Layout.cshtml.g.cs
 /Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_ValidationScriptsPartial.cshtml.g.cs
@@ -453,5 +457,4 @@ C:/Users/zheru/source/repos/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreap
 /Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/ShoppingCartWebApp.dll
 /Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/ShoppingCartWebApp.pdb
 /Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/ShoppingCartWebApp.genruntimeconfig.cache
-/Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/Razor/Views/MyPurchases/List.cshtml.g.cs
-/Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/Razor/Views/MyPurchases/Summary.cshtml.g.cs
+/Users/kcy/Projects/CA-Assignment/ShoppingCartWebApp/obj/Debug/netcoreapp3.1/ShoppingCartWebApp.csproj.AssemblyReference.cache
