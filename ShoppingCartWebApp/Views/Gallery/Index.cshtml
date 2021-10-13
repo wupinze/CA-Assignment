@@ -8,8 +8,10 @@
 
 <h1>Products</h1>
 <div class="searchbar-div">
-    @*<img src="../image/search_icon.png"/>*@
-    <input class ="searchbar-input" type="text" placeholder= "Search"/>
+    <form action ="" method="POST">
+        <input class="searchbar-input" type="text" placeholder="Search" name="searchStr" />
+        <input type="submit" value="Submit" style="display:none;" />
+    </form>
 </div>
 <div class="card-container">
     @{
