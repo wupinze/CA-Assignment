@@ -1,3 +1,8 @@
+# ignore hidden files
+
+.*
+!/.gitignore
+
 
 # ignore suo file
 **.suo
