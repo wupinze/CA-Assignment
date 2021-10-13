@@ -86,7 +86,9 @@ body {
     display: table-cell;
     padding: 0.5em;
 }
-
+.highlight {
+    background-color: yellow;
+}
 
 
 /*Gallery styles*/
