@@ -55,8 +55,14 @@ namespace ShoppingCartWebApp
          6) method: AddLibraryToCart(Guid userId,Guid ProductId)
 
 
-         7) method: getCartViewList(Guid userId)   return a list of cart object
-        */
+         7) method: getCartViewList(Guid userId)   return two list of cart object and quantity
+
+         8) method: ReduceProductFromCart(Guid userId,Guid ProductId)
+        
+         9) method: checkOutCartView(Guid userId)
+
+         10)method: getPurchaseHistory(Guid userId)
+         */
 
         //1) checkUser whether exist
         public bool checkUserWhetherExist(string username) {
@@ -184,6 +190,7 @@ namespace ShoppingCartWebApp
 
         }
 
+        //6)
         public void AddLibraryToCart(Guid userId,Guid ProductId) {
 
             User user = dbContext.Users.FirstOrDefault(
@@ -212,28 +219,182 @@ namespace ShoppingCartWebApp
         }
 
 
-        //get getCartViewList
-        public void getCartViewList(Guid userId) {
+        //7)get getCartViewList
+        /*  deal with back Data
+           
+         var tupList = db.getCartViewList(user.Id);  // call method
 
-            List<List<Cart>> carts = (List<List<Cart>>)dbContext.carts.Where(
+                List<int> QuantityList = tupList.Item1;
+                List<Product> ProductList = tupList.Item2;
+         */
+
+        public Tuple<List<int>, List<Product>> getCartViewList(Guid userId) {
+
+            List<Cart> carts = dbContext.carts.Where(
                 x => x.user.Id == userId
-                ).GroupBy(
-                x => x.product
-                );
+                ).ToList();
 
-            foreach (var item in carts)
+            if (carts != null)
             {
+                var iter = from cart in carts
+                           group cart by cart.product into productGroup
+                           select productGroup;
 
-            }
 
-            if (carts == null)
-            {
-                //return carts;
+                List<int> QuantityList = new List<int>();
+                List<Product> ProductList = new List<Product>();
+
+                foreach (var grp in iter)
+                {
+                    Console.WriteLine("{0}", grp.Count());
+                    QuantityList.Add(grp.Count());
+                    foreach (var cart in grp)
+                    {
+                        if (!ProductList.Contains(cart.product))
+                        {
+                            ProductList.Add(cart.product);
+                        }
+                        Console.WriteLine("{0}", cart.product.ProductName);
+                    }
+                }
+
+                return new Tuple<List<int>, List<Product>>(QuantityList, ProductList); 
+
             }
             else {
-               // return new List<Cart>();
+
+                return new Tuple<List<int>, List<Product>>(new List<int>(), new List<Product>());
             }
 
+            
+
+        }
+
+
+        //8)
+        public void ReduceProductFromCart(Guid userId, Guid ProductId)
+        {
+
+            User user = dbContext.Users.FirstOrDefault(
+                x => x.Id == userId
+                );
+
+            Product productData = dbContext.products.FirstOrDefault(
+                x => x.Id == ProductId
+                );
+
+            if (user == null || productData == null)
+            {
+                Debug.WriteLine("userId or productId not correct");
+                return;
+            }
+            Cart cart = dbContext.carts.FirstOrDefault(
+                x => x.user == user && x.product == productData
+                );
+            if (cart != null)
+            { 
+                //productData.carts.Remove(cart);
+                //user.carts.Remove(cart);
+                dbContext.carts.Remove(cart);
+                dbContext.SaveChanges();
+            }
+            else {
+
+                Debug.WriteLine("did't found cart data");
+            }
+
+        }
+
+
+        // 9) checkOut
+        public void checkOutCartView(Guid userId) {
+
+            // all cart data transfer to the 
+
+            //1. add data to purchaseHistory
+            User user = dbContext.Users.FirstOrDefault(
+                x => x.Id == userId
+                );
+
+            var tupList = this.getCartViewList(userId);
+            List<int> QuantityList = tupList.Item1;
+            List<Product> ProductList = tupList.Item2;
+           // Console.WriteLine("backData :addResult={0},resultMessage={1}", tupList.Item1, tupList.Item2);
+
+            for (int i = 0; i < ProductList.Count(); i++)
+            {
+                Product product = ProductList[i];
+                int quantity = QuantityList[i];
+
+                for (int j = 0; j < quantity; j++)
+                {
+
+                    string ACStr = "a-c" + Guid.NewGuid().ToString();
+                    PurchaseHistory Purchase = new PurchaseHistory
+                    {
+                        PurchaseDate = DateTime.Now,
+                        ActivationCode = ACStr
+                    };
+
+                    user.purHistories.Add(Purchase);
+                    product.PurHistories.Add(Purchase);
+
+                    dbContext.SaveChanges();
+                }
+
+    
+            }
+
+            //2. delete data from cart table
+            List<Cart> carts = dbContext.carts.ToList();
+            foreach (var item in carts)
+            {
+                dbContext.carts.Remove(item);
+            }
+            dbContext.SaveChanges();
+        }
+
+
+        //10) getPurchaseHis
+        public List<PurchasesItem> getPurchaseHistory(Guid userId)
+        {
+
+            List<PurchaseHistory> purchases = dbContext.purHistories.Where(
+                x => x.user.Id == userId
+                ).ToList();
+
+            if (purchases != null)
+            {
+                var iter = from pur in purchases
+                           group pur by pur.product into productGroup
+                           select productGroup;
+
+                List<PurchasesItem> PurchasesItems = new List<PurchasesItem>();
+
+                foreach (var grp in iter)
+                {
+                    PurchasesItem purchasItem = new PurchasesItem();
+
+                    purchasItem.Quantity = grp.Count();
+                    
+
+                    Console.WriteLine("{0}", grp.Count());
+                    
+                    foreach (var pur in grp)
+                    {
+                        purchasItem.product = pur.product;
+                        purchasItem.PurchaseDate = pur.PurchaseDate;
+                        purchasItem.ActivationCode.Add(pur.ActivationCode);
+                        Console.WriteLine("{0}", pur.product.ProductName);
+                    }
+
+                    PurchasesItems.Add(purchasItem);
+                }
+
+                return  PurchasesItems;
+            }
+
+            return new List<PurchasesItem>();
         }
 
 
