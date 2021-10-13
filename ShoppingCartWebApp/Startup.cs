@@ -65,6 +65,11 @@ namespace ShoppingCartWebApp
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Login}/{action=Index}/{id?}");
+
+                // Temp route to access MyPurchases views, can be deleted later 
+                endpoints.MapControllerRoute(
+                    name: "generic",
+                    pattern: "{controller}/{action}/{id?}");
             });
 
             DB db = new DB(dbContext);
