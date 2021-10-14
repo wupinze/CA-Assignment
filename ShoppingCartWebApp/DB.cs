@@ -388,6 +388,16 @@ namespace ShoppingCartWebApp
 
                 user2.purHistories.Add(ph2);
                 product3.PurHistories.Add(ph2);
+
+
+                PurchaseHistory ph3 = new PurchaseHistory
+                {
+                    PurchaseDate = DateTime.Now,
+                    ActivationCode = Guid.NewGuid().ToString()
+                };
+
+                user2.purHistories.Add(ph3);
+                product3.PurHistories.Add(ph3); 
             }
 
             dbContext.SaveChanges();

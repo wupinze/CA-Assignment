@@ -45,10 +45,25 @@
                     Quantity: @grp.Count()
                     <br />
                     Activation Code:
-                    @foreach(var product in grp)
-                    {
-                        <p>@product.ActivationCode</p>
+                    @{
+                        if (grp.Count() > 1)
+                        {
+                            <div>
+                                <select name="actCode">
+                                    @foreach(var g in grp)
+                                    {
+                                        <option>@g.ActivationCode</option>
+                                    }
+                                </select>
+                            </div>
+                        }
+                        else
+                        {
+                            @grp.FirstOrDefault(x => x.ProductId == currProduct.Id).ActivationCode
+                        }   
                     }
+
+                    
                 </td>
             </tr>
         }
