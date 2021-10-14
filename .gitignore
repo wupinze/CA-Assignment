@@ -4,6 +4,10 @@
 !/.gitignore
 
 
+# ignore XML file
+**.xml
+
+
 # ignore suo file
 **.suo
 
