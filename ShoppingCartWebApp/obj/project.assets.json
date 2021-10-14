@@ -8743,28 +8743,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Wenyi\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\zheru\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Wenyi\\Desktop\\NUS ISS\\SA4102 Enterprise Solutions\\ASP.NET\\Assignment\\Code\\ShoppingCartWebApp\\ShoppingCartWebApp.csproj",
+      "projectUniqueName": "C:\\Users\\zheru\\source\\repos\\CA-Assignment\\ShoppingCartWebApp\\ShoppingCartWebApp.csproj",
       "projectName": "ShoppingCartWebApp",
-      "projectPath": "C:\\Users\\Wenyi\\Desktop\\NUS ISS\\SA4102 Enterprise Solutions\\ASP.NET\\Assignment\\Code\\ShoppingCartWebApp\\ShoppingCartWebApp.csproj",
-      "packagesPath": "C:\\Users\\Wenyi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Wenyi\\Desktop\\NUS ISS\\SA4102 Enterprise Solutions\\ASP.NET\\Assignment\\Code\\ShoppingCartWebApp\\obj\\",
+      "projectPath": "C:\\Users\\zheru\\source\\repos\\CA-Assignment\\ShoppingCartWebApp\\ShoppingCartWebApp.csproj",
+      "packagesPath": "C:\\Users\\zheru\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\zheru\\source\\repos\\CA-Assignment\\ShoppingCartWebApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Wenyi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\zheru\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -8816,6 +8813,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[3.1.18, 3.1.18]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -8824,7 +8827,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.303\\RuntimeIdentifierGraph.json"
       }
     }
   }

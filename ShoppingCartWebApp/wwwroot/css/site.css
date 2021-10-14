@@ -2,165 +2,87 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-    white-space: normal;
-    text-align: center;
-    word-break: break-all;
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
 a {
-    color: #0366d6;
+  color: #0366d6;
 }
 
 .btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-    font-size: 14px;
+  font-size: 14px;
 }
-
 @media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
+  html {
+    font-size: 16px;
+  }
 }
 
 .border-top {
-    border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #e5e5e5;
 }
-
 .border-bottom {
-    border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-    font-size: 1rem;
-    line-height: inherit;
+  font-size: 1rem;
+  line-height: inherit;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-    position: relative;
-    min-height: 100%;
+  position: relative;
+  min-height: 100%;
 }
 
 body {
-    /* Margin bottom by footer height */
-    margin-bottom: 60px;
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
 }
-
 .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
-    line-height: 60px; /* Vertically center the text there */
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
 }
 
-/* My Styles */
-/* ----------------------------------------------------*/
-.my_tbl {
+/*Self defined styles*/
+.login_table {
     display: inline-block;
     padding: 0.5em;
-    border: 2px solid #5499c7;
+    border: 2px solid #46a7e0;
+    width: 50%;
 }
 
-.my_row {
+.login_row {
     display: table-row;
 }
 
-.my_cell {
+.login_cell {
     display: table-cell;
-    padding: 0.1em;
-}
-
-.a_product {
-    display: inline-block;
-    width: 15em;
-    border: 1px solid #5499c7;
-    padding: 1em;
-    margin: 0.2em;
-    vertical-align: top;
-    cursor: pointer;
-}
-
-.product_list {
     padding: 0.5em;
-    max-width: 65em;
-    text-align: left;
-}
-
-.product_attr {
-    margin-top: 0.6em;
-}
-
-.hilite_task {
-    border: 3px solid #5499c7;
-    background-color: #f1f7fc;
-}
-
-.unavailable_task {
-    border: 3px solid #cd6155;
-    background-color: #fdedec;
-}
-
-#select_count_url {
-    color: #000000;
-    text-decoration: underline;
-}
-
-#select_count_box {
-    text-align: right;
-    padding: 0.5em;
-    background-color: #f1f7fc;
-    margin-top: 0;
-    margin-bottom: 0.5em;
-}
-
-table, td, th, tr {
-    border: 1px solid #0066cc;
-}
-
-td, th {
-    text-align: center;
-    padding: 8px;
-}
-
-.even_row {
-    background-color: #f5fcff;
-}
-
-.hilite {
-    background-color: darkred;
-    color: white;
-}
-
-span.cart-badge {
-    min-width: 3rem;
-    padding: 0 6px;
-    margin-left: 14px;
-    text-align: center;
-    font-size: 1rem;
-    line-height: 22px;
-    height: 22px;
-    color: #757575;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    font-weight: bold;
 }

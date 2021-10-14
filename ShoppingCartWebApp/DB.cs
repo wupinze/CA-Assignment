@@ -55,30 +55,22 @@ namespace ShoppingCartWebApp
          6) method: AddLibraryToCart(Guid userId,Guid ProductId)
 
 
-         7) method: getCartViewList(Guid userId)   return two list of cart object and quantity
-
-         8) method: ReduceProductFromCart(Guid userId,Guid ProductId)
-        
-         9) method: checkOutCartView(Guid userId)
-
-         10)method: getPurchaseHistory(Guid userId)
-         */
+         7) method: getCartViewList(Guid userId)   return a list of cart object
+        */
 
         //1) checkUser whether exist
-        public bool checkUserWhetherExist(string username)
-        {
+        public bool checkUserWhetherExist(string username) {
 
             User user = dbContext.Users.FirstOrDefault(
                 x => x.Username == username
-                );
+                ) ;
 
             if (user == null)
             {
                 Debug.WriteLine("this user not registered");
                 return false;
             }
-            else
-            {
+            else {
 
                 return true;
             }
@@ -86,8 +78,7 @@ namespace ShoppingCartWebApp
         }
 
         //2) check username and password both whether correct
-        public bool checkUserNameAndPassword(string username, string password)
-        {
+        public bool checkUserNameAndPassword(string username, string password) {
 
             User user = dbContext.Users.FirstOrDefault(
                 x => x.Username == username
@@ -103,16 +94,14 @@ namespace ShoppingCartWebApp
                     //username and password both correct, can success login
                     return true;
                 }
-                else
-                {
+                else {
                     Debug.WriteLine("Password not success");
                     return false;
                 }
 
 
             }
-            else
-            {
+            else {
                 Debug.WriteLine("this user not registered");
                 return false;
             }
@@ -123,8 +112,7 @@ namespace ShoppingCartWebApp
 
 
         // 3) insert Session to 
-        public bool SeedSessionData(Session session)
-        {
+        public bool SeedSessionData(Session session) {
 
             Session session1 = dbContext.Sessions.FirstOrDefault(
                 x => x.Id == session.Id
@@ -136,8 +124,7 @@ namespace ShoppingCartWebApp
                 dbContext.SaveChanges();
                 return true;
             }
-            else
-            {
+            else {
 
                 Debug.WriteLine("this Session already exist");
                 return false;
@@ -165,8 +152,7 @@ namespace ShoppingCartWebApp
         }
 
         //4)
-        public List<Product> GetProductsList()
-        {
+        public List<Product> GetProductsList() {
 
             List<Product> products = dbContext.products.ToList();
             if (products != null)
@@ -179,38 +165,26 @@ namespace ShoppingCartWebApp
 
 
         //5)
-        public List<Product> SearchProducts(string searchStr)
-        {
-            List<Product> products;
-            if (string.IsNullOrEmpty(searchStr))
-                products = dbContext.products.ToList();
-            else
-            {
-                products = dbContext.products.Where(
-                    x => x.ProductName.Contains(searchStr)
-                    || x.Description.Contains(searchStr)
-                    ).ToList();
-            }
+        public List<Product> SearchProducts(string searchStr) {
 
-            foreach (var product in products)
-                Debug.WriteLine(product.ProductName);
+            List<Product> products = dbContext.products.Where(
+                x => x.ProductName.Contains(searchStr)
+                || x.Description.Contains(searchStr)
+                ).ToList();
 
             if (products != null)
             {
                 return products;
             }
-            else
-            {
+            else {
 
                 return new List<Product>();
-
+            
             }
 
         }
 
-        //6)
-        public void AddLibraryToCart(Guid userId, Guid ProductId)
-        {
+        public void AddLibraryToCart(Guid userId,Guid ProductId) {
 
             User user = dbContext.Users.FirstOrDefault(
                 x => x.Id == userId
@@ -238,186 +212,28 @@ namespace ShoppingCartWebApp
         }
 
 
-        //7)get getCartViewList
-        /*  deal with back Data
-           
-         var tupList = db.getCartViewList(user.Id);  // call method
+        //get getCartViewList
+        public void getCartViewList(Guid userId) {
 
-                List<int> QuantityList = tupList.Item1;
-                List<Product> ProductList = tupList.Item2;
-         */
-
-        public Tuple<List<int>, List<Product>> getCartViewList(Guid userId)
-        {
-
-            List<Cart> carts = dbContext.carts.Where(
+            List<List<Cart>> carts = (List<List<Cart>>)dbContext.carts.Where(
                 x => x.user.Id == userId
-                ).ToList();
-
-            if (carts != null)
-            {
-                var iter = from cart in carts
-                           group cart by cart.product into productGroup
-                           select productGroup;
-
-
-                List<int> QuantityList = new List<int>();
-                List<Product> ProductList = new List<Product>();
-
-                foreach (var grp in iter)
-                {
-                    Console.WriteLine("{0}", grp.Count());
-                    QuantityList.Add(grp.Count());
-                    foreach (var cart in grp)
-                    {
-                        if (!ProductList.Contains(cart.product))
-                        {
-                            ProductList.Add(cart.product);
-                        }
-                        Console.WriteLine("{0}", cart.product.ProductName);
-                    }
-                }
-
-                return new Tuple<List<int>, List<Product>>(QuantityList, ProductList);
-
-            }
-            else
-            {
-
-                return new Tuple<List<int>, List<Product>>(new List<int>(), new List<Product>());
-            }
-
-
-
-        }
-
-
-        //8)
-        public void ReduceProductFromCart(Guid userId, Guid ProductId)
-        {
-
-            User user = dbContext.Users.FirstOrDefault(
-                x => x.Id == userId
+                ).GroupBy(
+                x => x.product
                 );
 
-            Product productData = dbContext.products.FirstOrDefault(
-                x => x.Id == ProductId
-                );
-
-            if (user == null || productData == null)
-            {
-                Debug.WriteLine("userId or productId not correct");
-                return;
-            }
-            Cart cart = dbContext.carts.FirstOrDefault(
-                x => x.user == user && x.product == productData
-                );
-            if (cart != null)
-            {
-                //productData.carts.Remove(cart);
-                //user.carts.Remove(cart);
-                dbContext.carts.Remove(cart);
-                dbContext.SaveChanges();
-            }
-            else
-            {
-
-                Debug.WriteLine("did't found cart data");
-            }
-
-        }
-
-
-        // 9) checkOut
-        public void checkOutCartView(Guid userId)
-        {
-
-            // all cart data transfer to the 
-
-            //1. add data to purchaseHistory
-            User user = dbContext.Users.FirstOrDefault(
-                x => x.Id == userId
-                );
-
-            var tupList = this.getCartViewList(userId);
-            List<int> QuantityList = tupList.Item1;
-            List<Product> ProductList = tupList.Item2;
-            // Console.WriteLine("backData :addResult={0},resultMessage={1}", tupList.Item1, tupList.Item2);
-
-            for (int i = 0; i < ProductList.Count(); i++)
-            {
-                Product product = ProductList[i];
-                int quantity = QuantityList[i];
-
-                for (int j = 0; j < quantity; j++)
-                {
-
-                    string ACStr = "a-c" + Guid.NewGuid().ToString();
-                    PurchaseHistory Purchase = new PurchaseHistory
-                    {
-                        PurchaseDate = DateTime.Now,
-                        ActivationCode = ACStr
-                    };
-
-                    user.purHistories.Add(Purchase);
-                    product.PurHistories.Add(Purchase);
-
-                    dbContext.SaveChanges();
-                }
-
-
-            }
-
-            //2. delete data from cart table
-            List<Cart> carts = dbContext.carts.ToList();
             foreach (var item in carts)
             {
-                dbContext.carts.Remove(item);
+
             }
-            dbContext.SaveChanges();
-        }
 
-
-        //10) getPurchaseHis
-        public List<PurchasesItem> getPurchaseHistory(Guid userId)
-        {
-
-            List<PurchaseHistory> purchases = dbContext.purHistories.Where(
-                x => x.user.Id == userId
-                ).ToList();
-
-            if (purchases != null)
+            if (carts == null)
             {
-                var iter = from pur in purchases
-                           group pur by pur.product into productGroup
-                           select productGroup;
-
-                List<PurchasesItem> PurchasesItems = new List<PurchasesItem>();
-
-                foreach (var grp in iter)
-                {
-                    PurchasesItem purchasItem = new PurchasesItem();
-
-                    purchasItem.Quantity = grp.Count();
-
-
-                    Console.WriteLine("{0}", grp.Count());
-
-                    foreach (var pur in grp)
-                    {
-                        purchasItem.product = pur.product;
-                        purchasItem.PurchaseDate = pur.PurchaseDate;
-                        purchasItem.ActivationCode.Add(pur.ActivationCode);
-                        Console.WriteLine("{0}", pur.product.ProductName);
-                    }
-
-                    PurchasesItems.Add(purchasItem);
-                }
-
-                return PurchasesItems;
+                //return carts;
+            }
+            else {
+               // return new List<Cart>();
             }
 
-            return new List<PurchasesItem>();
         }
 
 
@@ -426,10 +242,10 @@ namespace ShoppingCartWebApp
         {
             HashAlgorithm sha = SHA256.Create();
 
-            string[] usernames = { "john", "jean", "james", "kate", "david", "crist" };
+            string[] usernames = { "john", "jean", "james", "kate","david","crist" };
 
             foreach (string username in usernames)
-            {
+            { 
                 string combo = username + username;
                 byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(combo));
 
@@ -446,8 +262,7 @@ namespace ShoppingCartWebApp
 
 
         //seedProducts
-        public void SeedProductsTable()
-        {
+        public void SeedProductsTable() {
 
             dbContext.Add(new Product
             {
@@ -455,7 +270,7 @@ namespace ShoppingCartWebApp
                 Description = "Brings powerful charting capabilities to your .NET applications.",
                 Price = 99,
                 imageUrl = "../Image/charts.png"
-            });
+            }) ;
 
 
             dbContext.Add(new Product

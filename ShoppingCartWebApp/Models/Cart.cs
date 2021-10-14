@@ -8,14 +8,13 @@ namespace ShoppingCartWebApp.Models
         public Cart()
         {
             Id = new Guid();
-            
         }
 
 
         public Guid Id { get; set;}
 
+
         public virtual User user { get; set;}
-        
         public virtual Product product { get; set;}
 
         
