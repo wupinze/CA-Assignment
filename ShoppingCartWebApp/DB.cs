@@ -172,11 +172,19 @@ namespace ShoppingCartWebApp
 
         //5)
         public List<Product> SearchProducts(string searchStr) {
+            List<Product> products;
+            if (string.IsNullOrEmpty(searchStr))
+                products = dbContext.products.ToList();
+            else
+            {
+                products = dbContext.products.Where(
+                    x => x.ProductName.Contains(searchStr)
+                    || x.Description.Contains(searchStr)
+                    ).ToList();
+            }
 
-            List<Product> products = dbContext.products.Where(
-                x => x.ProductName.Contains(searchStr)
-                || x.Description.Contains(searchStr)
-                ).ToList();
+            foreach (var product in products)
+                Debug.WriteLine(product.ProductName);
 
             if (products != null)
             {
@@ -468,7 +476,7 @@ namespace ShoppingCartWebApp
                 imageUrl = "../Image/Logger.png"
             });
 
-
+      
             dbContext.Add(new Product
             {
                 ProductName = ".NET Numerics",
