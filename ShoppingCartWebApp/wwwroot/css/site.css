@@ -70,19 +70,67 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 
-/*Self defined styles*/
-.login_table {
-    display: inline-block;
-    padding: 0.5em;
-    border: 2px solid #46a7e0;
-    width: 50%;
+/*Login page styles*/
+.login-form,
+.login-form * {
+    box-sizing: border-box;
 }
 
-.login_row {
-    display: table-row;
+.login-form {
+    max-width: 350px;
+    margin: 0 auto;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
 }
 
-.login_cell {
-    display: table-cell;
-    padding: 0.5em;
+.login-form__content {
+    padding: 30px;
+    background: #eeeeee;
+}
+
+.login-form__header {
+    margin-bottom: 15px;
+    text-align: center;
+    color: #333333;
+}
+
+.login-form__input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #dddddd;
+    background: #ffffff;
+    outline: none;
+    transition: border-color 0.5s;
+}
+
+    .login-form__input:focus {
+        border-color: #0366d6;
+    }
+
+    .login-form__input::placeholder {
+        color: #aaaaaa;
+    }
+
+.login-form__button {
+    padding: 10px;
+    color: #ffffff;
+    font-weight: bold;
+    background: #46a7e0;
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    .login-form__button:active {
+        background: #46a7e0;
+    }
+
+.login-form__links {
+    margin-top: 15px;
+    text-align: center;
 }

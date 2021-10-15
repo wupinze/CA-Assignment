@@ -11,31 +11,12 @@ if(message)
 </script>
 }
 
-<form action="/Login/Login" method="POST">
-    <div style="text-align:center">
-        <div class="login_table">
-            <div class="login_row">
-                <div class="login_cell">
-                    Username:
-                </div>
-                <div class="login_cell">
-                    <input class="form-control" name="username" style="width:200%" />
-                </div>
-            </div>
-            <div class="login_row">
-                <div class="login_cell">
-                    Password:
-                </div>
-                <div class="login_cell">
-                    <input class="form-control" name="password" style="width:200%" />
-                </div>
-            </div>
-            <div class="login_row">
-                <div class="login_cell"></div>
-                <div class="login_cell" style="text-align: right">
-                    <input type="submit" value="Login" class="btn btn-primary" style="width:200%" />
-                </div>
-            </div>
-        </div>
+
+<form class="login-form" action="/Login/Login" method="POST">
+    <div class="login-form__content">
+        <div class="login-form__header">Login to your account</div>
+        <input class="login-form__input" type="text" name="username" placeholder="Username">
+        <input class="login-form__input" type="password" name="password" placeholder="Password">
+        <button class="login-form__button" type="submit">Login</button>
     </div>
 </form>

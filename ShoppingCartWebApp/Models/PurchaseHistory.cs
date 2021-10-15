@@ -7,15 +7,15 @@ namespace ShoppingCartWebApp.Models
     {
         public PurchaseHistory()
         {
-            Id = new Guid();
+            Id = Guid.NewGuid().ToString();
         }
 
-        public Guid Id { get; set;}
+        public string Id { get; set; }
 
         [Required]
-        public DateTime PurchaseDate { get; set;}
+        public string PurchaseDate { get; set; }
 
-        public string ActivationCode { get; set;}
+        public string ActivationCode { get; set; }
 
         public virtual User user { get; set; }
         public virtual Product product { get; set; }
