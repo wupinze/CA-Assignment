@@ -17,3 +17,4 @@ namespace ShoppingCartWebApp.Models
         public virtual User User { get; set; }
     }
 }
+

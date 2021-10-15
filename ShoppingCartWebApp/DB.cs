@@ -174,6 +174,17 @@ namespace ShoppingCartWebApp
 
         //5)
         public List<Product> SearchProducts(string searchStr) {
+            List<Product> products;
+            if (string.IsNullOrEmpty(searchStr))
+                products = dbContext.products.ToList();
+            else
+            {
+                products = dbContext.products.Where(
+                    x => x.ProductName.Contains(searchStr)
+                    || x.Description.Contains(searchStr)
+                    ).ToList();
+            }
+
 
             List<Product> Allproducts = dbContext.products.ToList();
             if (searchStr.Trim() == "")
@@ -595,7 +606,7 @@ namespace ShoppingCartWebApp
                 imageUrl = "../Image/Logger.png"
             });
 
-
+      
             dbContext.Add(new Product
             {
                 ProductName = ".NET Numerics",
