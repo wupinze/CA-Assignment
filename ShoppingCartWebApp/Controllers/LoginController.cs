@@ -7,7 +7,7 @@ using ShoppingCartWebApp.Models;
 using Microsoft.AspNetCore.Http;
 using System.Security.Cryptography;
 using System.Text;
-
+using System.Diagnostics;
 namespace ShoppingCartWebApp.Controllers
 {
     public class LoginController : Controller
@@ -32,8 +32,8 @@ namespace ShoppingCartWebApp.Controllers
                 {
                     return RedirectToAction("Index", "Logout");
                 }
-                
-                return RedirectToAction("", "");
+                Debug.WriteLine("redirect to gallery from login index");
+                return RedirectToAction("Index", "Gallery");
             }
 
             string errorMessage = (string)TempData["loginError"];

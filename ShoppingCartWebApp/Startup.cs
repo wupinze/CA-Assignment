@@ -67,8 +67,10 @@ namespace ShoppingCartWebApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Login}/{action=Index}/{id?}");
-            });
+                    //pattern: "{controller=Login}/{action=Index}/{id?}");
+                    // route to landing page, which is gallery
+                      pattern: "{controller=Gallery}/{action=Index}/{id?}");
+        });
 
             DB db = new DB(dbContext);
             if (!dbContext.Database.CanConnect())
