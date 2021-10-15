@@ -1,0 +1,53 @@
+﻿@{
+    List<PurchasesItem> purchases = (List<PurchasesItem>)ViewData["purchases"]; 
+
+    ViewData["title"] = "My Purchases";
+}
+
+
+<h3>My Purchases - Details</h3><a href="/Gallery/Index">Gallery</a> | <a href="/Logout/Index/">Logout</a>
+<br />
+<br />
+
+<div class="container form-group">
+    @{
+        foreach (var purchase in purchases)
+        {
+        <div class="row form-group">
+            <div class="col-sm-4 border border-dark shadow p-3 mb-5 bg-white rounded text-center">
+                <img src="/Image/@String.Concat(purchase.product.ProductName.Substring(5),".png")" width="100" height="100">
+                <h3> @purchase.product.ProductName</h3>
+                <p>@purchase.product.Description</p>
+                <a class="btn btn-outline-primary btn-block" role="button" href="/Image/@String.Concat(purchase.product.ProductName.Substring(5),".png")" download="@String.Concat(purchase.product.ProductName.Substring(5),".png")">Download</a>
+            </div>
+            <div class="col-sm-8 p-5">
+                <p>Purchased On: @purchase.PurchaseDate</p>
+                <p>Quantity: @purchase.Quantity</p>
+                <p>Activation Code:</p>
+                @{
+                    if (purchase.Quantity > 1)
+                    {
+                        <div>
+                            <select class="form-control form-control-sm" name="actCode">
+                                @foreach (string ac in purchase.ActivationCode)
+                                {
+                                    <option>@ac</option>
+                                }
+                            </select>
+                            <br />
+                        </div>
+                    }
+                    else
+                    {
+                        @purchase.ActivationCode[0];
+                        <br />
+                        <br />
+                    }
+                }
+                <button type="button" class="btn btn-outline-secondary btn-sm" formaction="/Cart/">Buy Again</button>
+            </div>
+        </div>   
+        }
+    }
+</div>
+

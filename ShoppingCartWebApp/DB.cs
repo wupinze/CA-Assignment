@@ -22,6 +22,8 @@ namespace ShoppingCartWebApp
         {
             SeedUsersTable();
             SeedProductsTable();
+            // Test code - To be removed after link-up
+            SeedPurchaseHistory();
         }
 
         // Data Function List, choose function to use in your controller
@@ -42,8 +44,6 @@ namespace ShoppingCartWebApp
          */
 
 
-
-
         /* Libraries Gallery related methods
          4) List of Libraries
             method:  GetProductsList()    
@@ -52,16 +52,17 @@ namespace ShoppingCartWebApp
          5) method: SearchProducts(string searchStr)
 
 
-         6) method: AddLibraryToCart(Guid userId,Guid ProductId)
+         6) method: AddLibraryToCart(Session session,string ProductId)
 
+            method: getCarViewTotalQuantity(Session session,string ProductId)
 
-         7) method: getCartViewList(Guid userId)   return two list of cart object and quantity
+         7) method: getCartViewList(Session session)   return two list of cart object and quantity
 
-         8) method: ReduceProductFromCart(Guid userId,Guid ProductId)
+         8) method: ReduceProductFromCart(Session session,string ProductId)
         
-         9) method: checkOutCartView(Guid userId)
+         9) method: checkOutCartView(Session session)
 
-         10)method: getPurchaseHistory(Guid userId)
+         10)method: getPurchaseHistory(Session session)
          */
 
         //1) checkUser whether exist
@@ -170,6 +171,7 @@ namespace ShoppingCartWebApp
         }
 
 
+
         //5)
         public List<Product> SearchProducts(string searchStr) {
             List<Product> products;
@@ -183,23 +185,38 @@ namespace ShoppingCartWebApp
                     ).ToList();
             }
 
-            foreach (var product in products)
-                Debug.WriteLine(product.ProductName);
 
-            if (products != null)
+            List<Product> Allproducts = dbContext.products.ToList();
+            if (searchStr.Trim() == "")
             {
-                return products;
+                return Allproducts;
             }
             else {
 
-                return new List<Product>();
-            
-            }
+                List<Product> products = dbContext.products.Where(
+                x => x.ProductName.Contains(searchStr)
+                || x.Description.Contains(searchStr)
+                ).ToList();
+
+                if (products != null)
+                {
+                    return products;
+                }
+                else
+                { 
+                    return Allproducts;
+                }
+            }   
 
         }
 
         //6)
-        public void AddLibraryToCart(Guid userId,Guid ProductId) {
+        public int AddLibraryToCart(string sessionId,string ProductId) {
+
+            Session session = dbContext.Sessions.FirstOrDefault(
+                x => x.Id == sessionId
+                );
+            string userId = session.User.Id;
 
             User user = dbContext.Users.FirstOrDefault(
                 x => x.Id == userId
@@ -212,7 +229,6 @@ namespace ShoppingCartWebApp
             if (user == null || productData == null)
             {
                 Debug.WriteLine("user or product not exist");
-                return;
             }
 
             Cart cart = new Cart
@@ -224,6 +240,23 @@ namespace ShoppingCartWebApp
 
             dbContext.SaveChanges();
 
+            int sum = this.getCarViewTotalQuantity(sessionId);
+            return sum;
+
+        }
+
+
+        public int getCarViewTotalQuantity(string sessionId) {
+
+            var tupList = this.getCartViewList(sessionId);
+            List<int> QuantityList = tupList.Item1;
+            int sum = 0;
+            for (int i = 0; i < QuantityList.Count(); i++)
+            {
+                sum += QuantityList[i];
+            }
+
+            return sum;
         }
 
 
@@ -236,7 +269,12 @@ namespace ShoppingCartWebApp
                 List<Product> ProductList = tupList.Item2;
          */
 
-        public Tuple<List<int>, List<Product>> getCartViewList(Guid userId) {
+        public Tuple<List<int>, List<Product>> getCartViewList(string sessionId) {
+
+            Session session = dbContext.Sessions.FirstOrDefault(
+                x => x.Id == sessionId
+                );
+            string userId = session.User.Id;
 
             List<Cart> carts = dbContext.carts.Where(
                 x => x.user.Id == userId
@@ -280,8 +318,13 @@ namespace ShoppingCartWebApp
 
 
         //8)
-        public void ReduceProductFromCart(Guid userId, Guid ProductId)
+        public void ReduceProductFromCart(string sessionId, string ProductId)
         {
+
+            Session session = dbContext.Sessions.FirstOrDefault(
+               x => x.Id == sessionId
+               );
+            string userId = session.User.Id;
 
             User user = dbContext.Users.FirstOrDefault(
                 x => x.Id == userId
@@ -307,7 +350,6 @@ namespace ShoppingCartWebApp
                 dbContext.SaveChanges();
             }
             else {
-
                 Debug.WriteLine("did't found cart data");
             }
 
@@ -315,9 +357,14 @@ namespace ShoppingCartWebApp
 
 
         // 9) checkOut
-        public void checkOutCartView(Guid userId) {
+        public void checkOutCartView(string sessionId) {
 
             // all cart data transfer to the 
+
+            Session session = dbContext.Sessions.FirstOrDefault(
+               x => x.Id == sessionId
+               );
+            string userId = session.User.Id;
 
             //1. add data to purchaseHistory
             User user = dbContext.Users.FirstOrDefault(
@@ -337,10 +384,10 @@ namespace ShoppingCartWebApp
                 for (int j = 0; j < quantity; j++)
                 {
 
-                    string ACStr = "a-c" + Guid.NewGuid().ToString();
+                    string ACStr = "CA" + Guid.NewGuid().ToString();
                     PurchaseHistory Purchase = new PurchaseHistory
                     {
-                        PurchaseDate = DateTime.Now,
+                        PurchaseDate = DateTime.Now.ToShortDateString(),
                         ActivationCode = ACStr
                     };
 
@@ -364,47 +411,130 @@ namespace ShoppingCartWebApp
 
 
         //10) getPurchaseHis
-        public List<PurchasesItem> getPurchaseHistory(Guid userId)
+        public List<PurchasesItem> getPurchaseHistory(string sessionId)
         {
+
+            Session session = dbContext.Sessions.FirstOrDefault(
+               x => x.Id == sessionId
+               );
+            string userId = session.User.Id;
 
             List<PurchaseHistory> purchases = dbContext.purHistories.Where(
                 x => x.user.Id == userId
                 ).ToList();
 
             if (purchases != null)
-            {
+            {   //grop by date
                 var iter = from pur in purchases
-                           group pur by pur.product into productGroup
-                           select productGroup;
+                           group pur by pur.PurchaseDate into dateGroup
+                           select dateGroup;
 
                 List<PurchasesItem> PurchasesItems = new List<PurchasesItem>();
 
                 foreach (var grp in iter)
                 {
-                    PurchasesItem purchasItem = new PurchasesItem();
+                    Console.WriteLine("date ---> {0}", grp.Count());
+                    // grp type:  List<PurchaseHistory>
 
-                    purchasItem.Quantity = grp.Count();
-                    
+                    // grop by product
+                    var iter2 = from pur2 in grp
+                                group pur2 by pur2.product into ProductGroup
+                               select ProductGroup;
 
-                    Console.WriteLine("{0}", grp.Count());
-                    
-                    foreach (var pur in grp)
+                  
+                    foreach (var Item in iter2)
                     {
-                        purchasItem.product = pur.product;
-                        purchasItem.PurchaseDate = pur.PurchaseDate;
-                        purchasItem.ActivationCode.Add(pur.ActivationCode);
-                        Console.WriteLine("{0}", pur.product.ProductName);
+                        PurchasesItem purchasItem = new PurchasesItem();
+
+                        purchasItem.Quantity = Item.Count();
+
+                        //Console.WriteLine("product---> {0}", Item.Count());
+
+                        foreach (var pur in Item)
+                        {
+                            purchasItem.product = pur.product;
+                            purchasItem.PurchaseDate = pur.PurchaseDate;
+                            purchasItem.ActivationCode.Add(pur.ActivationCode);
+                           // Console.WriteLine("occuer times {0}", pur.product.ProductName);
+                        }
+
+                        PurchasesItems.Add(purchasItem);
                     }
 
-                    PurchasesItems.Add(purchasItem);
                 }
 
-                return  PurchasesItems;
+
+                Console.WriteLine("{0}", PurchasesItems.Count());
+
+
+                return PurchasesItems;
             }
 
             return new List<PurchasesItem>();
         }
 
+        // Test method - To be replaced by getPurchaseHistory method after link up 
+        public List<PurchasesItem> getPurchaseHistory2(string userId)
+        {
+
+            //Session session = dbContext.Sessions.FirstOrDefault(
+            //   x => x.Id == sessionId
+            //   );
+            //string userId = session.User.Id;
+
+            List<PurchaseHistory> purchases = dbContext.purHistories.Where(
+                x => x.user.Id == userId
+                ).ToList();
+
+            if (purchases != null)
+            {   //grop by date
+                var iter = from pur in purchases
+                           group pur by pur.PurchaseDate into dateGroup
+                           select dateGroup;
+
+                List<PurchasesItem> PurchasesItems = new List<PurchasesItem>();
+
+                foreach (var grp in iter)
+                {
+                    Console.WriteLine("date ---> {0}", grp.Count());
+                    // grp type:  List<PurchaseHistory>
+
+                    // grop by product
+                    var iter2 = from pur2 in grp
+                                group pur2 by pur2.product into ProductGroup
+                                select ProductGroup;
+
+
+                    foreach (var Item in iter2)
+                    {
+                        PurchasesItem purchasItem = new PurchasesItem();
+
+                        purchasItem.Quantity = Item.Count();
+
+                        //Console.WriteLine("product---> {0}", Item.Count());
+
+                        foreach (var pur in Item)
+                        {
+                            purchasItem.product = pur.product;
+                            purchasItem.PurchaseDate = pur.PurchaseDate;
+                            purchasItem.ActivationCode.Add(pur.ActivationCode);
+                            // Console.WriteLine("occuer times {0}", pur.product.ProductName);
+                        }
+
+                        PurchasesItems.Add(purchasItem);
+                    }
+
+                }
+
+
+                Console.WriteLine("{0}", PurchasesItems.Count());
+
+
+                return PurchasesItems;
+            }
+
+            return new List<PurchasesItem>();
+        }
 
         //seedUsers
         public void SeedUsersTable()
@@ -486,11 +616,99 @@ namespace ShoppingCartWebApp
             });
 
             dbContext.SaveChanges();
-
-
         }
 
+        // Seed purHistories for testing purpose - To be removed 
+        public void SeedPurchaseHistory()
+        {
+            User user1 = dbContext.Users.FirstOrDefault(x =>
+                x.Username == "john");
 
+            User user2 = dbContext.Users.FirstOrDefault(x =>
+                x.Username == "kate");
+
+            Product product1 = dbContext.products.FirstOrDefault(x =>
+                x.ProductName == ".NET Charts");
+
+            Product product2 = dbContext.products.FirstOrDefault(x =>
+                x.ProductName == ".NET Logger");
+
+            Product product3 = dbContext.products.FirstOrDefault(x =>
+                x.ProductName == ".NET ML");
+
+            if (user1 != null)
+            {
+                PurchaseHistory ph1 = new PurchaseHistory
+                {
+                    PurchaseDate = DateTime.Now.ToShortDateString(),
+                    ActivationCode = Guid.NewGuid().ToString()
+                };
+
+                user1.purHistories.Add(ph1);
+                product1.PurHistories.Add(ph1);
+
+                PurchaseHistory ph2 = new PurchaseHistory
+                {
+                    PurchaseDate = DateTime.Now.ToShortDateString(),
+                    ActivationCode = Guid.NewGuid().ToString()
+                };
+
+                user1.purHistories.Add(ph2);
+                product2.PurHistories.Add(ph2);
+
+                PurchaseHistory ph3 = new PurchaseHistory
+                {
+                    PurchaseDate = DateTime.Now.ToShortDateString(),
+                    ActivationCode = Guid.NewGuid().ToString()
+                };
+
+                user1.purHistories.Add(ph3);
+                product2.PurHistories.Add(ph3);
+
+                PurchaseHistory ph4 = new PurchaseHistory
+                {
+                    PurchaseDate = DateTime.Now.AddDays(-10).ToShortDateString(),
+                    ActivationCode = Guid.NewGuid().ToString(),
+                };
+
+                user1.purHistories.Add(ph4);
+                product2.PurHistories.Add(ph4);
+
+            }
+
+            if (user2 != null)
+            {
+                PurchaseHistory ph1 = new PurchaseHistory
+                {
+                    PurchaseDate = DateTime.Now.AddDays(-20).ToShortDateString(),
+                    ActivationCode = Guid.NewGuid().ToString()
+                };
+
+                user2.purHistories.Add(ph1);
+                product2.PurHistories.Add(ph1);
+
+                PurchaseHistory ph2 = new PurchaseHistory
+                {
+                    PurchaseDate = DateTime.Now.AddDays(-20).ToShortDateString(),
+                    ActivationCode = Guid.NewGuid().ToString()
+                };
+
+                user2.purHistories.Add(ph2);
+                product3.PurHistories.Add(ph2);
+
+
+                PurchaseHistory ph3 = new PurchaseHistory
+                {
+                    PurchaseDate = DateTime.Now.ToShortDateString(),
+                    ActivationCode = Guid.NewGuid().ToString()
+                };
+
+                user2.purHistories.Add(ph3);
+                product3.PurHistories.Add(ph3);
+            }
+
+            dbContext.SaveChanges();
+        }
 
     }
 }

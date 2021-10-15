@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["title"] = "My Purchases";
+
+    List<PurchasesItem> purchases = (List<PurchasesItem>)ViewData["purchases"];
+
+    var iter = from purchase in purchases
+               group purchase by purchase.PurchaseDate;
+
+    List<PurchaseHistory> phList = (List<PurchaseHistory>)ViewData["phList"];
+
+    var grpByDate = from ph in phList
+                    group ph by ph.PurchaseDate;
+}
+
+<h3>My Purchases - Summary</h3>
+<br />
+<br />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Order Date</th>
+            <th scope="col">No. of Items</th>
+            <th scope="col">Cost</th>
+            <th scope="col">Order Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach(var i in iter)
+            {
+                foreach(var grp in grpByDate)
+                {
+                    <tr>
+                        <td>@grp.Key</td>
+                        <td>@grp.Count()</td>
+                        <td><a href="/MyPurchases/List/">View Details</a></td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+
+</table>
