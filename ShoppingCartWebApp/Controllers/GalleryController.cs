@@ -28,7 +28,15 @@ namespace ShoppingCartWebApp.Controllers
             Session session = GetSession();
             if (session == null)
             {
-                return RedirectToAction("Index", "Logout");
+                session = new Session()
+                {
+                   
+                };
+                dbContext.Sessions.Add(session);
+                dbContext.SaveChanges();
+
+                Response.Cookies.Append("SessionId", session.Id.ToString());
+
             }
 
             List<ShoppingCartWebApp.Models.Product> products = dbContext.products.Where(x =>
