@@ -23,10 +23,10 @@ namespace ShoppingCartWebApp.Controllers
         {
             if (Request.Cookies["SessionId"] != null)
             {
-                Guid sessionId = Guid.Parse(Request.Cookies["sessionId"]);
+                string sessionId = Request.Cookies["sessionId"];
                 Session session = dbContext.Sessions.FirstOrDefault(x =>
-                    x.Id == sessionId.ToString()
-                );
+                    x.Id == sessionId)
+                ;
 
                 if (session == null)
                 {
