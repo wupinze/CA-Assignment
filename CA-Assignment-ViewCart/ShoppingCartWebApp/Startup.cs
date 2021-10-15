@@ -69,23 +69,25 @@ namespace ShoppingCartWebApp
             });
 
             DB db = new DB(dbContext);
-            
+
 
             if (!dbContext.Database.CanConnect())
             {
                 dbContext.Database.EnsureCreated();
                 db.Seed();
+                
             }
-            else {
+            else
+            {
 
                 //List<Product> products = db.GetProductsList();
                 //Console.WriteLine("123");
-
+              
             }
-            
+            /*
             User user = dbContext.Users.FirstOrDefault(
-                    x => x.Username == "jean"
-                    );
+                       x => x.Username == "jean"
+                       );
 
             Product product = dbContext.products.FirstOrDefault(
                 x => x.ProductName == ".NET ML"
@@ -116,13 +118,19 @@ namespace ShoppingCartWebApp
                 x => x.ProductName == ".NET Charts"
                 );
 
-            db.AddLibraryToCart(user.Id, product.Id);
-            db.AddLibraryToCart(user1.Id, product1.Id);
-            db.AddLibraryToCart(user2.Id, product2.Id);
-            db.AddLibraryToCart(user3.Id, product3.Id);
-            
+            db.AddLibraryToCart(user.Username, product.Id);
+            db.AddLibraryToCart(user1.Username, product1.Id);
+            db.AddLibraryToCart(user2.Username, product2.Id);
+            db.AddLibraryToCart(user3.Username, product3.Id);
 
+            User user4 = dbContext.Users.FirstOrDefault(
+                x => x.Username == "jean"
+                );
 
+            Product product4 = dbContext.products.FirstOrDefault(
+                x => x.ProductName == ".NET Analytics"
+                );
+            db.AddLibraryToCart(user4.Username, product4.Id);*/
         }
     }
 }

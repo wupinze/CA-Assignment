@@ -9,10 +9,10 @@ namespace ShoppingCartWebApp.Models
     {
         public Session()
         {
-            Id = Guid.NewGuid();
+            Id = Guid.NewGuid().ToString();
         }
 
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public virtual string UserId { get; set; }
         public virtual User User { get; set; }
     }

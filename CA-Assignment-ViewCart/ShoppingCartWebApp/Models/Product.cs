@@ -8,12 +8,12 @@ namespace ShoppingCartWebApp.Models
     {
         public Product()
         {
-            Id = new Guid();
+            Id = Guid.NewGuid().ToString();
             PurHistories = new List<PurchaseHistory>();
             carts = new List<Cart>();
         }
 
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         [MaxLength(20)]

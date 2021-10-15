@@ -98,8 +98,6 @@ body {
 .product_details {
     display: flex;
     flex-direction: row;
-    width: 1200px;
-    margin: 0 auto;
     flex-wrap: wrap;
     justify-content: center;
 }
@@ -110,7 +108,7 @@ body {
 }
 
 .product_details{
-    margin-left : -100px;
+    margin-right : 100px;
     
 }
 .product_details .image {
@@ -162,26 +160,23 @@ body {
     color: black;
     cursor: default;
     border: 2px solid black;
-    margin-block:7px;
 }
 
 
 
-.price_quantity {
-    margin-left: -1000px;
-}
 
-    .btn-numbox {
-        
-        display: inline-flex;
-        margin-inline:50px;
+
+    .product_details  .btn-numbox li {
+        list-style: none;
+        display: inline-block;
     }
-    .number {
-    
-    font-size: 28px;
-    color: black;
-    margin-right:45px;
-}
+        .product_details .price_quantity .btn-numbox .number {
+            display: inline-block;
+            font-size: 28px;
+            color: black;
+            margin-left:-50px;
+            
+        }
 
 
     .btn-numbox .count ,

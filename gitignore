@@ -1,0 +1,42 @@
+# ignore hidden files
+
+.*
+!/.gitignore
+
+
+# ignore XML file
+**.xml
+
+# ignore pdb
+**.pdb
+
+# ignore suo file
+**.suo
+
+# ignore cache
+**.cache
+
+
+# ignore editorconfig
+**.config
+**.editorconfig
+
+# ignore binaries
+**.dll
+
+# ignore json
+**.json
+
+# ignore props
+**.props
+
+# ignore .vs
+**.vs
+../.vs/
+**/.vs
+
+## ignore these directories
+bin/
+obj/
+debug/
+release/

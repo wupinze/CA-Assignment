@@ -7,11 +7,11 @@ namespace ShoppingCartWebApp.Models
     {
         public Cart()
         {
-            Id = new Guid();
+            Id = Guid.NewGuid().ToString();
         }
 
 
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
 
         public virtual User user { get; set; }

@@ -39,44 +39,83 @@ namespace ShoppingCartWebApp.Controllers
             return View();
 
         }
-        public ActionResult test()
+        public ActionResult test(string clickedBtn)
         {
 
-            string username = "jean";
-            var tupList = db.getCartViewList(username);
-            List<int> QuantityList = tupList.Item1;
-            List<Product> ProductList = tupList.Item2;
-            ViewData["ProductList"] = ProductList;
-            ViewData["QuantityList"] = QuantityList;
-            double tp = 0;
-            double pp;
-            double ppfix;
-            List<float> pricelist = new List<float>();
-            foreach (var product in ProductList)
+            if (clickedBtn == null)
             {
-                pricelist.Add(product.Price);
-            }
-
-            var res = pricelist.Zip(QuantityList, (n, w) => new { Price = n, Quantity = w });
-            foreach (var a in res)
-            {
-                pp = a.Price * a.Quantity;
-
-                tp += pp;
-            }
-
-            /*
-             int quantity = 0;
-            foreach (var product in ProductList, var quantity1 in QuantityList;)
-            {
-                foreach (var quantity1 in QuantityList)
+                string username = "jean";
+                var tupList = db.getCartViewList(username);
+                List<int> QuantityList = tupList.Item1;
+                List<Product> ProductList = tupList.Item2;
+                ViewData["ProductList"] = ProductList;
+                ViewData["QuantityList"] = QuantityList;
+                double tp = 0;
+                double pp;
+                
+                List<float> pricelist = new List<float>();
+                foreach (var product in ProductList)
                 {
-                    quantity = quantity1;
+                    pricelist.Add(product.Price);
                 }
-                pp = product.Price * quantity;
-                tp += pp;
-            }*/
-            ViewData["tp"] = tp;
+
+                var res = pricelist.Zip(QuantityList, (n, w) => new { Price = n, Quantity = w });
+                foreach (var a in res)
+                {
+                    pp = a.Price * a.Quantity;
+
+                    tp += pp;
+                }
+
+               
+                ViewData["tp"] = Convert.ToString(tp);
+            }
+            else
+            {
+                string startStr = clickedBtn.Substring(0, 1);
+
+                string username = "jean";
+                //add 
+                if (startStr == "a")
+                {
+                    string productId = clickedBtn.Substring(2);
+                    db.AddLibraryToCart(username, productId);
+                    
+                }
+                else if (startStr == "r"){ //reduce
+                    string productId = clickedBtn.Substring(2);
+                    db.ReduceProductFromCart(username, productId);
+                }
+
+
+                var tupList = db.getCartViewList(username);
+                List<int> QuantityList = tupList.Item1;
+                List<Product> ProductList = tupList.Item2;
+                ViewData["ProductList"] = ProductList;
+                ViewData["QuantityList"] = QuantityList;
+                double tp = 0;
+                double pp;
+                
+                List<float> pricelist = new List<float>();
+                foreach (var product in ProductList)
+                {
+                    pricelist.Add(product.Price);
+                }
+
+                var res = pricelist.Zip(QuantityList, (n, w) => new { Price = n, Quantity = w });
+                foreach (var a in res)
+                {
+                    pp = a.Price * a.Quantity;
+
+                    tp += pp;
+                }
+
+   
+                ViewData["tp"] = Convert.ToString(tp);
+
+
+
+            }
 
             return View();
         }
@@ -94,26 +133,7 @@ namespace ShoppingCartWebApp.Controllers
             return RedirectToAction("Summary", "MyPurchases");
         }
         
-        public IActionResult Additem(Guid userId, Guid ProductId)
-        {
-            User user = dbContext.Users.FirstOrDefault(
-                    x => x.Username == "jean"
-                    );
-            Product productData = dbContext.products.FirstOrDefault(
-                x => x.ProductName == ".NET Charts"
-                );
-            db.AddLibraryToCart(user.Id, productData.Id);
-            return View();
-        }
-        public IActionResult Removeitem(string username, Guid ProductId)
-        {
-            username = "jean";
-            Product productData = dbContext.products.FirstOrDefault(
-                x => x.ProductName == ".NET Charts"
-                );
-            db.ReduceProductFromCart(username,productData.Id);
-            return View();
-        }
+        
 
     }
 }
