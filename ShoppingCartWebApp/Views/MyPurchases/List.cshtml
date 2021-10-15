@@ -15,10 +15,10 @@
         {
         <div class="row form-group">
             <div class="col-sm-4 border border-dark shadow p-3 mb-5 bg-white rounded text-center">
-                <img src="/Image/@String.Concat(purchase.product.ProductName.Substring(5),".png")" width="100" height="100">
+                <img src="@purchase.product.imageUrl" width="100" height="100">
                 <h3> @purchase.product.ProductName</h3>
                 <p>@purchase.product.Description</p>
-                <a class="btn btn-outline-primary btn-block" role="button" href="/Image/@String.Concat(purchase.product.ProductName.Substring(5),".png")" download="@String.Concat(purchase.product.ProductName.Substring(5),".png")">Download</a>
+                <a class="btn btn-outline-primary btn-block" role="button" href="@purchase.product.imageUrl" download>Download</a>
             </div>
             <div class="col-sm-8 p-5">
                 <p>Purchased On: @purchase.PurchaseDate</p>
