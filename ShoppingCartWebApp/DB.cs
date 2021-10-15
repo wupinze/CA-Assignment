@@ -213,10 +213,7 @@ namespace ShoppingCartWebApp
         public int AddLibraryToCart(string sessionId, string ProductId)
         {
 
-            Session session = dbContext.Sessions.FirstOrDefault(
-                x => x.Id == sessionId
-                );
-            string userId = session.User.Id;
+         
 
             Session session = dbContext.Sessions.FirstOrDefault(
                 x => x.Id == sessionId
@@ -251,19 +248,7 @@ namespace ShoppingCartWebApp
         }
 
 
-        public int getCarViewTotalQuantity(string sessionId)
-        {
-
-            var tupList = this.getCartViewList(sessionId);
-            List<int> QuantityList = tupList.Item1;
-            int sum = 0;
-            for (int i = 0; i < QuantityList.Count(); i++)
-            {
-                sum += QuantityList[i];
-            }
-
-            return sum;
-        }
+      
 
 
         public int getCarViewTotalQuantity(string sessionId) {
@@ -394,6 +379,7 @@ namespace ShoppingCartWebApp
             User user = dbContext.Users.FirstOrDefault(
                 x => x.Id == userId
                 );
+           
 
             var tupList = this.getCartViewList(userId);
             List<int> QuantityList = tupList.Item1;
@@ -496,7 +482,67 @@ namespace ShoppingCartWebApp
 
             return new List<PurchasesItem>();
         }
+        public List<PurchasesItem> getPurchaseHistory2(string userId)
+        {
 
+            //Session session = dbContext.Sessions.FirstOrDefault(
+            //   x => x.Id == sessionId
+            //   );
+            //string userId = session.User.Id;
+
+            List<PurchaseHistory> purchases = dbContext.purHistories.Where(
+                x => x.user.Id == userId
+                ).ToList();
+
+            if (purchases != null)
+            {   //grop by date
+                var iter = from pur in purchases
+                           group pur by pur.PurchaseDate into dateGroup
+                           select dateGroup;
+
+                List<PurchasesItem> PurchasesItems = new List<PurchasesItem>();
+
+                foreach (var grp in iter)
+                {
+                    Console.WriteLine("date ---> {0}", grp.Count());
+                    // grp type:  List<PurchaseHistory>
+
+                    // grop by product
+                    var iter2 = from pur2 in grp
+                                group pur2 by pur2.product into ProductGroup
+                                select ProductGroup;
+
+
+                    foreach (var Item in iter2)
+                    {
+                        PurchasesItem purchasItem = new PurchasesItem();
+
+                        purchasItem.Quantity = Item.Count();
+
+                        //Console.WriteLine("product---> {0}", Item.Count());
+
+                        foreach (var pur in Item)
+                        {
+                            purchasItem.product = pur.product;
+                            purchasItem.PurchaseDate = pur.PurchaseDate;
+                            purchasItem.ActivationCode.Add(pur.ActivationCode);
+                            // Console.WriteLine("occuer times {0}", pur.product.ProductName);
+                        }
+
+                        PurchasesItems.Add(purchasItem);
+                    }
+
+                }
+
+
+                Console.WriteLine("{0}", PurchasesItems.Count());
+
+
+                return PurchasesItems;
+            }
+
+            return new List<PurchasesItem>();
+        }
         //seedUsers
         public void SeedUsersTable()
         {
