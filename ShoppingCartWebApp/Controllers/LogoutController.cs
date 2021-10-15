@@ -25,8 +25,8 @@ namespace ShoppingCartWebApp.Controllers
 
             Guid sessionId = Guid.Parse(Request.Cookies["sessionId"]);
             Session session = dbContext.Sessions.FirstOrDefault(x =>
-                x.Id == sessionId
-            );
+                x.Id == sessionId.ToString()
+            ); ;
 
             db.DeleteSessionData(session);
             

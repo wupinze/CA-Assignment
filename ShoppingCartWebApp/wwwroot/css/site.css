@@ -86,3 +86,41 @@ body {
     display: table-cell;
     padding: 0.5em;
 }
+
+/*Gallery styles*/
+
+.card-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+.card {
+    border: 2px solid black;
+    padding: 1em;
+    margin: 1em;
+    width: 300px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: var(--font-size);
+}
+
+/*MyPurchases styles*/
+
+.card-container-1 {
+    padding: 2rem; 
+}
+
+.card-1 {
+  padding: 1rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 1rem;
+}

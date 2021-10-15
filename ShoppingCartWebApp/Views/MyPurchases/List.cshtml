@@ -1,71 +1,53 @@
 ﻿@{
-    List<PurchaseHistory> phList = (List<PurchaseHistory>)ViewData["phList"];
-    List<Product> productList = (List<Product>)ViewData["productList"];
-
-    var grpByProduct = from ph in phList
-                       group ph by ph.ProductId; 
+    List<PurchasesItem> purchases = (List<PurchasesItem>)ViewData["purchases"]; 
 
     ViewData["title"] = "My Purchases";
 }
 
 
-<h2>My Purchases - Details</h2>
+<h3>My Purchases - Details</h3><a href="/Gallery/Index">Gallery</a> | <a href="/Logout/Index/">Logout</a>
 <br />
 <br />
 
-<table border="0" cellpadding="20">
-    <tr>
-        <th>[Product Image / Name / Desc]</th>
-        <th>[Purchased Date / Quantity / Actv Code]</th>
-    </tr>
+<div class="container form-group">
     @{
-        foreach (var grp in grpByProduct)
+        foreach (var purchase in purchases)
         {
-            Product currProduct = null;
-            for (int i = 0; i < productList.Count(); i++)
-            {
-                if (grp.Key == productList[i].Id)
-                {
-                    currProduct = productList[i];
-                }
-            }
-            <tr>
-                <td align="center">
-                    <img src="/Image/@String.Concat(currProduct.ProductName.Substring(5),".png")" width="100" height="100">
-                    <br />
-                    @currProduct.ProductName
-                    <br />
-                    @currProduct.Description
-                    <br />
-                    <button class="btn btn-primary btn-block">Download</button>
-                </td>
-                <td valign="middle">
-                    Purchased On: @grp.FirstOrDefault(x => x.ProductId == currProduct.Id).PurchaseDate.ToShortDateString() 
-                    <br />
-                    Quantity: @grp.Count()
-                    <br />
-                    Activation Code:
-                    @{
-                        if (grp.Count() > 1)
-                        {
-                            <div>
-                                <select name="actCode">
-                                    @foreach(var g in grp)
-                                    {
-                                        <option>@g.ActivationCode</option>
-                                    }
-                                </select>
-                            </div>
-                        }
-                        else
-                        {
-                            @grp.FirstOrDefault(x => x.ProductId == currProduct.Id).ActivationCode
-                        }   
+        <div class="row form-group">
+            <div class="col-sm-4 border border-dark shadow p-3 mb-5 bg-white rounded text-center">
+                <img src="/Image/@String.Concat(purchase.product.ProductName.Substring(5),".png")" width="100" height="100">
+                <h3> @purchase.product.ProductName</h3>
+                <p>@purchase.product.Description</p>
+                <a class="btn btn-outline-primary btn-block" role="button" href="/Image/@String.Concat(purchase.product.ProductName.Substring(5),".png")" download="@String.Concat(purchase.product.ProductName.Substring(5),".png")">Download</a>
+            </div>
+            <div class="col-sm-8 p-5">
+                <p>Purchased On: @purchase.PurchaseDate</p>
+                <p>Quantity: @purchase.Quantity</p>
+                <p>Activation Code:</p>
+                @{
+                    if (purchase.Quantity > 1)
+                    {
+                        <div>
+                            <select class="form-control form-control-sm" name="actCode">
+                                @foreach (string ac in purchase.ActivationCode)
+                                {
+                                    <option>@ac</option>
+                                }
+                            </select>
+                            <br />
+                        </div>
                     }
-
-                    
-                </td>
-            </tr>
+                    else
+                    {
+                        @purchase.ActivationCode[0];
+                        <br />
+                        <br />
+                    }
+                }
+                <button type="button" class="btn btn-outline-secondary btn-sm" formaction="/Cart/">Buy Again</button>
+            </div>
+        </div>   
         }
     }
-</table>
+</div>
+

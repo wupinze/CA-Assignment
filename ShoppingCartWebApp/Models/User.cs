@@ -10,12 +10,12 @@ namespace ShoppingCartWebApp.Models
     {
         public User()
         {
-            Id = new Guid();
+            Id = Guid.NewGuid().ToString();
             carts = new List<Cart>();
             purHistories = new List<PurchaseHistory>();
         }
 
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         public string Username { get; set; }

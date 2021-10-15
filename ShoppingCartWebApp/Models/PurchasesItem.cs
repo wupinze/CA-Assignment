@@ -6,7 +6,7 @@ namespace ShoppingCartWebApp.Models
     public class PurchasesItem
     {
         public Product product { get; set;}
-        public DateTime PurchaseDate { get; set;}
+        public string PurchaseDate { get; set;}
         public int Quantity { get; set;}
         public List<string> ActivationCode{ get; set;}
 
@@ -14,14 +14,6 @@ namespace ShoppingCartWebApp.Models
         {
             this.ActivationCode = new List<string>();
         }
-
-        //public PurchasesItem(Product product, DateTime PurchaseDate, int quantity, List<string> ActivationCode)
-        //{
-        //    this.product = product;
-        //    this.Quantity = quantity;
-        //    this.PurchaseDate = PurchaseDate;
-        //    this.ActivationCode = ActivationCode;
-        //}
 
     }
 }
