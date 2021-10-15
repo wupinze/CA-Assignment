@@ -8,29 +8,29 @@ namespace ShoppingCartWebApp.Models
     {
         public Product()
         {
-            Id = new Guid();
+            Id = Guid.NewGuid().ToString();
             PurHistories = new List<PurchaseHistory>();
             carts = new List<Cart>();
         }
 
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         [MaxLength(20)]
-        public string ProductName { get; set;}
+        public string ProductName { get; set; }
 
 
         [Required]
         [MaxLength(200)]
-        public string Description { get; set;}
+        public string Description { get; set; }
 
         [Required]
-        public float Price { get; set;}
+        public float Price { get; set; }
 
         [Required]
-        public string imageUrl { get; set;} 
+        public string imageUrl { get; set; }
 
-        public virtual ICollection<PurchaseHistory> PurHistories { get; set;}
+        public virtual ICollection<PurchaseHistory> PurHistories { get; set; }
         public virtual ICollection<Cart> carts { get; set; }
     }
 }
