@@ -21,63 +21,7 @@ namespace ShoppingCartWebApp.Controllers
             db = new DB(this.dbContext);
         }
 
-        /*public IActionResult Index()
-        {
-
-            *//*List<Product> products = db.GetProductsList(); *//*
-
-
-            //ViewData["products"] = products;
-            Session session = GetSession();
-            if (session == null)
-            {
-                return RedirectToAction("Index", "Logout");
-            }
-
-            
-
-            List<ShoppingCartWebApp.Models.Product> products = dbContext.products.Where(x =>
-                x.Id != null
-            ).ToList();
-
-            ViewData["products"] = products;
-
-            if (GetCart() == null)
-            {
-                Cart mycart = new Cart()
-                {
-                    user = session.User
-                };
-                dbContext.carts.Add(mycart);
-                dbContext.SaveChanges();
-
-                Response.Cookies.Append("CartId", mycart.Id.ToString());
-            };
-            Cart cart = GetCart();
-
-            ViewData["cart"] = cart;
-
-            return View();
-        }*/
-
-        /*public IActionResult Search(string searchStr)
-        {
-            List<Product> products = db.SearchProducts(searchStr);
-            ViewData["products"] = products;
-            ViewData["searchStr"] = searchStr;
-            return View();
-        }*/
-
-        //[HttpPost]
-        /*public IActionResult Index(string searchStr)
-        {
-            List<Product> products = db.SearchProducts(searchStr);
-            ViewData["products"] = products;
-            ViewData["srchproducts"] = products;
-            ViewData["searchStr"] = searchStr;
-
-            return View();
-        }*/
+        
 
         public IActionResult Index()
         {
@@ -90,26 +34,10 @@ namespace ShoppingCartWebApp.Controllers
             List<ShoppingCartWebApp.Models.Product> products = dbContext.products.Where(x =>
                 x.Id != null
             ).ToList();
-            /*List<ShoppingCartWebApp.Models.Product> NoSrchproducts = dbContext.products.Where(x =>
-                x.Id == null
-            ).ToList();
-            ViewData["srchproducts"] = NoSrchproducts;*/
+        
             ViewData["products"] = products;
 
-            /*if (GetCart() == null)
-            {
-                Cart mycart = new Cart()
-                {
-                    user = session.User
-                };
-                dbContext.carts.Add(mycart);
-                dbContext.SaveChanges();
-
-                Response.Cookies.Append("CartId", mycart.Id.ToString());
-            };
-            Cart cart = GetCart(); 
-            
-            ViewData["cart"] = cart;*/
+           
             int count = CartCount();
             ViewData["cartcount"] = count;
             return View();
@@ -119,16 +47,6 @@ namespace ShoppingCartWebApp.Controllers
         {
             Session session = GetSession();
 
-            //if no session
-            /*if (session == null)
-            {
-                session = CreateTempSession();
-                dbContext.Sessions.Add(session);
-                dbContext.SaveChanges();
-
-                // ask browser to save and send back these cookies next time
-                Response.Cookies.Append("SessionId", session.Id.ToString());
-            }*/
 
             ViewData["session"] = session;
 
@@ -151,9 +69,7 @@ namespace ShoppingCartWebApp.Controllers
             productData.carts.Add(cart);
             session.User.carts.Add(cart);
             
-            /*User user = dbContext.Users.FirstOrDefault(x =>
-                x.Id == session.UserId);*/
-            //user.carts.Add(cart);
+         
 
             dbContext.SaveChanges();
 

@@ -45,45 +45,7 @@ namespace ShoppingCartWebApp.Controllers
             return View();
         }
 
-        /*public IActionResult Login(IFormCollection form)
-        {
-            string username = form["username"];
-            string password = form["password"];
-
-            HashAlgorithm sha = SHA256.Create();
-            byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(username + password));
-
-            User user = dbContext.Users.FirstOrDefault(x =>
-               x.Username == username && x.PassHash == hash);
-
-            if (user == null)
-            {
-                TempData["loginError"] = "Invalid username or password";
-                return RedirectToAction("Index", "Login");
-            }
-
-            Session currsession = GetSession();
-            if (currsession == null)
-            {
-                Session session = new Session()
-                {
-                    User = user
-                };
-                dbContext.Sessions.Add(session);
-                dbContext.SaveChanges();
-
-                Response.Cookies.Append("SessionId", session.Id.ToString());
-                Response.Cookies.Append("Username", user.Username);
-            }
-            else if (currsession.User.Username == "temp")
-            {
-                Session session = dbContext.Sessions.FirstOrDefault(x =>
-                    x.User.Username == "temp");
-                session.User = user;
-            }
-
-            return RedirectToAction("", "");
-        }*/
+        
 
 
         public IActionResult Login(IFormCollection form)
