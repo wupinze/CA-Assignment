@@ -1,0 +1,196 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    font-size: 32px;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+  
+}
+.nav-link {
+    font-size: 28px;
+}
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+/*Self defined styles*/
+.login_table {
+    display: inline-block;
+    padding: 0.5em;
+    border: 2px solid #46a7e0;
+    width: 50%;
+}
+
+.login_row {
+    display: table-row;
+}
+
+.login_cell {
+    display: table-cell;
+    padding: 0.5em;
+}
+
+/*viewcart style*/
+
+
+
+.product_details {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+.tp {
+    font-size :28px;
+}
+
+.product_details .image {
+    border: 2px solid black;
+    padding: 1em;
+    margin: 1em;
+    width: 300px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: var(--font-size);
+}
+
+
+.product_details .price_quantity {
+    display: flex;
+    flex-direction: column;
+    font-size: 28px;
+    margin: 5px;
+    margin-top: 120px;
+}
+
+    .product_details .price_quantity p {
+        display: inline-block;
+        font-size: 36px;
+        color: black;
+        
+    }
+    .product_details, image h3 h4 {
+    text-align: center;
+}
+
+    .product_details div img {
+        display: block;
+        margin: 0 auto;
+        width: 100%;
+        height: 150px;
+        
+        object-fit: contain;
+    }
+
+
+
+
+
+
+
+
+    .product_details .btn-numbox li {
+        list-style: none;
+        display: inline-block;
+    }
+        .product_details .price_quantity .btn-numbox .number {
+            display: inline-block;
+            font-size: 28px;
+            color: black;
+            
+            margin-right: -40px;
+            
+        }
+
+        .count {
+
+           margin-right: 50px;
+        }
+
+    .btn-numbox .count .num-minus,
+    .input-num,
+    .num-add {
+        display: inline-grid;
+        width: 28px;
+        height: 30px;
+        line-height: 28px;
+        text-align: center;
+        font-size: 24px;
+        color: black;
+        cursor: default;
+        border: 2px solid black;
+        
+    }
+
+.btn-numbox .count .input-num {
+    width: 58px;
+    height: 28px;
+    color: #333;
+    border: 2px solid black;
+   
+}

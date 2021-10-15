@@ -1,0 +1,176 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+/*Self defined styles*/
+.login_table {
+    display: inline-block;
+    padding: 0.5em;
+    border: 2px solid #46a7e0;
+    width: 50%;
+}
+
+.login_row {
+    display: table-row;
+}
+
+.login_cell {
+    display: table-cell;
+    padding: 0.5em;
+}
+/*
+.box {
+    width: 900px;
+    height: 600px;
+    border: solid 2px black;
+    margin: 5px auto;
+}
+    */
+
+.bd .shop_name {
+    display: flex;
+    width: 1000px;
+    height: 300px;
+    background-color: white;
+    border: solid 2px black;
+    justify-content: space-between;
+}
+
+
+
+
+.shop_name div {
+    width: 200px;
+    height: 250px;
+    border: solid 2px black;
+    margin-top: 10px;
+    margin-left: 23px;
+    box-sizing: border-box;
+}
+
+.shop_name h3 {
+    float: left;
+    text-align: center;
+    margin: 5px 0;
+   
+}
+.shop.name h4 {
+    display: flex; 
+    flex-flow: column;
+}
+
+.shop_name p {
+    text-align: center;
+    font-size: 28px;
+    margin: 5px 0;
+}
+
+
+
+
+
+.shop_name .btn-numbox li {
+    list-style: none;
+    display: inline-block;
+}
+    .shop_name.btn-numbox li .number {
+        display: inline-block;
+        font-size: 12px;
+        color: #808080;
+        vertical-align: sub;
+    }
+
+.shop_name.btn-numbox .count {
+    overflow: hidden;
+    margin: 0 16px 0 -20px;
+}
+
+    .btn-numbox .count .num-minus,
+    .input-num,
+    .num-add {
+        display: inline-block;
+        width: 28px;
+        height: 30px;
+        line-height: 28px;
+        text-align: center;
+        font-size: 24px;
+        color: black;
+        cursor: default;
+        border: 2px solid;
+    }
+
+    .btn-numbox .count .input-num {
+        width: 58px;
+        height: 28px;
+        color: #333;
+        border-left: 0;
+        border-right: 0;
+    }

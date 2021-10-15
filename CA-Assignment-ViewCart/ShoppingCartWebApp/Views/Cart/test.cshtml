@@ -1,0 +1,122 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{ List<Product> ProductList = (List<Product>)ViewData["ProductList"];
+    List<int> QuantityList = (List<int>)ViewData["QuantityList"];
+    string tp = ViewData["tp"].ToString();
+    double totalprice = double.Parse(tp); }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body onload="totalprice()">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Viewcart</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a style="color:blue" class="nav-link" asp-area="" asp-controller="Cart" asp-action="ContinueShopping"><u>Continue Shopping</u></a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="color:black" class="nav-link" asp-area="">|</a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="color:blue" class="nav-link" asp-area="" asp-controller="Cart" asp-action="Checkout"><u>Checkout</u></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    @section Scripts {
+        <script src="~/js/Quantity.js"></script>
+    }
+    <p align="right" class="tp" id="price-product"> Total: $ @totalprice</p>
+
+    @{ for (int i = 0; i < ProductList.Count(); i++)
+        {
+            <div class="product_details">
+
+                <div class=" image">
+                    <img src="@ProductList[i].imageUrl" alt="">
+
+                    <h3>@ProductList[i].ProductName</h3>
+                    <h4>@ProductList[i].Description</h4>
+                </div>
+                <div class="price_quantity">
+                    <p><span class="price" id="per-price">Price: $ @ProductList[i].Price</span> </p>
+                    <ul class="btn-numbox">
+                        <li class="number">Quantity:</li>
+                        <li>
+                            <ul class="count">
+
+                                <li><input id="num-minus" class="num-minus" type="button" value="DeleteAll" onclick="location.href='@Url.Action("Removeitem", "Cart")'" /></li>
+                                <li><input type="text" class="input-num" id="input-num" value="@QuantityList[i]" /></li>
+                                <li><input id="num-add" class="num-add" type="button" value="+" onclick="location.href='@Url.Action("Additem", "Cart")'" /></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div> } }
+    <!--
+        <div class="product_details">
+            <div class=" image">
+                <img src="~/Image/charts.png">
+
+                <h3>XXX(Name)</h3>
+                <h4>XXX(Decription)</h4>
+            </div>
+            <div class="price_quantity">
+                <p>Price：$100.00</p>
+                <ul class="btn-numbox">
+                    <li class="number">Quantity:</li>
+                    <li>
+                        <ul class="count">
+                            <li><span id="num-minus" class="num-minus">-</span></li>
+                            <li><input type="text" class="input-num" id="input-num" value="0" /></li>
+                            @* foreach(var quantity in QuantityList)
+                                {
+                                <li><input type="text" class="input-num" id="input-num" value="@quantity" /></li>
+                                }
+                            *@
+                            <li><span id="num-add" class="num-add">+</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <br>
+
+        <div class="product_details">
+            <div class=" image">
+                <img src="~/Image/Numerics.png">
+                <h3>XXX(Name)</h3>
+                <h4>XXX(Decription)</h4>
+            </div>
+            <div class="price_quantity">
+                <p>Price：$99.00</p>
+                <ul class="btn-numbox">
+                    <li class="number">Quantity:</li>
+                    <li>
+                        <ul class="count">
+                            <li><span id="num-minus" class="num-minus">-</span></li>
+                            <li><input type="text" class="input-num" id="input-num" value="0" /></li>
+                            <li><span id="num-add" class="num-add">+</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        -->
+
+
+</body>
+    </html>
