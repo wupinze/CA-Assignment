@@ -32,7 +32,7 @@ namespace ShoppingCartWebApp.Controllers
                 {
                     return RedirectToAction("Index", "Logout");
                 }
-
+                
                 return RedirectToAction("", "");
             }
 
