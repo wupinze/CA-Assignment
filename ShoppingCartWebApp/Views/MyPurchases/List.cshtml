@@ -1,52 +1,62 @@
 ﻿@{
-    List<PurchasesItem> purchases = (List<PurchasesItem>)ViewData["purchases"]; 
+    List<PurchasesItem> purchases = (List<PurchasesItem>)ViewData["purchases"];
+
+    string date = (string)ViewData["date"];
+    string nameOfUser = (string)ViewData["username"];
+    string name = string.Format(nameOfUser.Substring(0, 1).ToUpper() + nameOfUser.Substring(1).ToLower());
+
+    var grpByDate = from pur in purchases
+                    where pur.PurchaseDate == date
+                    select pur;
 
     ViewData["title"] = "My Purchases";
 }
-
-
-<h3>My Purchases - Details</h3><a href="/Gallery/Index">Gallery</a> | <a href="/Logout/Index/">Logout</a>
+<div class="greeting-div">
+    <h3>Hello, @name</h3>
+    <p><a href="#">Gallery</a> | <a href="#">Logout</a></p>
+</div>
 <br />
+<h4>Summary of Purchases</h4>
 <br />
 
 <div class="container form-group">
     @{
-        foreach (var purchase in purchases)
+        foreach (var purchase in grpByDate)
         {
-        <div class="row form-group">
-            <div class="col-sm-4 border border-dark shadow p-3 mb-5 bg-white rounded text-center">
-                <img src="@purchase.product.imageUrl" width="100" height="100">
-                <h3> @purchase.product.ProductName</h3>
-                <p>@purchase.product.Description</p>
-                <a class="btn btn-outline-primary btn-block" role="button" href="@purchase.product.imageUrl" download>Download</a>
-            </div>
-            <div class="col-sm-8 p-5">
-                <p>Purchased On: @purchase.PurchaseDate</p>
-                <p>Quantity: @purchase.Quantity</p>
-                <p>Activation Code:</p>
-                @{
-                    if (purchase.Quantity > 1)
-                    {
-                        <div>
-                            <select class="form-control form-control-sm" name="actCode">
-                                @foreach (string ac in purchase.ActivationCode)
-                                {
-                                    <option>@ac</option>
-                                }
-                            </select>
+            <div class="row form-group">
+                <div class="col-sm-4 border border-dark shadow p-3 mb-5 bg-white rounded text-center">
+                    <img src="@purchase.product.imageUrl" width="100" height="100">
+                    <h3> @purchase.product.ProductName</h3>
+                    <p>@purchase.product.Description</p>
+                    <a class="btn btn-outline-primary btn-block" role="button" href="@purchase.product.imageUrl" download>Download</a>
+                </div>
+                <div class="col-sm-8 p-5">
+                    <p>Purchased On: @purchase.PurchaseDate</p>
+                    <p>Quantity: @purchase.Quantity</p>
+                    <p>Activation Code:</p>
+                    @{
+                        if (purchase.Quantity > 1)
+                        {
+                            <div>
+                                <select class="form-control form-control-sm" name="actCode">
+                                    @foreach (string ac in purchase.ActivationCode)
+                                    {
+                                        <option>@ac</option>
+                                    }
+                                </select>
+                                <br />
+                            </div>
+                        }
+                        else
+                        {
+                            @purchase.ActivationCode[0];
                             <br />
-                        </div>
+                            <br />
+                        }
                     }
-                    else
-                    {
-                        @purchase.ActivationCode[0];
-                        <br />
-                        <br />
-                    }
-                }
-                <button type="button" class="btn btn-outline-secondary btn-sm" formaction="/Cart/">Buy Again</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" formaction="#">Buy Again</button>
+                </div>
             </div>
-        </div>   
         }
     }
 </div>

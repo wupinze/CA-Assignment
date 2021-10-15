@@ -21,14 +21,19 @@ namespace ShoppingCartWebApp.Controllers
         public IActionResult Summary(string sessionId)
         {
             // Test code <start> - to be removed after link up 
-            string userName = "john";
-            User user1 = dbContext.Users.FirstOrDefault(x => x.Username == userName);
+            string username = "john";
+            User user1 = dbContext.Users.FirstOrDefault(x => x.Username == username);
             // Test code <end>
+
+            /* Replacement code after link-up complete */
+            //Session session = dbContext.Sessions.FirstOrDefault(
+            //    x => x.Id == sessionId
+            //    );
+            //string username = session.User.Username;
 
             List<PurchasesItem> purchases = db.getPurchaseHistory2(user1.Id);
   
             ViewData["purchases"] = purchases;
-
 
             List<PurchaseHistory> phList = dbContext.purHistories.Where(x => x.user.Id == user1.Id).ToList();
 
@@ -40,26 +45,28 @@ namespace ShoppingCartWebApp.Controllers
                 productList.Add(product);
             }
 
+            ViewData["username"] = username;
             ViewData["phList"] = phList;
             ViewData["productList"] = productList;
-
-
-
             return View(); 
         }
 
 
-        public IActionResult List(/*string sessionId*/)
+        public IActionResult List(string date, string username)
         {
-            // Test code <start> - to be removed after link up 
-            string username = "john";
             User user1 = dbContext.Users.FirstOrDefault(x => x.Username == username);
-            // Test code <end> 
 
+            /* Replacement code after link-up complete */
+            //Session session = dbContext.Sessions.FirstOrDefault(x => x.User == user1);
+            //List<PurchasesItem> purchases = db.getPurchaseHistory(session.Id);
+
+            // Test code <start> - to be removed after link up
             List<PurchasesItem> purchases = db.getPurchaseHistory2(user1.Id);
+            // Test code <end>
 
+            ViewData["date"] = date;
+            ViewData["username"] = username;
             ViewData["purchases"] = purchases;
-      
             return View();
         }
     }
