@@ -1,0 +1,105 @@
+﻿@{ List<ShoppingCartWebApp.Models.Product> products =
+                                            (List<ShoppingCartWebApp.Models.Product>)ViewData["products"];
+
+    Cart cart = (Cart)ViewData["cart"];
+    string nameOfUser = "Glendon Tan";
+    int count = (int)ViewData["cartcount"];
+    //string searchStr = (string)ViewData["searchStr"];
+    @*    List<ShoppingCartWebApp.Models.Product> srchproducts =
+        (List<ShoppingCartWebApp.Models.Product>)ViewData["srchproducts"];*@
+}
+
+@section Scripts {
+    <script src="~/js/Gallery.js"></script>
+}
+
+
+<div class="gallery-header">
+    <div class="greeting-div">
+        <h3> Hello, @nameOfUser </h3>
+        <p><a href="#">My Purchases</a> | <a href="/Logout/Index">Logout</a></p>
+    </div>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">
+        <div class="cart-div">
+            <img src="../image/cart_logo.png" class="cart-logo" alt="Alternate Text" />
+            <p id="count" class="cart-quantity">@count</p>
+        </div>
+    </a>
+</div>
+
+<!--<div class="searchbar-div">
+    <form action="/Gallery/Index" method="POST">
+        <input onchange="search_product()" id="searchbar" class="searchbar-input" type="text" placeholder="Search" name="searchStr" />-->
+@*<input type="submit" value="Submit" style="display:none;" />*@
+<!--</form>
+</div>-->
+@*<div class="searchbar-div">
+        <form onsubmit="return search_product()" method="POST">
+            <input id="searchbar" class="searchbar-input" type="text" placeholder="Search" name="searchStr" />
+            <input type="submit" value="Submit" style="display:none;" />
+        </form>
+    </div>*@
+
+
+
+<div class="searchbar-div">
+    <form action="/Gallery/Index" method="POST">
+        <input onchange="search_product()" id="searchbar" class="searchbar-input" type="text" placeholder="Search" name="searchStr" />
+        <input onclick="search_product()" type="submit" value="Submit" style="display:none;" />
+    </form>
+</div>
+
+<div class="card-container">
+    @{
+        foreach (var product in products)
+        {
+            <div class="card">
+                <img src="@product.imageUrl" alt="">
+
+                <h3>@product.ProductName</h3>
+                <p>@product.Description</p>
+
+                <button id=@product.Id class="@product.ProductName add-to-cart" type="button" onclick=""><span>$@product.Price</span> - Add to cart</button>
+            </div>
+        }
+    }
+</div>
+
+@*@if (srchproducts.Count == 0)
+    {
+        <div class="card-container">
+            @{
+                foreach (var product in products)
+                {
+                    <div class="card">
+                        <img src="@product.imageUrl" alt="">
+
+                        <h3>@product.ProductName</h3>
+                        <p>@product.Description</p>
+
+                        <button id=@product.Id class="@product.ProductName add-to-cart" type="button" onclick=""><span>$@product.Price</span> - Add to cart</button>
+                    </div>
+                }
+            }
+        </div>
+    }
+    else
+    {
+    <div class="card-container">
+        @{
+            foreach (var product in srchproducts)
+            {
+                <div class="card">
+
+                    <img src="@product.imageUrl" alt="">
+
+                    <h3>@Html.Raw(Helper.Highlight(product.ProductName, searchStr)) </h3>
+                    <p>@Html.Raw(Helper.Highlight(product.Description, searchStr))</p>
+
+                    <button id=@product.Id class="@product.ProductName add-to-cart" type="button" onclick=""><span>$@product.Price</span> - Add to cart</button>
+                </div>
+            }
+        }
+    </div>
+    }*@
+
