@@ -10,12 +10,12 @@ namespace ShoppingCartWebApp.Models
             Id = Guid.NewGuid().ToString();
         }
 
-        public string Id { get; set;}
+        public string Id { get; set; }
 
         [Required]
-        public string PurchaseDate { get; set;}
+        public string PurchaseDate { get; set; }
 
-        public string ActivationCode { get; set;}
+        public string ActivationCode { get; set; }
 
         public virtual User user { get; set; }
         public virtual Product product { get; set; }

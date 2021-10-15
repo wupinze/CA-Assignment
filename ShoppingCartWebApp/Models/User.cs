@@ -27,8 +27,8 @@ namespace ShoppingCartWebApp.Models
         public byte[] PassHash { get; set; }
 
 
-        public virtual ICollection<Cart> carts { get; set;}
+        public virtual ICollection<Cart> carts { get; set; }
 
-        public virtual ICollection<PurchaseHistory> purHistories { get; set;}
+        public virtual ICollection<PurchaseHistory> purHistories { get; set; }
     }
 }

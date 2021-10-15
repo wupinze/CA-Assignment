@@ -11,12 +11,12 @@ namespace ShoppingCartWebApp.Models
         }
 
 
-        public string Id { get; set;}
+        public string Id { get; set; }
 
 
-        public virtual User user { get; set;}
-        public virtual Product product { get; set;}
+        public virtual User user { get; set; }
+        public virtual Product product { get; set; }
 
-        
+
     }
 }
