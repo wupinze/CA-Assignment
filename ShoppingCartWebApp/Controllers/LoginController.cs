@@ -21,21 +21,28 @@ namespace ShoppingCartWebApp.Controllers
 
         public IActionResult Index()
         {
-            if (Request.Cookies["SessionId"] != null)
+            if (Request.Cookies["SessionId"] != null)// if there is a session id
             {
                 Guid sessionId = Guid.Parse(Request.Cookies["sessionId"]);
                 Session session = dbContext.Sessions.FirstOrDefault(x =>
                     x.Id == sessionId
                 );
 
-                if (session == null)
+                if (session == null)// if session is not in session table
                 {
                     return RedirectToAction("Index", "Logout");
                 }
-                else if (Request.Cookies["Username"] != "guest")
+
+                else if (Request.Cookies["Username"] != "guest") // else if user is already logged in
                 {
+                    // redirect to gallery
                     return RedirectToAction("", "");
                 }
+                //else if (Request.Cookies["Username"] == "guest")
+                //{
+                //    // not sure if this can be an else block rather than else-if
+                //    // so this is if there is an active guest session
+                //}
             }
 
             string errorMessage = (string)TempData["loginError"];
