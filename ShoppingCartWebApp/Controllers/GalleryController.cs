@@ -28,6 +28,8 @@ namespace ShoppingCartWebApp.Controllers
             Session session = GetSession();
             if (session == null)
             {
+                // start new session if session is null
+                // will probably have to create temp user
                 string username = "guest";
                 string password = username;
                 HashAlgorithm sha = SHA256.Create();
@@ -40,16 +42,19 @@ namespace ShoppingCartWebApp.Controllers
                 };
                 dbContext.Sessions.Add(session);
                 dbContext.SaveChanges();
-
+                Debug.WriteLine("Creating new session for guest");
+                Debug.WriteLine(session.Id);
+                Debug.WriteLine(user.Username);
                 Response.Cookies.Append("SessionId", session.Id.ToString());
                 Response.Cookies.Append("Username", user.Username);
+                ViewData["username"] = user.Username;
                 //return RedirectToAction("Index", "Logout");
             }
 
             List<ShoppingCartWebApp.Models.Product> products = dbContext.products.Where(x =>
                 x.Id != null
             ).ToList();
-        
+            ViewData["username"] = Request.Cookies["Username"];
             ViewData["products"] = products;
 
            
