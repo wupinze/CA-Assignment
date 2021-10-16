@@ -39,11 +39,7 @@ namespace ShoppingCartWebApp.Controllers
                     // redirect to gallery
                     return RedirectToAction("", "");
                 }
-                //else if (Request.Cookies["Username"] == "guest")
-                //{
-                //    // not sure if this can be an else block rather than else-if
-                //    // so this is if there is an active guest session
-                //}
+         
             }
 
             string errorMessage = (string)TempData["loginError"];
@@ -79,10 +75,42 @@ namespace ShoppingCartWebApp.Controllers
             {
                 Debug.WriteLine("Existing session:");
                 Debug.WriteLine($"Login/Login, user: {Request.Cookies["Username"]}, session: {Request.Cookies["SessionId"]}");
+
+                //update cookies
                 Response.Cookies.Delete("Username");
                 Response.Cookies.Append("Username", username);
-                // below probably still shows guest as client hasn't sent new request
-                Debug.WriteLine($"Login/Login, user: {Request.Cookies["Username"]}, session: {Request.Cookies["SessionId"]}");
+
+
+                // update session object
+                Guid sessionId = Guid.Parse(Request.Cookies["sessionId"]);
+
+                Session currentSession = dbContext.Sessions.FirstOrDefault(x =>
+                    x.Id == sessionId);
+
+                // Get cart entries corresponding to GUEST user
+                List<Cart> currentCart = dbContext.carts.Where(x => x.user.Id == currentSession.User.Id).ToList();
+
+                // Change entries to user who is logging in
+                foreach (var row in currentCart)
+                {
+                
+                    Debug.WriteLine($"user: {row.user.Username}, product: {row.product.ProductName}");
+                    row.user = user; // Change entries to user who is logging in
+                    Debug.WriteLine("Change to: ");
+                    Debug.WriteLine($"user: {row.user.Username}, product: {row.product.ProductName}");
+
+                }
+
+                // Change user of current session to user who has just logged in
+                currentSession.UserId = user.Id;
+
+
+             
+
+                //Persist changes to database
+                dbContext.SaveChanges();
+
+
                 return RedirectToAction("Index", "Gallery");
             }
             Session session = new Session()
