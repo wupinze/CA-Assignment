@@ -2,7 +2,7 @@
                                             (List<ShoppingCartWebApp.Models.Product>)ViewData["products"];
 
     Cart cart = (Cart)ViewData["cart"];
-    string nameOfUser = "Glendon Tan";
+    string nameOfUser = (string) ViewData["username"];
     int count = (int)ViewData["cartcount"];
     //string searchStr = (string)ViewData["searchStr"];
     @*    List<ShoppingCartWebApp.Models.Product> srchproducts =
