@@ -28,8 +28,9 @@ namespace ShoppingCartWebApp.Controllers
 
         public IActionResult Index()
         {
-            Response.Cookies.Delete("SessionId");
-            Response.Cookies.Delete("Username");
+           
+                
+            
 
             if (Request.Cookies["sessionId"] != null)
             {
@@ -37,8 +38,14 @@ namespace ShoppingCartWebApp.Controllers
                 Session session = dbContext.Sessions.FirstOrDefault(x =>
                     x.Id == sessionId
                 );
-
-                db.DeleteSessionData(session);
+                if (session.User.Username != "guest") 
+                {
+                    // only clear cookies and delete session if user is logged in (i.e. not guest)
+                    Response.Cookies.Delete("SessionId");
+                    Response.Cookies.Delete("Username");
+                    db.DeleteSessionData(session);
+                }
+               
             }
 
 
