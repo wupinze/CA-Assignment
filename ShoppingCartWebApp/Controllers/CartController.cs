@@ -29,10 +29,21 @@ namespace ShoppingCartWebApp.Controllers
                x.user.Id == session.User.Id
                     ).ToList();
 
-                foreach(var item in cart)
+               
+                
+                var groupedItems = from item in cart
+                                   group item by item.product.ProductName;
+
+                foreach(var grp in groupedItems)
                 {
-                    Debug.WriteLine(item.product.ProductName);
+                    Debug.WriteLine($"{grp.Key} = {grp.Count()}");
+                  
+                    foreach (var item in grp)
+                        Debug.WriteLine($"{item.product.ProductName}");
                 }
+
+                ViewData["cart"] = groupedItems;
+                
             }
             return View();
         }

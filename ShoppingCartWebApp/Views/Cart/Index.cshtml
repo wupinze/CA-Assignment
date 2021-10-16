@@ -1,5 +1,31 @@
 ﻿
+@{ 
+
+    var cart = (IEnumerable<IGrouping<string,Cart>>)ViewData["Cart"];
+    
+  
+}
+
+
 <div class="text-center">
     <h1 class="display-4">This is The cart page</h1>
     <p><a href="https://docs.microsoft.com/aspnet/core">My Cart</a>.</p>
+</div>
+
+
+<div class="card-container">
+    @{
+        foreach (var group in cart)
+        {
+            
+            <div class="card">
+                @*<img src="@item.product.imageUrl" alt="">*@
+
+                <h3>@group.Key</h3>
+                <p>@*@item.product.Description*@</p>
+
+                <h4>Qty: @group.Count()</h4>
+            </div>
+        }
+    }
 </div>
