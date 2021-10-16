@@ -31,14 +31,19 @@ namespace ShoppingCartWebApp.Controllers
             Session session = GetSession();
             if (session == null)
             {
-                // start new session if session is null
+                //start new session if session is null
                 // will probably have to create temp user
-                string username = "guest";
-                string password = username;
-                HashAlgorithm sha = SHA256.Create();
-                byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(username + password));
-                User user = dbContext.Users.FirstOrDefault(x =>
-                    x.Username == username && x.PassHash == hash);
+
+
+                //string username = "guest";
+                //string password = username;
+                //HashAlgorithm sha = SHA256.Create();
+                //byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(username + password));
+                //User user = dbContext.Users.FirstOrDefault(x =>
+                //    x.Username == username && x.PassHash == hash);
+
+
+                User user = CreateTempUser();
                 session = new Session()
                 {
                     User = user
@@ -182,15 +187,11 @@ namespace ShoppingCartWebApp.Controllers
             User tempuser = new User
             {
                 Id = new Guid(),
-                Username = "temp",
+                Username = "guest",
                 PassHash = hash
             };
 
-            dbContext.Add(new User
-            {
-                Username = tempuser.Username,
-                PassHash = tempuser.PassHash
-            });
+            dbContext.Add(tempuser);
 
             dbContext.SaveChanges();
 
