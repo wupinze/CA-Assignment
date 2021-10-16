@@ -19,21 +19,24 @@ namespace ShoppingCartWebApp.Controllers
             this.dbContext = dbContext;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(bool? proceedStatus)
         {
-            bool nullFields = (bool) TempData["nullFields"];
-            if (nullFields)
+            if (proceedStatus.HasValue)
             {
-                ViewData["nullFields"] = "Fields cannot be left empty";
+                if (proceedStatus == false)
+                {
+                    ViewData["nullFields"] = "Fields cannot be empty";
+                    ViewData["createSuccess"] = null;
+                    return View();
+                }
+                else if (proceedStatus == true)
+                {
+                    ViewData["nullFields"] = null;
+                    ViewData["createSuccess"] = "User successfully created";
+                    return View();
+                }
             }
-
-            bool createSuccess = (bool) TempData["createSuccess"];
-            if (createSuccess)
-            {
-                ViewData["createSuccess"] = "User successfully created";
-                return RedirectToAction("Login", "Login");
-            }
-
+            
             return View();
         }
 
@@ -55,11 +58,12 @@ namespace ShoppingCartWebApp.Controllers
             string username = form["username"];
             string password = form["password"];
 
+            bool proceedStatus;
+
             if (username == "" || password == "" /*|| name == "" */)
             {
-                bool nullFields = true;
-                TempData["nullFields"] = nullFields;
-                return RedirectToAction("Index", "Register");
+                proceedStatus = false;
+                return RedirectToAction("Index", "Register", proceedStatus);
             }
 
             HashAlgorithm sha = SHA256.Create();
@@ -73,9 +77,8 @@ namespace ShoppingCartWebApp.Controllers
             });
 
             dbContext.SaveChanges();
-            bool createSuccess = true;
-            TempData["createSuccess"] = createSuccess;
-            return RedirectToAction("Index", "Register");
+            proceedStatus = true;
+            return RedirectToAction("Index", "Register", proceedStatus);
         }
     }
 }

@@ -1,35 +1,33 @@
-﻿@{ 
-    string loginError = (string) ViewData["loginError"];
+﻿@{
+    string loginError = (string)ViewData["loginError"];
 }
 
 @if (loginError != null)
 {
-<script type="text/javascript">
-    function checkLoginError() {
-        var message = '@loginError';
-        if(message)
-            alert(message);
-    }
-</script>
+    <script type="text/javascript">
+var message = '@loginError';
+if(message)
+    alert(message);
+    </script>
 }
 
 
 
-<form class="login-form" action="/Login/Login" method="POST">
+<form class="login-form" id="loginform" action="/Login/Login" method="POST">
 
     <div class="login-form__content">
 
         <div class="login-form__header">Login to your account</div>
 
-        <input class="login-form__input" type="text" name="username" id="username" placeholder="Username">
+        <input class="login-form__input" type="text" name="username" placeholder="Username">
 
-        <input class="login-form__input" type="password" name="password" id="password" placeholder="Password">
+        <input class="login-form__input" type="password" name="password" placeholder="Password">
 
-        <button class="login-form__button" type="submit" onclick="checkLoginError()">Login</button>
+        <button class="login-form__button" type="submit">Login</button>
 
         <p></p>
 
-        <button class="login-form__button" type="submit" formaction="/Register/Index" id="signupbutton">Sign up</button>
+        <button class="login-form__button" type="submit" formaction="/Register/Create" id="signupbutton">Sign up</button>
 
     </div>
 

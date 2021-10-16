@@ -1,10 +1,12 @@
-﻿@{ string nullFields = (string) TempData["nullFields"];
-    string createSuccess = (string) TempData["createSuccess"]; }
+﻿@{ 
+    string nullFields = (string) ViewData["nullFields"];
+    string createSuccess = (string) ViewData["createSuccess"];
+}
 
 @if (nullFields != null)
 {
 <script type="text/javascript">
-var message = '@nullFields';
+    var message = '@nullFields';
 if(message)
     alert(message);
 </script>}
@@ -12,7 +14,7 @@ if(message)
 @if (createSuccess != null)
 {
 <script type="text/javascript">
-var message = '@createSuccess';
+    var message = '@createSuccess';
 if(message)
     alert(message);
 </script>}
@@ -70,6 +72,10 @@ if(message)
         <input class="login-form__input" type="password" name="password" id="password" placeholder="Password">
 
         <button class="login-form__button" type="submit" id="createuser">Create User</button>
+        <p></p>
+
+        <button class="login-form__button" type="submit" formaction="/Login/Index" id="returntologin">Return to Login</button>
+
 
     </div>
 
