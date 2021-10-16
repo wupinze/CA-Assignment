@@ -31,12 +31,15 @@ namespace ShoppingCartWebApp.Controllers
             Response.Cookies.Delete("SessionId");
             Response.Cookies.Delete("Username");
 
-            Guid sessionId = Guid.Parse(Request.Cookies["sessionId"]);
-            Session session = dbContext.Sessions.FirstOrDefault(x =>
-                x.Id == sessionId
-            );
+            if (Request.Cookies["sessionId"] != null)
+            {
+                Guid sessionId = Guid.Parse(Request.Cookies["sessionId"]);
+                Session session = dbContext.Sessions.FirstOrDefault(x =>
+                    x.Id == sessionId
+                );
 
-            db.DeleteSessionData(session);
+                db.DeleteSessionData(session);
+            }
 
 
             return RedirectToAction("Index", "Login");
