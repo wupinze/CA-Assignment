@@ -12,6 +12,7 @@ using ShoppingCartWebApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 
+using System.Diagnostics;
 namespace ShoppingCartWebApp
 {
     public class Startup
@@ -71,11 +72,11 @@ namespace ShoppingCartWebApp
             if (!dbContext.Database.CanConnect())
             {
                 dbContext.Database.EnsureCreated();
-
+                //Debug.WriteLine("Seeding data");
                 db.Seed();
             }
             else {
-
+                //Debug.WriteLine("Data not seeded");
                 //List<Product> products = db.GetProductsList();
                 //Console.WriteLine("123");
 
