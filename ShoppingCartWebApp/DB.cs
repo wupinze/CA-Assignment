@@ -280,10 +280,10 @@ namespace ShoppingCartWebApp
             Session session = dbContext.Sessions.FirstOrDefault(
                 x => x.Id == sessionId
                 );
-            string userId = session.User.Id;
+            //string userId = session.User.Id;
 
             List<Cart> carts = dbContext.carts.Where(
-                x => x.user.Id == userId
+                x => x.user.Id == session.UserId
                 ).ToList();
 
             if (carts != null)
