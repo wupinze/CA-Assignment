@@ -75,12 +75,14 @@ namespace ShoppingCartWebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
             // modify from this line onwards
-            if (Request.Cookies["SessionId"] != null)
+            if (Request.Cookies["SessionId"] != null)// if session Id exists
             {
                 Debug.WriteLine("Existing session:");
                 Debug.WriteLine($"Login/Login, user: {Request.Cookies["Username"]}, session: {Request.Cookies["SessionId"]}");
                 Response.Cookies.Delete("Username");
                 Response.Cookies.Append("Username", username);
+                // below probably still shows guest as client hasn't sent new request
+                Debug.WriteLine($"Login/Login, user: {Request.Cookies["Username"]}, session: {Request.Cookies["SessionId"]}");
                 return RedirectToAction("Index", "Gallery");
             }
             Session session = new Session()

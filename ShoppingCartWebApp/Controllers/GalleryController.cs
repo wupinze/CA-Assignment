@@ -50,7 +50,7 @@ namespace ShoppingCartWebApp.Controllers
                 Response.Cookies.Append("SessionId", session.Id.ToString());
                 Response.Cookies.Append("Username", user.Username);
                 ViewData["username"] = user.Username;
-
+                //session = GetSession();
                 //return RedirectToAction("Index", "Logout");
             }
             else
@@ -111,7 +111,10 @@ namespace ShoppingCartWebApp.Controllers
             
             Session session = GetSession();
             if (session == null)
+            {
+                Debug.WriteLine("Cart Count, Session null, return 0");
                 return 0;
+            }
             Debug.WriteLine("Cart Count");
             Debug.WriteLine($"Gallery/CartCount, user: {session.User.Username}, session: {session.Id}");
             Guid userid = session.UserId;
@@ -129,6 +132,8 @@ namespace ShoppingCartWebApp.Controllers
 
         public Session GetSession()
         {
+            // return session from database which corresponds to cookie in http request from client
+            Debug.WriteLine("GetSession, session Id"+Request.Cookies["SessionId"]);
             if (Request.Cookies["SessionId"] == null)
             {
                 return null;
