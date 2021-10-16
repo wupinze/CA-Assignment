@@ -21,22 +21,29 @@ namespace ShoppingCartWebApp.Controllers
             db = new DB(this.dbContext);
         }
 
-        
+
 
         public IActionResult Index()
         {
             Session session = GetSession();
             if (session == null)
             {
+                string username = "guest";
+                string password = username;
+                HashAlgorithm sha = SHA256.Create();
+                byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(username + password));
+                User user = dbContext.Users.FirstOrDefault(x =>
+                    x.Username == username && x.PassHash == hash);
                 session = new Session()
                 {
-                   
+                    User = user
                 };
                 dbContext.Sessions.Add(session);
                 dbContext.SaveChanges();
 
                 Response.Cookies.Append("SessionId", session.Id.ToString());
-
+                Response.Cookies.Append("Username", user.Username);
+                //return RedirectToAction("Index", "Logout");
             }
 
             List<ShoppingCartWebApp.Models.Product> products = dbContext.products.Where(x =>
@@ -87,6 +94,8 @@ namespace ShoppingCartWebApp.Controllers
         public int CartCount()
         {
             Session session = GetSession();
+            if (session == null)
+                return 0;
             Guid userid = session.UserId;
             List<Cart> carts = dbContext.carts.Where(x =>
                 x.user.Id == userid).ToList();

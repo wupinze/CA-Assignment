@@ -32,8 +32,10 @@ namespace ShoppingCartWebApp.Controllers
                 {
                     return RedirectToAction("Index", "Logout");
                 }
-
-                return RedirectToAction("", "");
+                else if (Request.Cookies["Username"] != "guest")
+                {
+                    return RedirectToAction("", "");
+                }
             }
 
             string errorMessage = (string)TempData["loginError"];
