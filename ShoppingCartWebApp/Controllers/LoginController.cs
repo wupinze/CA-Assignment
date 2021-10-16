@@ -33,7 +33,7 @@ namespace ShoppingCartWebApp.Controllers
                     return RedirectToAction("Index", "Logout");
                 }
                 
-                return RedirectToAction("", "");
+                return RedirectToAction("Index", "Gallery");
             }
 
             string errorMessage = (string)TempData["loginError"];
@@ -72,7 +72,7 @@ namespace ShoppingCartWebApp.Controllers
             Response.Cookies.Append("SessionId", session.Id.ToString());
             Response.Cookies.Append("Username", user.Username);
 
-            return RedirectToAction("", "");
+            return RedirectToAction("Index", "Gallery");
         }
         
     }

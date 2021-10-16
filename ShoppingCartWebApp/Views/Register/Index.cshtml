@@ -1,0 +1,76 @@
+﻿@{ string nullFields = (string) TempData["nullFields"];
+    string createSuccess = (string) TempData["createSuccess"]; }
+
+@if (nullFields != null)
+{
+<script type="text/javascript">
+var message = '@nullFields';
+if(message)
+    alert(message);
+</script>}
+
+@if (createSuccess != null)
+{
+<script type="text/javascript">
+var message = '@createSuccess';
+if(message)
+    alert(message);
+</script>}
+
+<script>
+    window.onload = function () {
+        let elem = document.getElementById("username");
+        if (!elem) {
+            return;
+        }
+        elem.onblur = function () {
+            checkIsUsernameOk(elem.value);
+        }
+    }
+
+    function checkIsUsernameOk(username) {
+        let xhr = new XMLHttpRequest();
+
+        xhr.open("POST", "/Register/IsUsernameOk");
+        xhr.setRequestHeader("Content-Type", "application/json; charset=utf8");
+
+        xhr.onreadystatechange = function () {
+            if (this.readyState === XMLHttpRequest.DONE) {
+                if (this.status !== 200) {
+                    return;
+                }
+
+                let data = JSON.parse(this.responseText);
+
+                if (data.isOkay === false) {
+                    alert("Username has been taken");
+                    let elem = document.getElementById("username");
+                    elem.value = "";
+                }
+            }
+        };
+
+        let data = { "username": username };
+        xhr.send(JSON.stringify(data));
+    }
+</script>
+
+
+
+<form class="login-form" action="/Register/Create" method="POST">
+
+    <div class="login-form__content">
+
+        <div class="login-form__header">Register new user</div>
+
+        <input class="login-form__input" type="text" name="name" id="name" placeholder="Name">
+
+        <input class="login-form__input" type="text" name="username" id="username" placeholder="Username">
+
+        <input class="login-form__input" type="password" name="password" id="password" placeholder="Password">
+
+        <button class="login-form__button" type="submit" id="createuser">Create User</button>
+
+    </div>
+
+</form>
