@@ -246,7 +246,7 @@ namespace ShoppingCartWebApp
         {
             HashAlgorithm sha = SHA256.Create();
 
-            string[] usernames = { "john", "jean", "james", "kate","david","crist", "guest" };
+            string[] usernames = { "john", "jean", "james", "kate","david","crist"};
 
 
             foreach (string username in usernames)
