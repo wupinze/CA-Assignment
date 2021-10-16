@@ -6,10 +6,6 @@
     string tp = (string)ViewData["tp"];
     double totalprice = double.Parse(tp); }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-</head>
 <body onload="totalprice()">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -41,7 +37,7 @@
    
        @{ for (int i = 0; i < ProductList.Count(); i++)
             {
-<form action="test" method="post">
+<form action="ShoppingCart" method="post">
     <div class="product_details">
 
         <div class=" image">
@@ -55,9 +51,9 @@
             
             <div class="btn-numbox">
                 <p class="number">Quantity:</p>
-                <button type="submit" formaction="test?clickedBtn=r-@ProductList[i].Id">-</button>
+                <button type="submit" formaction="ShoppingCart?clickedBtn=r-@ProductList[i].Id">-</button>
                 <p><input type="text" class="input-num" id="input-num" value="@QuantityList[i]" /></p>
-                <button type="submit" formaction="test?clickedBtn=a+@ProductList[i].Id">+</button>
+                <button type="submit" formaction="ShoppingCart?clickedBtn=a+@ProductList[i].Id">+</button>
             </div>       
         </div>
     </div>
@@ -116,4 +112,3 @@
 
 
 </body>
-    </html>

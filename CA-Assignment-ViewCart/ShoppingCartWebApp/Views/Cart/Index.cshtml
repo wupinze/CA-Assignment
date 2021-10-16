@@ -1,13 +1,13 @@
-﻿@{ 
-    List<Product> ProductList = (List<Product>)ViewData["ProductList"];
-    
-}
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{ List<Product> ProductList = (List<Product>)ViewData["ProductList"];
+    List<int> QuantityList = (List<int>)ViewData["QuantityList"];
+    string tp = (string)ViewData["tp"];
+    double totalprice = double.Parse(tp); }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-</head>
-<body onload="totalprice()">
+
+<body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
@@ -32,83 +32,34 @@
             </div>
         </nav>
     </header>
-    <p align="right" class="tp"> Total: $ <span id="myText"></span></p>
-    <script>
-        function totalprice() {
-            var tp = totalprice;
-            document.getElementById("myText").innerHTML = tp;
-        }</script>
 
-    @section Scripts {
-        <script src="~/js/Quantity.js"></script>
-    }
+    <p align="right" class="tp" id="price-product"> Total: $ @totalprice</p>
 
-    @*   @{
-            foreach (var product in ProductList)
-            {
-            <div class="shop_name">
-                        <div class="dec">
-                            <h3>@product.ProductName</h3>
-                            <h4>@product.ProductDescription</h4>
+
+    @{ for (int i = 0; i < ProductList.Count(); i++)
+        {
+            <form action="Index" method="post">
+                <div class="product_details">
+
+                    <div class=" image">
+                        <img src="@ProductList[i].imageUrl" alt="">
+
+                        <h3>@ProductList[i].ProductName</h3>
+                        <h4>@ProductList[i].Description</h4>
+                    </div>
+                    <div class="price_quantity">
+                        <p><span class="price" id="per-price">Price: &ensp;&emsp;$@ProductList[i].Price</span> </p>
+
+                        <div class="btn-numbox">
+                            <p class="number">Quantity:</p>
+                            <button type="submit" formaction="Index?clickedBtn=r-@ProductList[i].Id">-</button>
+                            <p><input type="text" class="input-num" id="input-num" value="@QuantityList[i]" /></p>
+                            <button type="submit" formaction="Index?clickedBtn=a+@ProductList[i].Id">+</button>
                         </div>
-                        <p align="right" class="price">@product.Price</p>
+                    </div>
                 </div>
-            }
-        }*@
-
-<div class="product_details">
-    <div class=" image">
-        <img src="~/Image/charts.png">
-
-        <h3>XXX(Name)</h3>
-        <h4>XXX(Decription)</h4>
-    </div>
-    <div class="price_quantity">
-        <p >Price：$100.00</p>
-        <ul class="btn-numbox">
-            <li class="number">Quantity:</li>
-            <li>
-                <ul class="count">
-                    <li><span id="num-minus" class="num-minus">-</span></li>
-                    <li><input type="text" class="input-num" id="input-num" value="0" /></li>
-                    @* foreach(var quantity in QuantityList)
-                    {
-                    <li><input type="text" class="input-num" id="input-num" value="@quantity" /></li>
-                    }
-                    *@
-                    <li><span id="num-add" class="num-add">+</span></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-    
-</div>
-        <br>
-
-        <div class="product_details">
-            <div class=" image">
-                <img src="~/Image/Numerics.png">
-                <h3>XXX(Name)</h3>
-                <h4>XXX(Decription)</h4>
-            </div>
-            <div class="price_quantity">
-                <p>Price：$99.00</p>
-                <ul class="btn-numbox">
-                    <li class="number">Quantity:</li>
-                    <li>
-                        <ul class="count">
-                            <li><span id="num-minus" class="num-minus">-</span></li>
-                            <li><input type="text" class="input-num" id="input-num" value="0" /></li>
-                            <li><span id="num-add" class="num-add">+</span></li>
-                        </ul>
-                    </li>
-                </ul>
-                </div>
-            </div>
-
-
-
+            </form> } }
 </body>
-    </html>
+
 
 
