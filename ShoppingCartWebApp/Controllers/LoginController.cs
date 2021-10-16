@@ -7,6 +7,7 @@ using ShoppingCartWebApp.Models;
 using Microsoft.AspNetCore.Http;
 using System.Security.Cryptography;
 using System.Text;
+using System.Diagnostics;
 
 namespace ShoppingCartWebApp.Controllers
 {
@@ -73,7 +74,15 @@ namespace ShoppingCartWebApp.Controllers
                 TempData["loginError"] = "Invalid username or password";
                 return RedirectToAction("Index", "Login");
             }
-
+            // modify from this line onwards
+            if (Request.Cookies["SessionId"] != null)
+            {
+                Debug.WriteLine("Existing session:");
+                Debug.WriteLine($"Login/Login, user: {Request.Cookies["Username"]}, session: {Request.Cookies["SessionId"]}");
+                Response.Cookies.Delete("Username");
+                Response.Cookies.Append("Username", username);
+                return RedirectToAction("Index", "Gallery");
+            }
             Session session = new Session()
             {
                 User = user
@@ -83,7 +92,8 @@ namespace ShoppingCartWebApp.Controllers
 
             Response.Cookies.Append("SessionId", session.Id.ToString());
             Response.Cookies.Append("Username", user.Username);
-
+            Debug.WriteLine("Create New session");
+            Debug.WriteLine($"Login/Login, user: {Request.Cookies["Username"]}, session: {Request.Cookies["SessionId"]}");
             return RedirectToAction("Index", "Gallery");
         }
 

@@ -25,6 +25,9 @@ namespace ShoppingCartWebApp.Controllers
 
         public IActionResult Index()
         {
+            
+            Debug.WriteLine("Start of Gallery/Index");
+            Debug.WriteLine($"Gallery/Index, user: {Request.Cookies["Username"]}, session: {Request.Cookies["SessionId"]}");
             Session session = GetSession();
             if (session == null)
             {
@@ -43,23 +46,30 @@ namespace ShoppingCartWebApp.Controllers
                 dbContext.Sessions.Add(session);
                 dbContext.SaveChanges();
                 Debug.WriteLine("Creating new session for guest");
-                Debug.WriteLine(session.Id);
-                Debug.WriteLine(user.Username);
+                Debug.WriteLine($"Gallery/Index, user: {user.Username}, session: {session.Id}");
                 Response.Cookies.Append("SessionId", session.Id.ToString());
                 Response.Cookies.Append("Username", user.Username);
                 ViewData["username"] = user.Username;
+
                 //return RedirectToAction("Index", "Logout");
+            }
+            else
+            {
+                Debug.WriteLine("Else block in gallery controller");
+                Debug.WriteLine(Request.Cookies["Username"]);
+                ViewData["username"] = Request.Cookies["Username"];
             }
 
             List<ShoppingCartWebApp.Models.Product> products = dbContext.products.Where(x =>
-                x.Id != null
-            ).ToList();
-            ViewData["username"] = Request.Cookies["Username"];
+               x.Id != null
+                ).ToList();
             ViewData["products"] = products;
 
            
             int count = CartCount();
             ViewData["cartcount"] = count;
+
+            
             return View();
         }
 
@@ -98,9 +108,12 @@ namespace ShoppingCartWebApp.Controllers
 
         public int CartCount()
         {
+            
             Session session = GetSession();
             if (session == null)
                 return 0;
+            Debug.WriteLine("Cart Count");
+            Debug.WriteLine($"Gallery/CartCount, user: {session.User.Username}, session: {session.Id}");
             Guid userid = session.UserId;
             List<Cart> carts = dbContext.carts.Where(x =>
                 x.user.Id == userid).ToList();
@@ -178,5 +191,7 @@ namespace ShoppingCartWebApp.Controllers
 
             return tempuser;
         }
+
+        
     }
 }
