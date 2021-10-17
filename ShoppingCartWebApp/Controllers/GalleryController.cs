@@ -31,6 +31,8 @@ namespace ShoppingCartWebApp.Controllers
                 x.Id != null
             ).ToList();
 
+            ViewData["username"] = session.User.Username;
+            ViewData["sessionId"] = session.Id;
             List<Product> srchproducts = db.SearchProducts(searchStr);
             ViewData["srchproducts"] = srchproducts;  
             ViewData["searchStr"] = searchStr; 

@@ -21,15 +21,19 @@ namespace ShoppingCartWebApp.Controllers
         public IActionResult Summary(string sessionId)
         {
             // Test code <start> - to be removed after link up 
-            string username = "john";
-            User user1 = dbContext.Users.FirstOrDefault(x => x.Username == username);
+            //string username = "john";
+            //User user1 = dbContext.Users.FirstOrDefault(x => x.Username == username);
             // Test code <end>
 
             /* Replacement code after link-up complete */
-            //Session session = dbContext.Sessions.FirstOrDefault(
-            //    x => x.Id == sessionId
-            //    );
-            //string username = session.User.Username;
+            Session session = dbContext.Sessions.FirstOrDefault(
+                x => x.Id == sessionId
+                );
+            //test
+            User user = session.User;
+            string username = session.User.Username;
+
+            User user1 = dbContext.Users.FirstOrDefault(x => x.Username == username);
 
             List<PurchasesItem> purchases = db.getPurchaseHistory2(user1.Id);
   
@@ -57,11 +61,11 @@ namespace ShoppingCartWebApp.Controllers
             User user1 = dbContext.Users.FirstOrDefault(x => x.Username == username);
 
             /* Replacement code after link-up complete */
-            //Session session = dbContext.Sessions.FirstOrDefault(x => x.User == user1);
-            //List<PurchasesItem> purchases = db.getPurchaseHistory(session.Id);
+            Session session = dbContext.Sessions.FirstOrDefault(x => x.User == user1);
+            List<PurchasesItem> purchases = db.getPurchaseHistory(session.Id);
 
             // Test code <start> - to be removed after link up
-            List<PurchasesItem> purchases = db.getPurchaseHistory2(user1.Id);
+            //List<PurchasesItem> purchases = db.getPurchaseHistory2(user1.Id);
             // Test code <end>
 
             ViewData["date"] = date;

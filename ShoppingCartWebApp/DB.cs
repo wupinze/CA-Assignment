@@ -23,7 +23,7 @@ namespace ShoppingCartWebApp
             SeedUsersTable();
             SeedProductsTable();
             // Test code - To be removed after link-up
-            SeedPurchaseHistory();
+            //SeedPurchaseHistory();
         }
 
         // Data Function List, choose function to use in your controller
@@ -288,6 +288,8 @@ namespace ShoppingCartWebApp
                 x => x.user.Id == session.UserId
                 ).ToList();
 
+            carts.Sort((a, b) => a.product.Price.CompareTo(b.product.Price));
+
             if (carts != null)
             {
                 var iter = from cart in carts
@@ -375,7 +377,7 @@ namespace ShoppingCartWebApp
             Session session = dbContext.Sessions.FirstOrDefault(
                x => x.Id == sessionId
                );
-            string userId = session.User.Id;
+            string userId = session.UserId;
 
             //1. add data to purchaseHistory
             User user = dbContext.Users.FirstOrDefault(
@@ -383,7 +385,7 @@ namespace ShoppingCartWebApp
                 );
            
 
-            var tupList = this.getCartViewList(userId);
+            var tupList = this.getCartViewList(sessionId);
             List<int> QuantityList = tupList.Item1;
             List<Product> ProductList = tupList.Item2;
             // Console.WriteLine("backData :addResult={0},resultMessage={1}", tupList.Item1, tupList.Item2);
@@ -408,8 +410,6 @@ namespace ShoppingCartWebApp
 
                     dbContext.SaveChanges();
                 }
-
-
             }
 
             //2. delete data from cart table

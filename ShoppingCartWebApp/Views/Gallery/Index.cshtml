@@ -1,9 +1,10 @@
 ﻿@{ 
-    string nameOfUser = "Glendon Tan";
+    string nameOfUser = (string)ViewData["username"];
     int count = (int)ViewData["cartcount"];
     string searchStr = (string)ViewData["searchStr"];
     List<ShoppingCartWebApp.Models.Product> srchproducts =
         (List<ShoppingCartWebApp.Models.Product>)ViewData["srchproducts"];
+    string sessionId = (string)ViewData["sessionId"];
 }
 
 @section Scripts {
@@ -13,7 +14,7 @@
 <div class="gallery-header">
     <div class="greeting-div">
         <h3> Hello, @nameOfUser </h3>
-        <p><a href="#">My Purchases</a> | <a href="/Logout/Index">Logout</a></p>
+        <p><a href="/MyPurchases/Summary?sessionId=@sessionId">My Purchases</a> | <a href="/Logout/Index">Logout</a></p>
     </div>
     @*<button class="cart_button" type="button" onclick="window.location='@Url.Action("ShoppingCart", "Cart")'">*@
         <a href="/Cart/ShoppingCart" class="text-dark"> 
