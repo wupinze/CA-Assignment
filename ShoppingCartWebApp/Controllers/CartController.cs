@@ -37,8 +37,8 @@ namespace ShoppingCartWebApp.Controllers
             {
                 
                 //string username = session.User.Username;
-                //string userId = session.User.Id;
-                var tupList = db.getCartViewList(sessionId);
+                string userId = session.User.Id;
+                var tupList = db.getCartViewList(userId);
                 List<int> QuantityList = tupList.Item1;
                 List<Product> ProductList = tupList.Item2;
                 ViewData["ProductList"] = ProductList;
@@ -65,7 +65,7 @@ namespace ShoppingCartWebApp.Controllers
             {
                 
                 //string username = session.User.Username;
-                //string userId = session.User.Id;
+                string userId = session.User.Id;
                 string startStr = clickedBtn.Substring(0, 1);
 
                 //string username = "jean";
@@ -73,17 +73,17 @@ namespace ShoppingCartWebApp.Controllers
                 if (startStr == "a")
                 {
                     string productId = clickedBtn.Substring(2);
-                    db.AddLibraryToCart(sessionId, productId);
+                    db.AddLibraryToCart(userId, productId);
 
                 }
                 else if (startStr == "r")
                 { //reduce
                     string productId = clickedBtn.Substring(2);
-                    db.ReduceProductFromCart(sessionId, productId);
+                    db.ReduceProductFromCart(userId, productId);
                 }
 
 
-                var tupList = db.getCartViewList(sessionId);
+                var tupList = db.getCartViewList(userId);
                 List<int> QuantityList = tupList.Item1;
                 List<Product> ProductList = tupList.Item2;
                 ViewData["ProductList"] = ProductList;
@@ -117,8 +117,12 @@ namespace ShoppingCartWebApp.Controllers
         public IActionResult Checkout()
         {
             string sessionId = Request.Cookies["SessionId"];
+            Session session = dbContext.Sessions.FirstOrDefault(
+            x => x.Id == sessionId
+            );
+            string userid = session.User.Id;
             //string username = "jean";
-            db.checkOutCartView(sessionId);
+            db.checkOutCartView(userid);
             //db.checkOutCartView(user.Id);
             return RedirectToAction("Summary", "MyPurchases");
         }
