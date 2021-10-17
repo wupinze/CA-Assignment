@@ -379,7 +379,7 @@ namespace ShoppingCartWebApp
                 );
            
 
-            var tupList = this.getCartViewList(userId);
+            var tupList = this.getCartViewList(sessionId);
             List<int> QuantityList = tupList.Item1;
             List<Product> ProductList = tupList.Item2;
             // Console.WriteLine("backData :addResult={0},resultMessage={1}", tupList.Item1, tupList.Item2);
