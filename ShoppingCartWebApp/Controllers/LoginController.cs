@@ -101,7 +101,25 @@ namespace ShoppingCartWebApp.Controllers
 
                 }
                 // Delete temporary user from Users table
-
+                Debug.WriteLine("Delete guest");
+                //List<User> users = dbContext.Users.Where(x => x.Id == currentSession.User.Id).ToList();
+                List<User> users = dbContext.Users.Where(x => x == x).ToList();
+                foreach (var guestUser in users)
+                {
+                    Debug.WriteLine(guestUser.Username);
+                    //dbContext.Remove(guestUser);
+                }
+                //foreach (var guestUser in users)
+                //{
+                //    //Debug.WriteLine(guestUser.Username);
+                //    dbContext.Remove(guestUser);
+                //}
+                //dbContext.SaveChanges();
+                //foreach (var guestUser in users)
+                //{
+                //    Debug.WriteLine(guestUser.Username);
+                //    //dbContext.Remove(guestUser);
+                //}
 
                 // Change user of current session to user who has just logged in
                 currentSession.UserId = user.Id;
