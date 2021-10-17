@@ -21,6 +21,9 @@ namespace ShoppingCartWebApp.Controllers
 
         public IActionResult Index(bool? proceedStatus)
         {
+            Session session = GetSession();
+            ViewData["sessionId"] = session.Id;
+
             if (proceedStatus.HasValue)
             {
                 if (proceedStatus == false)
@@ -79,6 +82,21 @@ namespace ShoppingCartWebApp.Controllers
             dbContext.SaveChanges();
             proceedStatus = true;
             return RedirectToAction("Index", "Register", proceedStatus);
+        }
+
+        public Session GetSession()
+        {
+            if (Request.Cookies["SessionId"] == null)
+            {
+                return null;
+            }
+
+            string sessionId = Request.Cookies["SessionId"];
+            Session session = dbContext.Sessions.FirstOrDefault(x =>
+                x.Id == sessionId
+            );
+
+            return session;
         }
     }
 }

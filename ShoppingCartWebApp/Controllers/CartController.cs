@@ -120,7 +120,8 @@ namespace ShoppingCartWebApp.Controllers
             //string username = "jean";
             db.checkOutCartView(sessionId);
             //db.checkOutCartView(user.Id);
-            return RedirectToAction("Summary", "MyPurchases", new { sessionId = sessionId });
+            //return RedirectToAction("Summary", "MyPurchases", new { sessionId = sessionId });
+            return RedirectToAction("Index", "Recommend");
         }
     }
 }
