@@ -25,14 +25,17 @@ namespace ShoppingCartWebApp.Controllers
             return View();
 
         }
-        public ActionResult ShoppingCart(string clickedBtn,string sessionId)
+        public ActionResult ShoppingCart(string clickedBtn)
         {
+            string sessionId = Request.Cookies["SessionId"];
+            //string username = "jean";
+            
+            Session session = dbContext.Sessions.FirstOrDefault(
+            x => x.Id == sessionId
+            );
             if (clickedBtn == null)
             {
-                //string username = "jean";
-                Session session = dbContext.Sessions.FirstOrDefault(
-                x => x.Id == sessionId
-                );
+                
                 //string username = session.User.Username;
                 //string userId = session.User.Id;
                 var tupList = db.getCartViewList(sessionId);
@@ -60,9 +63,7 @@ namespace ShoppingCartWebApp.Controllers
             }
             else
             {
-                Session session = dbContext.Sessions.FirstOrDefault(
-                x => x.Id == sessionId
-                );
+                
                 //string username = session.User.Username;
                 //string userId = session.User.Id;
                 string startStr = clickedBtn.Substring(0, 1);
@@ -113,8 +114,9 @@ namespace ShoppingCartWebApp.Controllers
             return RedirectToAction("Index", "Gallery");
         }
 
-        public IActionResult Checkout(string sessionId)
+        public IActionResult Checkout()
         {
+            string sessionId = Request.Cookies["SessionId"];
             //string username = "jean";
             db.checkOutCartView(sessionId);
             //db.checkOutCartView(user.Id);
