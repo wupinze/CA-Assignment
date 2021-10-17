@@ -98,6 +98,11 @@ namespace ShoppingCartWebApp.Controllers
         public int CartCount()
         {
             Session session = GetSession();
+            if (session == null)
+            {
+                Debug.WriteLine("Cart Count, Session null, return 0");
+                return 0;
+            }
 
             int sum = db.getCarViewTotalQuantity(session.Id);
 
@@ -123,7 +128,7 @@ namespace ShoppingCartWebApp.Controllers
             byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes("temp"));
             User tempuser = new User
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid90.ToSting(),
                 Username = "guest",
                 PassHash = hash
             };

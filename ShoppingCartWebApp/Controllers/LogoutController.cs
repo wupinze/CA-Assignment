@@ -23,7 +23,7 @@ namespace ShoppingCartWebApp.Controllers
         {
             if (Request.Cookies["sessionId"] != null)
             {
-                string sessionId = string.Parse(Request.Cookies["sessionId"]);
+                string sessionId = Request.Cookies["sessionId"];
                 Session session = dbContext.Sessions.FirstOrDefault(x =>
                     x.Id == sessionId
                 );
