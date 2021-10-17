@@ -77,7 +77,7 @@ namespace ShoppingCartWebApp.Controllers
                 Debug.WriteLine($"Login/Login, user: {Request.Cookies["Username"]}, session: {Request.Cookies["SessionId"]}");
 
                 //update cookies
-                Response.Cookies.Delete("Username");
+                Response.Cookies.Delete("Username");// delete guest username
                 Response.Cookies.Append("Username", username);
 
 
@@ -100,6 +100,8 @@ namespace ShoppingCartWebApp.Controllers
                     Debug.WriteLine($"user: {row.user.Username}, product: {row.product.ProductName}");
 
                 }
+                // Delete temporary user from Users table
+
 
                 // Change user of current session to user who has just logged in
                 currentSession.UserId = user.Id;
