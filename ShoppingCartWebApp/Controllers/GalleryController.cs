@@ -123,7 +123,7 @@ namespace ShoppingCartWebApp.Controllers
             byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes("temp"));
             User tempuser = new User
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid().ToString(),
                 Username = "guest",
                 PassHash = hash
             };
