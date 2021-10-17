@@ -98,7 +98,10 @@ namespace ShoppingCartWebApp.Controllers
         public int CartCount()
         {
             Session session = GetSession();
-
+            if(session == null)
+            {
+                return 0;
+            }
             int sum = db.getCarViewTotalQuantity(session.Id);
 
             return sum;
