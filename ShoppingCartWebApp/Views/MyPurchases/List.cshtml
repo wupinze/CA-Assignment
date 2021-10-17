@@ -13,10 +13,10 @@
 }
 <div class="greeting-div">
     <h3>Hello, @name</h3>
-    <p><a href="#">Gallery</a> | <a href="#">Logout</a></p>
+    <p><a href="/Gallery/Index">Gallery</a> | <a href="/Logout/">Logout</a></p>
 </div>
 <br />
-<h4>Summary of Purchases</h4>
+<h4>Purchase Details</h4>
 <br />
 
 <div class="container form-group">
@@ -54,7 +54,7 @@
                             <br />
                         }
                     }
-                    <button type="button" class="btn btn-outline-secondary btn-sm" formaction="#">Buy Again</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" formaction="/MyPurchases/BuyAgain?productId=@purchase.product.Id">Buy Again</button>
                 </div>
             </div>
         }
