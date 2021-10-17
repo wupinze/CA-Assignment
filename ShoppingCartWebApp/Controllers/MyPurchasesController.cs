@@ -18,8 +18,9 @@ namespace ShoppingCartWebApp.Controllers
             db = new DB(this.dbContext);
         }
 
-        public IActionResult Summary(string sessionId)
+        public IActionResult Summary()
         {
+            string sessionId = Request.Cookies["sessionId"];
             Session session = dbContext.Sessions.FirstOrDefault(
                 x => x.Id == sessionId
                 );
