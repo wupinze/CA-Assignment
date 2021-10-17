@@ -16,15 +16,14 @@ namespace ShoppingCartWebApp.Controllers
     {
         private DBContext dbContext;
         private DB db;
+
         public GalleryController(DBContext dbContext)
         {
             this.dbContext = dbContext;
             db = new DB(this.dbContext);
         }
 
-
-
-        public IActionResult Index()
+        public IActionResult Index(string searchStr)
         {
             
             Debug.WriteLine("Start of Gallery/Index");
@@ -73,116 +72,49 @@ namespace ShoppingCartWebApp.Controllers
             List<ShoppingCartWebApp.Models.Product> products = dbContext.products.Where(x =>
                x.Id != null
                 ).ToList();
+            ViewData["username"] = session.User.Username;
             ViewData["products"] = products;
+            ViewData["sessionId"] = session.Id;
+            List<Product> srchproducts = db.SearchProducts(searchStr);
+            ViewData["srchproducts"] = srchproducts;  
+            ViewData["searchStr"] = searchStr; 
 
            
             int count = CartCount();
             ViewData["cartcount"] = count;
-
             
             return View();
         }
-
         public IActionResult AddProductToCart([FromBody] PdtToCart product)
         {
             Session session = GetSession();
 
+            string productId = product.ProductId;
 
-            ViewData["session"] = session;
-
-            Guid productId = Guid.Parse(product.ProductId);
-
-            string productName = product.ProductName;
-
-            Product productData = dbContext.products.FirstOrDefault(x =>
-                x.Id == productId);
-
-            if (productData == null)
-            {
-                return Json(new { status = "fail" });
-            }
-
-            Cart cart = new Cart
-            {
-            };
-
-            productData.carts.Add(cart);
-            session.User.carts.Add(cart);
-            
-         
-
-            dbContext.SaveChanges();
+            db.AddLibraryToCart(session.Id, productId);
 
             return Json(new { status = "success" });
         }
-
         public int CartCount()
         {
-            
             Session session = GetSession();
-            if (session == null)
-            {
-                Debug.WriteLine("Cart Count, Session null, return 0");
-                return 0;
-            }
-            Debug.WriteLine("Cart Count");
-            Debug.WriteLine($"Gallery/CartCount, user: {session.User.Username}, session: {session.Id}");
-            Guid userid = session.UserId;
-            List<Cart> carts = dbContext.carts.Where(x =>
-                x.user.Id == userid).ToList();
 
-            int count = carts.Count();
-            return count;
+            int sum = db.getCarViewTotalQuantity(session.Id);
+
+            return sum;
         }
-
-        public IActionResult GoToCart()
-        {
-            return RedirectToAction("Index", "Cart");
-        }
-
+        
         public Session GetSession()
         {
-            // return session from database which corresponds to cookie in http request from client
-            Debug.WriteLine("GetSession, session Id"+Request.Cookies["SessionId"]);
             if (Request.Cookies["SessionId"] == null)
             {
                 return null;
             }
-
-            Guid sessionId = Guid.Parse(Request.Cookies["SessionId"]);
+            string sessionId = Request.Cookies["SessionId"];
             Session session = dbContext.Sessions.FirstOrDefault(x =>
                 x.Id == sessionId
             );
-
             return session;
-        }
-
-        private Cart GetCart()
-        {
-            if (Request.Cookies["CartId"] == null)
-            {
-                return null;
-            }
-
-            Guid cartId = Guid.Parse(Request.Cookies["CartId"]);
-            Cart cart = dbContext.carts.FirstOrDefault(x =>
-                x.Id == cartId
-            );
-
-            return cart;
-        }
-
-        //TEMP SESSION
-        private Session CreateTempSession()
-        {
-            User tempuser = CreateTempUser();
-
-            Session tempsession = new Session
-            {
-                User = tempuser
-            };
-
-            return tempsession;
         }
 
         private User CreateTempUser()
@@ -202,7 +134,6 @@ namespace ShoppingCartWebApp.Controllers
 
             return tempuser;
         }
-
-        
     }
 }
+

@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["title"] = "My Purchases";
+
+    string nameOfUser = (string)ViewData["username"];
+    string name = string.Format(nameOfUser.Substring(0, 1).ToUpper() + nameOfUser.Substring(1).ToLower());
+
+    List<PurchasesItem> purchases = (List<PurchasesItem>)ViewData["purchases"];
+
+    var iter = from purchase in purchases
+               group purchase by purchase.PurchaseDate;
+
+    List<PurchaseHistory> phList = (List<PurchaseHistory>)ViewData["phList"];
+
+    var grp = from ph in phList
+              group ph by ph.PurchaseDate;
+
+    var grpByDate = grp.ToList();
+
+    List<float> totalCosts = new List<float>();
+
+    foreach (var set in grp)
+    {
+        float cost = 0;
+
+        foreach (var product in set)
+        {
+            cost += product.product.Price;
+        }
+
+        totalCosts.Add(cost);
+    }
+}
+
+<div class="greeting-div">
+    <h3>Hello, @name</h3>
+    <p><a href="/Gallery/Index">Gallery</a> | <a href="/Logout/Index">Logout</a></p>
+</div>
+<br />
+<h4>Summary of Purchases</h4>
+<br />
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Order Date</th>
+            <th scope="col">No. of Items Purchased</th>
+            <th scope="col">Cost</th>
+            <th scope="col">Order Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            for (int i = 0; i < grpByDate.Count(); i++)
+            {
+                <tr>
+                    <td>@(i+1)</td>
+                    <td>@grpByDate[i].Key</td>
+                    <td>@grpByDate[i].Count()</td>
+                    <td>$@totalCosts[i]</td>
+                    <td><a href="/MyPurchases/List/?date=@grpByDate[i].Key&username=@nameOfUser">View Details</a></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+

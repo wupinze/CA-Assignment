@@ -11,8 +11,8 @@ using System.Threading.Tasks;
 using ShoppingCartWebApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-
 using System.Diagnostics;
+
 namespace ShoppingCartWebApp
 {
     public class Startup
@@ -65,23 +65,19 @@ namespace ShoppingCartWebApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Gallery}/{action=Index}/{id?}");
+                    pattern: "{controller=Gallery}/{action=Index}/{searchStr?}");
             });
 
             DB db = new DB(dbContext);
             if (!dbContext.Database.CanConnect())
             {
                 dbContext.Database.EnsureCreated();
-                //Debug.WriteLine("Seeding data");
                 db.Seed();
             }
             else {
-                //Debug.WriteLine("Data not seeded");
                 //List<Product> products = db.GetProductsList();
                 //Console.WriteLine("123");
-
             }
-
         }
     }
 }

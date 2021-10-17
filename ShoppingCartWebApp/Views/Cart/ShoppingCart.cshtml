@@ -1,11 +1,10 @@
-@*
+﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{ List<Product> ProductList = (List<Product>)ViewData["ProductList"];
     List<int> QuantityList = (List<int>)ViewData["QuantityList"];
     string tp = (string)ViewData["tp"];
     double totalprice = double.Parse(tp); }
-
 
 <body>
     <header>
@@ -33,30 +32,29 @@
         </nav>
     </header>
 
-    <p align="right" class="tp" id="price-product"> Total: $ @totalprice</p>
+    <p style="font-size:36px; font-weight:bold" align="right" class="tp" id="price-product"> Total: $ @totalprice</p>
 
+   
+       @{ for (int i = 0; i < ProductList.Count(); i++)
+            {
+                <form action="ShoppingCart" method="post">
+                    <div class="product_details">
+                        <div class=" image">
+                            <img src="@ProductList[i].imageUrl" alt="">
 
-    @{ for (int i = 0; i < ProductList.Count(); i++)
-        {
-            <form action="Index" method="post">
-                <div class="product_details">
-
-                    <div class=" image">
-                        <img src="@ProductList[i].imageUrl" alt="">
-
-                        <h3>@ProductList[i].ProductName</h3>
+                        <h3 style="font-size:32px; font-weight:bold">@ProductList[i].ProductName</h3>
                         <h4>@ProductList[i].Description</h4>
-                    </div>
+                        </div>
                     <div class="price_quantity">
-                        <p><span class="price" id="per-price">Price: &ensp;&emsp;$@ProductList[i].Price</span> </p>
-
+                         <p><span class="price" id="per-price">Price: &ensp;&emsp;$@ProductList[i].Price</span> </p>
+            
                         <div class="btn-numbox">
                             <p class="number">Quantity:</p>
-                            <button type="submit" formaction="Index?clickedBtn=r-@ProductList[i].Id">-</button>
+                            <button type="submit" formaction="ShoppingCart?clickedBtn=r-@ProductList[i].Id">-</button>
                             <p><input type="text" class="input-num" id="input-num" value="@QuantityList[i]" /></p>
-                            <button type="submit" formaction="Index?clickedBtn=a+@ProductList[i].Id">+</button>
-                        </div>
+                            <button type="submit" formaction="ShoppingCart?clickedBtn=a+@ProductList[i].Id">+</button>
+                        </div>       
                     </div>
-                </div>
-            </form> } }
+                    </div>
+</form> } }
 </body>

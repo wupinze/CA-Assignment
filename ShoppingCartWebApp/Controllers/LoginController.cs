@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Diagnostics;
 
+
 namespace ShoppingCartWebApp.Controllers
 {
     public class LoginController : Controller
@@ -24,7 +25,7 @@ namespace ShoppingCartWebApp.Controllers
         {
             if (Request.Cookies["SessionId"] != null)// if there is a session id
             {
-                Guid sessionId = Guid.Parse(Request.Cookies["sessionId"]);
+                string sessionId = Request.Cookies["sessionId"];
                 Session session = dbContext.Sessions.FirstOrDefault(x =>
                     x.Id == sessionId
                 );
@@ -48,11 +49,10 @@ namespace ShoppingCartWebApp.Controllers
                 ViewData["loginError"] = errorMessage;
             }
 
+            ViewData["loginError"] = TempData["loginError"];
+
             return View();
         }
-
-        
-
 
         public IActionResult Login(IFormCollection form)
         {
@@ -65,12 +65,12 @@ namespace ShoppingCartWebApp.Controllers
             User user = dbContext.Users.FirstOrDefault(x =>
                x.Username == username && x.PassHash == hash);
 
-            if (user == null)
+            if (user == null && (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password)))
             {
                 TempData["loginError"] = "Invalid username or password";
                 return RedirectToAction("Index", "Login");
             }
-            // modify from this line onwards
+            
             if (Request.Cookies["SessionId"] != null)// if session Id exists
             {
                 Debug.WriteLine("Existing session:");
@@ -82,7 +82,7 @@ namespace ShoppingCartWebApp.Controllers
 
 
                 // update session object
-                Guid sessionId = Guid.Parse(Request.Cookies["sessionId"]);
+                string sessionId = Request.Cookies["sessionId"];
 
                 Session currentSession = dbContext.Sessions.FirstOrDefault(x =>
                     x.Id == sessionId);
@@ -116,23 +116,21 @@ namespace ShoppingCartWebApp.Controllers
                     dbContext.Remove(user1);
                 }
 
-                
-
-
-
-
-
-
-
-
-
-
                 //Persist changes to database
                 dbContext.SaveChanges();
 
 
                 return RedirectToAction("Index", "Gallery");
             }
+
+            if (user == null)
+            {
+                TempData["loginError"] = "Fields cannot be empty";
+                return RedirectToAction("Index", "Login");
+            }
+
+            TempData["loginError"] = null;
+
             Session session = new Session()
             {
                 User = user
@@ -146,24 +144,7 @@ namespace ShoppingCartWebApp.Controllers
             Debug.WriteLine($"Login/Login, user: {Request.Cookies["Username"]}, session: {Request.Cookies["SessionId"]}");
             return RedirectToAction("Index", "Gallery");
         }
-
-        public Session GetSession()
-        {
-            if (Request.Cookies["SessionId"] == null)
-            {
-                return null;
-            }
-
-            Guid sessionId = Guid.Parse(Request.Cookies["SessionId"]);
-            Session session = dbContext.Sessions.FirstOrDefault(x =>
-                x.Id == sessionId
-            );
-
-            return session;
-        }
     }
-
-    
 }
 
 

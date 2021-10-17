@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,12 +10,12 @@ namespace ShoppingCartWebApp.Models
     {
         public User()
         {
-            Id = new Guid();
+            Id = Guid.NewGuid().ToString();
             carts = new List<Cart>();
             purHistories = new List<PurchaseHistory>();
         }
 
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         public string Username { get; set; }
@@ -27,8 +27,8 @@ namespace ShoppingCartWebApp.Models
         public byte[] PassHash { get; set; }
 
 
-        public virtual ICollection<Cart> carts { get; set;}
+        public virtual ICollection<Cart> carts { get; set; }
 
-        public virtual ICollection<PurchaseHistory> purHistories { get; set;}
+        public virtual ICollection<PurchaseHistory> purHistories { get; set; }
     }
 }

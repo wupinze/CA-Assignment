@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using ShoppingCartWebApp.Models;
+
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using ShoppingCartWebApp.Models;
+
 namespace ShoppingCartWebApp.Controllers
 {
     public class CartController : Controller
@@ -16,36 +19,110 @@ namespace ShoppingCartWebApp.Controllers
             this.dbContext = dbContext;
             db = new DB(this.dbContext);
         }
-        public IActionResult Index()
+
+
+        public ActionResult Index()
         {
-            if (Request.Cookies["SessionId"] != null)
+            return View();
+        }
+        
+        public ActionResult ShoppingCart(string clickedBtn)
+        {
+            string sessionId = Request.Cookies["SessionId"];
+            //string username = "jean";
+            
+            Session session = dbContext.Sessions.FirstOrDefault(
+            x => x.Id == sessionId
+            );
+            if (clickedBtn == null)
             {
-                Guid sessionId = Guid.Parse(Request.Cookies["sessionId"]);
-                Session session = dbContext.Sessions.FirstOrDefault(x =>
-                    x.Id == sessionId
-                );
-
-                List<Cart> cart = dbContext.carts.Where(x =>
-               x.user.Id == session.User.Id
-                    ).ToList();
-
-               
                 
-                var groupedItems = from item in cart
-                                   group item by item.product.ProductName;
+                //string username = session.User.Username;
+                //string userId = session.User.Id;
+                var tupList = db.getCartViewList(sessionId);
+                List<int> QuantityList = tupList.Item1;
+                List<Product> ProductList = tupList.Item2;
+                ViewData["ProductList"] = ProductList;
+                ViewData["QuantityList"] = QuantityList;
+                double tp = 0;
+                double pp;
 
-                foreach(var grp in groupedItems)
+                List<float> pricelist = new List<float>();
+                foreach (var product in ProductList)
                 {
-                    Debug.WriteLine($"{grp.Key} = {grp.Count()}");
-                  
-                    foreach (var item in grp)
-                        Debug.WriteLine($"{item.product.ProductName}");
+                    pricelist.Add(product.Price);
                 }
 
-                ViewData["cart"] = groupedItems;
+                var res = pricelist.Zip(QuantityList, (n, w) => new { Price = n, Quantity = w });
+                foreach (var a in res)
+                {
+                    pp = a.Price * a.Quantity;
+
+                    tp += pp;
+                }
+                ViewData["tp"] = Convert.ToString(tp);
+            }
+            else
+            {
                 
+                //string username = session.User.Username;
+                //string userId = session.User.Id;
+                string startStr = clickedBtn.Substring(0, 1);
+
+                //string username = "jean";
+                //add 
+                if (startStr == "a")
+                {
+                    string productId = clickedBtn.Substring(2);
+                    db.AddLibraryToCart(sessionId, productId);
+
+                }
+                else if (startStr == "r")
+                { //reduce
+                    string productId = clickedBtn.Substring(2);
+                    db.ReduceProductFromCart(sessionId, productId);
+                }
+
+
+                var tupList = db.getCartViewList(sessionId);
+                List<int> QuantityList = tupList.Item1;
+                List<Product> ProductList = tupList.Item2;
+                ViewData["ProductList"] = ProductList;
+                ViewData["QuantityList"] = QuantityList;
+                double tp = 0;
+                double pp;
+
+                List<float> pricelist = new List<float>();
+                foreach (var product in ProductList)
+                {
+                    pricelist.Add(product.Price);
+                }
+
+                var res = pricelist.Zip(QuantityList, (n, w) => new { Price = n, Quantity = w });
+                foreach (var a in res)
+                {
+                    pp = a.Price * a.Quantity;
+
+                    tp += pp;
+                }
+                ViewData["tp"] = Convert.ToString(tp);
             }
             return View();
+        }
+
+        public IActionResult ContinueShopping()
+        {
+            return RedirectToAction("Index", "Gallery");
+        }
+
+        public IActionResult Checkout()
+        {
+            string sessionId = Request.Cookies["SessionId"];
+            //string username = "jean";
+            db.checkOutCartView(sessionId);
+            //db.checkOutCartView(user.Id);
+            //return RedirectToAction("Summary", "MyPurchases", new { sessionId = sessionId });
+            return RedirectToAction("Index", "Recommend");
         }
     }
 }

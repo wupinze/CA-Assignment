@@ -10,8 +10,5 @@ namespace ShoppingCartWebApp.Models
         public string ProductId { get; set; }
 
         public string ProductName { get; set; }
-
-        //public int UpdateCartNum { get; set; }
-
     }
 }

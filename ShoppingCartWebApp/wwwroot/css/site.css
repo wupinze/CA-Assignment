@@ -1,4 +1,4 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
@@ -70,104 +70,75 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 
-/*Self defined styles*/
-.login_table {
-    display: inline-block;
-    padding: 0.5em;
-    border: 2px solid #46a7e0;
-    width: 50%;
+/*Login page styles*/
+.login-form,
+.login-form * {
+    box-sizing: border-box;
 }
 
-.login_row {
-    display: table-row;
+.login-form {
+    max-width: 350px;
+    margin: 0 auto;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
 }
+
+.login-form__content {
+    padding: 30px;
+    background: #eeeeee;
+}
+
+.login-form__header {
+    margin-bottom: 15px;
+    text-align: center;
+    color: #333333;
+}
+
+.login-form__input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #dddddd;
+    background: #ffffff;
+    outline: none;
+    transition: border-color 0.5s;
+}
+
+    .login-form__input:focus {
+        border-color: #0366d6;
+    }
+
+    .login-form__input::placeholder {
+        color: #aaaaaa;
+    }
+
+.login-form__button {
+    padding: 10px;
+    color: #ffffff;
+    font-weight: bold;
+    background: #46a7e0;
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    .login-form__button:active {
+        background: #46a7e0;
+    }
 
 .login_cell {
     display: table-cell;
     padding: 0.5em;
+
 }
 
-.my_cell {
-    display: table-cell;
-    padding: 0.1em;
-}
 
-.a_product {
-    display: inline-block;
-    width: 15em;
-    border: 1px solid #5499c7;
-    padding: 1em;
-    margin: 0.2em;
-    vertical-align: top;
-    cursor: pointer;
-}
 
-.product_list {
-    padding: 0.5em;
-    max-width: 65em;
-    text-align: left;
-}
-
-.product_attr {
-    margin-top: 0.6em;
-}
-
-.hilite_task {
-    border: 3px solid #5499c7;
-    background-color: #f1f7fc;
-}
-
-.unavailable_task {
-    border: 3px solid #cd6155;
-    background-color: #fdedec;
-}
-
-#select_count_url {
-    color: #000000;
-    text-decoration: underline;
-}
-
-#select_count_box {
-    text-align: right;
-    padding: 0.5em;
-    background-color: #f1f7fc;
-    margin-top: 0;
-    margin-bottom: 0.5em;
-}
-
-table, td, th, tr {
-    border: 1px solid #0066cc;
-}
-
-td, th {
-    text-align: center;
-    padding: 8px;
-}
-
-.even_row {
-    background-color: #f5fcff;
-}
-
-.hilite {
-    background-color: darkred;
-    color: white;
-}
-
-span.cart-badge {
-    min-width: 3rem;
-    padding: 0 6px;
-    margin-left: 14px;
-    text-align: center;
-    font-size: 1rem;
-    line-height: 22px;
-    height: 22px;
-    color: #757575;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    font-weight: bold;
-}
-
-.highlight{
+.highlight {
     /*background-color: yellow;*/
     /*font-weight:bold;*/
     background-color: #D3D3D3;
@@ -175,6 +146,8 @@ span.cart-badge {
 
 
 /*Gallery styles*/
+
+
 
 .card-container {
     display: flex;
@@ -196,27 +169,29 @@ span.cart-badge {
     font-size: var(--font-size);
 }
 
-    .card > * {
-        margin: 0.5em;
-    }
+.card > * {
+    margin: 0.5em;
+}
 
-    .card > img {
-        display: block;
-        margin: 0 auto;
-        width: 100%;
-        height: 150px;
-        /* Seems to be the correct option */
-        object-fit: contain;
-    }
+.card > img {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: 150px;
+    /* Seems to be the correct option */
+    object-fit: contain;
+}
+.card > h3{
+    text-align:center;
 
-    .card > h3 {
-        text-align: center;
-    }
+}
 
-    .card > p {
-    }
+.card >p {
 
-.searchbar-div {
+
+}
+
+.searchbar-div{
     margin: 1.5em 0em;
 }
 
@@ -226,41 +201,226 @@ span.cart-badge {
     width: 74%;
     border-radius: 25px;
     background-image: url("../image/search_icon.png");
-    background-repeat: no-repeat;
-    background-size: 1.5em;
-    background-position: 0.5% 50%;
+    background-repeat:no-repeat;
+    background-size:1.5em;
+   background-position: 0.5% 50%;
     padding-left: 30px;
 }
+.greeting-div > h3{
+    font-size:x-large;
 
-.greeting-div > h3 {
-    font-size: x-large;
 }
-
 .greeting-div > p > a {
-    font-size: medium;
+    font-size:medium;
 }
 
-.cart-div {
+.cart-div{
+    display:flex;
+    flex-direction:row;
+    margin-left:10px;
+
+}
+
+.cart_button {
+    /*padding: 10px;*/
+    color: #ffffff;
+    font-weight: bold;
+    background: #46a7e0;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
     display: flex;
-    flex-direction: row;
-    margin-left: 10px;
+    width: 13.5%;
+    height: 70px;
 }
 
 .cart-logo {
-    height: 50px;
-    display: block;
-}
-
-.cart-quantity {
-    font-size: xx-large;
-    font-weight: bold;
-    margin-left: 0.2em;
-}
-
-.gallery-header {
+    height: 55px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    padding-top:10px;
+    padding-left: 12px;
+}
+.cart-quantity {
+    font-size: 26pt;
+    font-weight: bold;
+    margin-left: 0.4em;
+    padding-top: 10px;
+    padding-right: 12px;
+}
+.gallery-header{
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    flex-wrap:wrap;
+  
     padding: 0 0;
 }
+/*input[type=number]::-webkit-inner-spin-button {
+    opacity: 1
+
+}*/
+
+/*MyPurchases styles*/
+
+.card-container-1 {
+    padding: 2rem; 
+}
+
+.card-1 {
+  padding: 1rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 1rem;
+}
+
+
+/*viewcart style*/
+
+
+
+.product_details {
+    display: flex;
+    flex-direction: row;
+    width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+.tp {
+    font-size: 28px;
+}
+
+.product_details {
+    margin-left: -100px;
+}
+
+    .product_details .image {
+        border: 2px solid black;
+        padding: 1em;
+        margin: 1em;
+        width: 300px;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-size: var(--font-size);
+    }
+
+
+    .product_details .price_quantity {
+        display: flex;
+        flex-direction: column;
+        font-size: 28px;
+        margin: 5px;
+        margin-top: 120px;
+    }
+
+
+
+.product_details, image h3 h4 {
+    text-align: center;
+}
+
+    .product_details div img {
+        display: block;
+        margin: 0 auto;
+        width: 100%;
+        height: 150px;
+        object-fit: contain;
+    }
+
+
+
+
+.price_quantity button {
+    display: inline-flex;
+    width: 38px;
+    height: 30px;
+    line-height: 18px;
+    text-align: center;
+    font-size: 28px;
+    color: black;
+    vertical-align: middle;
+    border: 2px solid transparent;
+    font-weight: 900;
+    font-size: 125%;
+    margin-block: 7px;
+    border-radius: 10px;
+    background-color: #7cbdd5;
+}
+
+
+
+.price_quantity {
+    margin-left: -1000px;
+}
+
+.btn-numbox {
+    display: inline-flex;
+    margin-inline: 50px;
+}
+
+.number {
+    font-size: 28px;
+    color: black;
+    margin-right: 25px;
+}
+
+
+.btn-numbox .input-num {
+    display: inline-grid;
+    width: 58px;
+    height: 30px;
+    line-height: 28px;
+    text-align: center;
+    font-size: 24px;
+    color: black;
+    cursor: default;
+    border: 2px solid black;
+}
+
+.rec-card-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.rec-card {
+    border: 2px solid black;
+    padding: 1em;
+    margin: 1em;
+    width: 230px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: var(--font-size);
+}
+
+    .rec-card > * {
+        margin: 0.5em;
+    }
+
+    .rec-card > img {
+        display: block;
+        margin: 0 auto;
+        width: 100%;
+        height: 100px;
+        /* Seems to be the correct option */
+        object-fit: contain;
+    }
+
+    .rec-card > h3 {
+        text-align: center;
+        font-size: 20px;
+    }
+
+    .rec-card > p {
+    }

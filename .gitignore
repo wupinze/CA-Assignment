@@ -4,13 +4,11 @@
 !/.gitignore
 
 
-
 # ignore XML file
 **.xml
 
 # ignore pdb
 **.pdb
-
 
 # ignore suo file
 **.suo
