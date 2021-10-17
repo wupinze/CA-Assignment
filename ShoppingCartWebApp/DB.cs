@@ -283,7 +283,7 @@ namespace ShoppingCartWebApp
             List<Cart> carts = dbContext.carts.Where(
                 x => x.user.Id == session.UserId
                 ).ToList();
-
+            carts.Sort((a, b) => a.product.Price.CompareTo(b.product.Price));
             if (carts != null)
             {
                 var iter = from cart in carts
