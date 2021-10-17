@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using ShoppingCartWebApp.Models;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Web;
 
 namespace ShoppingCartWebApp.Controllers
 {
@@ -52,6 +53,10 @@ namespace ShoppingCartWebApp.Controllers
                 dbContext.SaveChanges();
                 Debug.WriteLine("Creating new session for guest");
                 Debug.WriteLine($"Gallery/Index, user: {user.Username}, session: {session.Id}");
+
+                //Create persistent cookie
+            
+
                 Response.Cookies.Append("SessionId", session.Id.ToString());
                 Response.Cookies.Append("Username", user.Username);
                 ViewData["username"] = user.Username;
