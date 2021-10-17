@@ -183,7 +183,6 @@ namespace ShoppingCartWebApp
         //5)
         public List<Product> SearchProducts(string searchStr)
         {
-
             List<Product> Allproducts = dbContext.products.ToList();
 
             if (searchStr == null)
@@ -550,6 +549,7 @@ namespace ShoppingCartWebApp
         {
             HashAlgorithm sha = SHA256.Create();
 
+
             string[] usernames = { "john", "jean", "james", "kate", "david", "crist" };
 
             foreach (string username in usernames)
@@ -719,6 +719,5 @@ namespace ShoppingCartWebApp
 
             dbContext.SaveChanges();
         }
-
     }
 }

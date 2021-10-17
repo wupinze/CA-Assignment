@@ -1,17 +1,17 @@
+
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using ShoppingCartWebApp.Models;
 
 namespace ShoppingCartWebApp.Controllers
 {
     public class CartController : Controller
     {
-
-
         private DBContext dbContext;
         private DB db;
         public CartController(DBContext dbContext)
@@ -20,11 +20,12 @@ namespace ShoppingCartWebApp.Controllers
             db = new DB(this.dbContext);
         }
 
+
         public ActionResult Index()
         {
             return View();
-
         }
+        
         public ActionResult ShoppingCart(string clickedBtn)
         {
             string sessionId = Request.Cookies["SessionId"];
@@ -116,7 +117,16 @@ namespace ShoppingCartWebApp.Controllers
 
         public IActionResult Checkout()
         {
-            string sessionId = Request.Cookies["SessionId"];
+            string sessionId = Request.Cookies["sessionId"];
+            Session session = dbContext.Sessions.FirstOrDefault(x =>
+                x.Id == sessionId
+            );
+
+            string username = session.User.Username;
+            if(username == "guest")
+            {
+                return RedirectToAction("Index", "Login");
+            }
             //string username = "jean";
             db.checkOutCartView(sessionId);
             //db.checkOutCartView(user.Id);

@@ -1,17 +1,15 @@
-﻿@{
+@{
     string loginError = (string)ViewData["loginError"];
 }
 
 @if (loginError != null)
 {
     <script type="text/javascript">
-var message = '@loginError';
-if(message)
+  var message = '@loginError';
+  if(message)
     alert(message);
     </script>
 }
-
-
 
 <form class="login-form" id="loginform" action="/Login/Login" method="POST">
 
@@ -30,5 +28,4 @@ if(message)
         <button class="login-form__button" type="submit" formaction="/Register/Create" id="signupbutton">Sign up</button>
 
     </div>
-
 </form>

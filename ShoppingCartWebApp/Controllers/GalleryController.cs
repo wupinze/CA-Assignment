@@ -1,10 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using ShoppingCartWebApp.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ShoppingCartWebApp.Models;
 using System.Diagnostics;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+
 namespace ShoppingCartWebApp.Controllers
 {
     public class GalleryController : Controller
@@ -20,27 +25,66 @@ namespace ShoppingCartWebApp.Controllers
 
         public IActionResult Index(string searchStr)
         {
+            
+            Debug.WriteLine("Start of Gallery/Index");
+            Debug.WriteLine($"Gallery/Index, user: {Request.Cookies["Username"]}, session: {Request.Cookies["SessionId"]}");
             Session session = GetSession();
-
             if (session == null)
             {
-                return RedirectToAction("Index", "Login");
+                //start new session if session is null
+                // will probably have to create temp user
+
+
+                //string username = "guest";
+                //string password = username;
+                //HashAlgorithm sha = SHA256.Create();
+                //byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(username + password));
+                //User user = dbContext.Users.FirstOrDefault(x =>
+                //    x.Username == username && x.PassHash == hash);
+
+
+                User user = CreateTempUser();
+                session = new Session()
+                {
+                    User = user
+                };
+                dbContext.Sessions.Add(session);
+                dbContext.SaveChanges();
+                Debug.WriteLine("Creating new session for guest");
+                Debug.WriteLine($"Gallery/Index, user: {user.Username}, session: {session.Id}");
+
+                //Create persistent cookie
+            
+
+                Response.Cookies.Append("SessionId", session.Id.ToString());
+                Response.Cookies.Append("Username", user.Username);
+                ViewData["username"] = user.Username;
+                //session = GetSession();
+                //return RedirectToAction("Index", "Logout");
+            }
+            else
+            {
+                Debug.WriteLine("Else block in gallery controller");
+                Debug.WriteLine(Request.Cookies["Username"]);
+                ViewData["username"] = Request.Cookies["Username"];
             }
 
             List<ShoppingCartWebApp.Models.Product> products = dbContext.products.Where(x =>
-                x.Id != null
-            ).ToList();
-
+               x.Id != null
+                ).ToList();
             ViewData["username"] = session.User.Username;
+            ViewData["products"] = products;
             ViewData["sessionId"] = session.Id;
             List<Product> srchproducts = db.SearchProducts(searchStr);
             ViewData["srchproducts"] = srchproducts;  
             ViewData["searchStr"] = searchStr; 
+
+           
             int count = CartCount();
             ViewData["cartcount"] = count;
+            
             return View();
         }
-
         public IActionResult AddProductToCart([FromBody] PdtToCart product)
         {
             Session session = GetSession();
@@ -51,34 +95,48 @@ namespace ShoppingCartWebApp.Controllers
 
             return Json(new { status = "success" });
         }
-
         public int CartCount()
         {
             Session session = GetSession();
-
+            if(session == null)
+            {
+                return 0;
+            }
             int sum = db.getCarViewTotalQuantity(session.Id);
 
             return sum;
         }
-
-        /*public IActionResult GoToCart()
-        {
-            return RedirectToAction("ShoppingCart", "Cart");
-        }*/
-
+        
         public Session GetSession()
         {
             if (Request.Cookies["SessionId"] == null)
             {
                 return null;
             }
-
             string sessionId = Request.Cookies["SessionId"];
             Session session = dbContext.Sessions.FirstOrDefault(x =>
                 x.Id == sessionId
             );
-
             return session;
+        }
+
+        private User CreateTempUser()
+        {
+            HashAlgorithm sha = SHA256.Create();
+            byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes("temp"));
+            User tempuser = new User
+            {
+                Id = Guid.NewGuid().ToString(),
+                Username = "guest",
+                PassHash = hash
+            };
+
+            dbContext.Add(tempuser);
+
+            dbContext.SaveChanges();
+
+            return tempuser;
         }
     }
 }
+

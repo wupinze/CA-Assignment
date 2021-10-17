@@ -1,4 +1,4 @@
-﻿let selected = []
+let selected = []
 
 window.onload = function () {
     /*setup event listeners for product add to cart*/
@@ -66,7 +66,7 @@ function ProductIntoCartProduct(productId, productName) {
         ProductName: productName,
     };
 
-    alert("Added " + productName + " to Cart");
+    alert("Added " + productName + " to Cart")
 
     xhr.send(JSON.stringify(product));
 }

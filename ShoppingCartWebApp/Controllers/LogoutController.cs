@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ShoppingCartWebApp.Models;
 
 namespace ShoppingCartWebApp.Controllers
 {
@@ -20,17 +21,20 @@ namespace ShoppingCartWebApp.Controllers
 
         public IActionResult Index()
         {
-            Response.Cookies.Delete("SessionId");
-            Response.Cookies.Delete("Username");
-
-            string sessionId = Request.Cookies["sessionId"];
-            Session session = dbContext.Sessions.FirstOrDefault(x =>
-                x.Id == sessionId.ToString()
-            );
-
-            db.DeleteSessionData(session);
-            
-
+            if (Request.Cookies["sessionId"] != null)
+            {
+                string sessionId = Request.Cookies["sessionId"];
+                Session session = dbContext.Sessions.FirstOrDefault(x =>
+                    x.Id == sessionId
+                );
+                if (session.User.Username != "guest") 
+                {
+                    // only clear cookies and delete session if user is logged in (i.e. not guest)
+                    Response.Cookies.Delete("SessionId");
+                    Response.Cookies.Delete("Username");
+                    db.DeleteSessionData(session);
+                }
+            }
             return RedirectToAction("Index", "Login");
         }
     }
