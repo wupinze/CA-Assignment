@@ -48,6 +48,7 @@ namespace ShoppingCartWebApp.Controllers
             ViewData["products"] = products;
             ViewData["recList"] = recList;
             ViewData["sessionId"] = session.Id;
+            ViewData["username"] = session.User.Username;
 
             int count = CartCount();
             ViewData["cartcount"] = count;
