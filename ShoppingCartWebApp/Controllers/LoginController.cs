@@ -39,6 +39,7 @@ namespace ShoppingCartWebApp.Controllers
 
             ViewData["loginError"] = TempData["loginError"];
 
+            ViewData["createUserSuccess"] = TempData["createUserSuccess"];
 
             return View();
         }
