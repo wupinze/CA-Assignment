@@ -21,93 +21,100 @@ namespace ShoppingCartWebApp.Controllers
         }
 
 
-        public ActionResult Index()
-        {
-            return View();
-        }
+        
         
         public ActionResult ShoppingCart(string clickedBtn)
         {
-            string sessionId = Request.Cookies["SessionId"];
-            //string username = "jean";
-            
-            Session session = dbContext.Sessions.FirstOrDefault(
-            x => x.Id == sessionId
-            );
-            if (clickedBtn == null)
+            if (Request.Cookies["SessionId"] != null)
             {
-                
-                //string username = session.User.Username;
-                //string userId = session.User.Id;
-                var tupList = db.getCartViewList(sessionId);
-                List<int> QuantityList = tupList.Item1;
-                List<Product> ProductList = tupList.Item2;
-                ViewData["ProductList"] = ProductList;
-                ViewData["QuantityList"] = QuantityList;
-                double tp = 0;
-                double pp;
-
-                List<float> pricelist = new List<float>();
-                foreach (var product in ProductList)
+                string sessionId = Request.Cookies["sessionId"];
+                Session session = dbContext.Sessions.FirstOrDefault(x =>
+                x.Id == sessionId);
+                string username = session.User.Username;
+                ViewData["username"] = username;
+                if (clickedBtn == null)
                 {
-                    pricelist.Add(product.Price);
-                }
 
-                var res = pricelist.Zip(QuantityList, (n, w) => new { Price = n, Quantity = w });
-                foreach (var a in res)
+                    //string username = session.User.Username;
+                    //string userId = session.User.Id;
+                    var tupList = db.getCartViewList(sessionId);
+                    List<int> QuantityList = tupList.Item1;
+                    List<Product> ProductList = tupList.Item2;
+                    ViewData["ProductList"] = ProductList;
+                    ViewData["QuantityList"] = QuantityList;
+                    double tp = 0;
+                    double pp;
+
+                    List<float> pricelist = new List<float>();
+                    foreach (var product in ProductList)
+                    {
+                        pricelist.Add(product.Price);
+                    }
+
+                    var res = pricelist.Zip(QuantityList, (n, w) => new { Price = n, Quantity = w });
+                    foreach (var a in res)
+                    {
+                        pp = a.Price * a.Quantity;
+
+                        tp += pp;
+                    }
+                    ViewData["tp"] = Convert.ToString(tp);
+                }
+                else
                 {
-                    pp = a.Price * a.Quantity;
 
-                    tp += pp;
+                    //string username = session.User.Username;
+                    //string userId = session.User.Id;
+                    string startStr = clickedBtn.Substring(0, 1);
+
+                    //string username = "john";
+                    //add 
+                    if (startStr == "a")
+                    {
+                        string productId = clickedBtn.Substring(2);
+                        db.AddLibraryToCart(sessionId, productId);
+
+                    }
+                    else if (startStr == "r")
+                    { //reduce
+                        string productId = clickedBtn.Substring(2);
+                        db.ReduceProductFromCart(sessionId, productId);
+                    }
+
+
+                    var tupList = db.getCartViewList(sessionId);
+                    List<int> QuantityList = tupList.Item1;
+                    List<Product> ProductList = tupList.Item2;
+                    ViewData["ProductList"] = ProductList;
+                    ViewData["QuantityList"] = QuantityList;
+                    double tp = 0;
+                    double pp;
+
+                    List<float> pricelist = new List<float>();
+                    foreach (var product in ProductList)
+                    {
+                        pricelist.Add(product.Price);
+                    }
+
+                    var res = pricelist.Zip(QuantityList, (n, w) => new { Price = n, Quantity = w });
+                    foreach (var a in res)
+                    {
+                        pp = a.Price * a.Quantity;
+
+                        tp += pp;
+                    }
+                    ViewData["tp"] = Convert.ToString(tp);
+
                 }
-                ViewData["tp"] = Convert.ToString(tp);
-            }
-            else
-            {
-                
-                //string username = session.User.Username;
-                //string userId = session.User.Id;
-                string startStr = clickedBtn.Substring(0, 1);
 
-                //string username = "jean";
-                //add 
-                if (startStr == "a")
+                if (session == null)
                 {
-                    string productId = clickedBtn.Substring(2);
-                    db.AddLibraryToCart(sessionId, productId);
-
-                }
-                else if (startStr == "r")
-                { //reduce
-                    string productId = clickedBtn.Substring(2);
-                    db.ReduceProductFromCart(sessionId, productId);
+                    return RedirectToAction("Index", "Login");
                 }
 
-
-                var tupList = db.getCartViewList(sessionId);
-                List<int> QuantityList = tupList.Item1;
-                List<Product> ProductList = tupList.Item2;
-                ViewData["ProductList"] = ProductList;
-                ViewData["QuantityList"] = QuantityList;
-                double tp = 0;
-                double pp;
-
-                List<float> pricelist = new List<float>();
-                foreach (var product in ProductList)
-                {
-                    pricelist.Add(product.Price);
-                }
-
-                var res = pricelist.Zip(QuantityList, (n, w) => new { Price = n, Quantity = w });
-                foreach (var a in res)
-                {
-                    pp = a.Price * a.Quantity;
-
-                    tp += pp;
-                }
-                ViewData["tp"] = Convert.ToString(tp);
             }
             return View();
+
         }
 
         public IActionResult ContinueShopping()
