@@ -32,6 +32,8 @@ namespace ShoppingCartWebApp.Controllers
                 string sessionId = Request.Cookies["sessionId"];
                 Session session = dbContext.Sessions.FirstOrDefault(x =>
                 x.Id == sessionId);
+                string username = session.User.Username;
+                ViewData["username"] = username;
                 if (clickedBtn == null)
                 {
 

@@ -204,12 +204,14 @@ body {
    background-position: 0.5% 50%;
     padding-left: 30px;
 }
-.greeting-div > h3{
-    font-size:x-large;
 
+
+.greeting-div > h3 {
+    font-size: 36px;
+    font-weight: 500;
 }
 .greeting-div > p > a {
-    font-size:medium;
+    font-size:24px;
 }
 
 .cart-div{
@@ -274,10 +276,6 @@ body {
     justify-content: center;
 }
 
-
-.tp {
-    font-size: 28px;
-}
 
 .product_details {
     margin-left: -100px;
