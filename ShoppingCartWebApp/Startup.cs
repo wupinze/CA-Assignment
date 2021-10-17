@@ -18,6 +18,9 @@ namespace ShoppingCartWebApp
     {
         public Startup(IConfiguration configuration)
         {
+
+
+
             Configuration = configuration;
         }
 
@@ -64,7 +67,7 @@ namespace ShoppingCartWebApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Login}/{action=Index}/{id?}");
+                    pattern: "{controller=Gallery}/{action=Index}/{searchStr?}");
             });
 
             DB db = new DB(dbContext);
@@ -81,6 +84,7 @@ namespace ShoppingCartWebApp
 
             }
 
+       
         }
     }
 }

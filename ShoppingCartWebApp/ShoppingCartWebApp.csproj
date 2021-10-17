@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Image\**" />
+    <Content Remove="Image\**" />
+    <EmbeddedResource Remove="Image\**" />
+    <None Remove="Image\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Microsoft.EntityFrameworkCore" />
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
     <None Remove="Microsoft.EntityFrameworkCore.Proxies" />
@@ -17,6 +24,19 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Image\" />
+    <None Include="Views\Cart\backup.cshtml" />
+    <None Include="Views\Cart\Index.cshtml" />
+    <None Include="Views\Cart\ShoppingCart.cshtml" />
+    <None Include="Views\Gallery\Index.cshtml" />
+    <None Include="Views\Gallery\Search.cshtml" />
+    <None Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Home\Privacy.cshtml" />
+    <None Include="Views\Login\Index.cshtml" />
+    <None Include="Views\MyPurchases\List.cshtml" />
+    <None Include="Views\MyPurchases\Summary.cshtml" />
+    <None Include="Views\Register\Index.cshtml" />
+    <None Include="Views\Shared\Error.cshtml" />
+    <None Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
   </ItemGroup>
 </Project>
