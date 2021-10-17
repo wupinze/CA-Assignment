@@ -117,7 +117,16 @@ namespace ShoppingCartWebApp.Controllers
 
         public IActionResult Checkout()
         {
-            string sessionId = Request.Cookies["SessionId"];
+            string sessionId = Request.Cookies["sessionId"];
+            Session session = dbContext.Sessions.FirstOrDefault(x =>
+                x.Id == sessionId
+            );
+
+            string username = session.User.Username;
+            if(username == "guest")
+            {
+                return RedirectToAction("Index", "Login");
+            }
             //string username = "jean";
             db.checkOutCartView(sessionId);
             //db.checkOutCartView(user.Id);
