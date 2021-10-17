@@ -10,32 +10,26 @@ namespace ShoppingCartWebApp.Controllers
     public class MyPurchasesController : Controller
     {
         private DBContext dbContext;
-        private DB db; 
+        private DB db;
 
         public MyPurchasesController(DBContext dbContext)
         {
             this.dbContext = dbContext;
-            db = new DB(this.dbContext); 
+            db = new DB(this.dbContext);
         }
 
         public IActionResult Summary(string sessionId)
         {
-            // Test code <start> - to be removed after link up 
-            string username = "john";
-            User user1 = dbContext.Users.FirstOrDefault(x => x.Username == username);
-            // Test code <end>
+            Session session = dbContext.Sessions.FirstOrDefault(
+                x => x.Id == sessionId
+                );
+            string username = session.User.Username;
 
-            /* Replacement code after link-up complete */
-            //Session session = dbContext.Sessions.FirstOrDefault(
-            //    x => x.Id == sessionId
-            //    );
-            //string username = session.User.Username;
+            List<PurchasesItem> purchases = db.getPurchaseHistory(sessionId);
 
-            List<PurchasesItem> purchases = db.getPurchaseHistory2(user1.Id);
-  
             ViewData["purchases"] = purchases;
 
-            List<PurchaseHistory> phList = dbContext.purHistories.Where(x => x.user.Id == user1.Id).ToList();
+            List<PurchaseHistory> phList = dbContext.purHistories.Where(x => x.user.Id == session.User.Id).ToList();
 
             List<Product> productList = new List<Product>();
 
@@ -48,7 +42,7 @@ namespace ShoppingCartWebApp.Controllers
             ViewData["username"] = username;
             ViewData["phList"] = phList;
             ViewData["productList"] = productList;
-            return View(); 
+            return View();
         }
 
 
@@ -56,18 +50,22 @@ namespace ShoppingCartWebApp.Controllers
         {
             User user1 = dbContext.Users.FirstOrDefault(x => x.Username == username);
 
-            /* Replacement code after link-up complete */
-            //Session session = dbContext.Sessions.FirstOrDefault(x => x.User == user1);
-            //List<PurchasesItem> purchases = db.getPurchaseHistory(session.Id);
-
-            // Test code <start> - to be removed after link up
-            List<PurchasesItem> purchases = db.getPurchaseHistory2(user1.Id);
-            // Test code <end>
+            Session session = dbContext.Sessions.FirstOrDefault(x => x.User == user1);
+            List<PurchasesItem> purchases = db.getPurchaseHistory(session.Id);
 
             ViewData["date"] = date;
             ViewData["username"] = username;
             ViewData["purchases"] = purchases;
             return View();
+        }
+
+        public IActionResult BuyAgain(string productId)
+        {
+            string sessionId = Request.Cookies["SessionId"];
+
+            db.AddLibraryToCart(sessionId, productId);
+
+            return RedirectToAction("ShoppingCart", "Cart"); 
         }
     }
 }
