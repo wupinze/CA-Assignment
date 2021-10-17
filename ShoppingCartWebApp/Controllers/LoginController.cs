@@ -7,6 +7,8 @@ using ShoppingCartWebApp.Models;
 using Microsoft.AspNetCore.Http;
 using System.Security.Cryptography;
 using System.Text;
+using System.Diagnostics;
+
 
 namespace ShoppingCartWebApp.Controllers
 {
@@ -21,24 +23,33 @@ namespace ShoppingCartWebApp.Controllers
 
         public IActionResult Index()
         {
-            if (Request.Cookies["SessionId"] != null)
+            if (Request.Cookies["SessionId"] != null)// if there is a session id
             {
                 string sessionId = Request.Cookies["sessionId"];
                 Session session = dbContext.Sessions.FirstOrDefault(x =>
-                    x.Id == sessionId)
-                ;
+                    x.Id == sessionId
+                );
 
-                if (session == null)
+                if (session == null)// if session is not in session table
                 {
                     return RedirectToAction("Index", "Logout");
                 }
-                
-                return RedirectToAction("Index", "Gallery");
 
+                else if (Request.Cookies["Username"] != "guest") // else if user is already logged in
+                {
+                    // redirect to gallery
+                    return RedirectToAction("", "");
+                }
+         
+            }
+
+            string errorMessage = (string)TempData["loginError"];
+            if (errorMessage != null)
+            {
+                ViewData["loginError"] = errorMessage;
             }
 
             ViewData["loginError"] = TempData["loginError"];
-
 
             return View();
         }
@@ -59,6 +70,58 @@ namespace ShoppingCartWebApp.Controllers
                 TempData["loginError"] = "Invalid username or password";
                 return RedirectToAction("Index", "Login");
             }
+            
+            if (Request.Cookies["SessionId"] != null)// if session Id exists
+            {
+                Debug.WriteLine("Existing session:");
+                Debug.WriteLine($"Login/Login, user: {Request.Cookies["Username"]}, session: {Request.Cookies["SessionId"]}");
+
+                //update cookies
+                Response.Cookies.Delete("Username");// delete guest username
+                Response.Cookies.Append("Username", username);
+
+
+                // update session object
+                string sessionId = Request.Cookies["sessionId"];
+
+                Session currentSession = dbContext.Sessions.FirstOrDefault(x =>
+                    x.Id == sessionId);
+
+                // Get cart entries corresponding to GUEST user
+                List<Cart> currentCart = dbContext.carts.Where(x => x.user.Id == currentSession.User.Id).ToList();
+
+                // Change entries to user who is logging in
+                foreach (var row in currentCart)
+                {
+                
+                    Debug.WriteLine($"user: {row.user.Username}, product: {row.product.ProductName}");
+                    row.user = user; // Change entries to user who is logging in
+                    Debug.WriteLine("Change to: ");
+                    Debug.WriteLine($"user: {row.user.Username}, product: {row.product.ProductName}");
+
+                }
+                // change session user first
+                User guestUser = currentSession.User;
+                currentSession.UserId = user.Id;
+                currentSession.User = user;
+
+                // Delete temporary user from Users table
+
+                // get all users
+                List<User> users = dbContext.Users.ToList();
+                // get guest user
+                List<User> guestUsers = dbContext.Users.Where(x => x.Id == guestUser.Id).ToList();
+                foreach(var user1 in guestUsers)
+                {
+                    dbContext.Remove(user1);
+                }
+
+                //Persist changes to database
+                dbContext.SaveChanges();
+
+
+                return RedirectToAction("Index", "Gallery");
+            }
 
             if (user == null)
             {
@@ -77,10 +140,10 @@ namespace ShoppingCartWebApp.Controllers
 
             Response.Cookies.Append("SessionId", session.Id.ToString());
             Response.Cookies.Append("Username", user.Username);
-
+            Debug.WriteLine("Create New session");
+            Debug.WriteLine($"Login/Login, user: {Request.Cookies["Username"]}, session: {Request.Cookies["SessionId"]}");
             return RedirectToAction("Index", "Gallery");
         }
-        
     }
 }
 

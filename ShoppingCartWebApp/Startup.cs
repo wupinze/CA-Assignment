@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using ShoppingCartWebApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace ShoppingCartWebApp
 {
@@ -18,9 +19,6 @@ namespace ShoppingCartWebApp
     {
         public Startup(IConfiguration configuration)
         {
-
-
-
             Configuration = configuration;
         }
 
@@ -74,17 +72,12 @@ namespace ShoppingCartWebApp
             if (!dbContext.Database.CanConnect())
             {
                 dbContext.Database.EnsureCreated();
-
                 db.Seed();
             }
             else {
-
                 //List<Product> products = db.GetProductsList();
                 //Console.WriteLine("123");
-
             }
-
-       
         }
     }
 }
