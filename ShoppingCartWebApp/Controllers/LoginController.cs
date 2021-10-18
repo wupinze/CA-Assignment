@@ -40,16 +40,13 @@ namespace ShoppingCartWebApp.Controllers
                     // redirect to gallery
                     return RedirectToAction("", "");
                 }
-         
-            }
+                //return RedirectToAction("Index", "Gallery");
 
-            string errorMessage = (string)TempData["loginError"];
-            if (errorMessage != null)
-            {
-                ViewData["loginError"] = errorMessage;
             }
 
             ViewData["loginError"] = TempData["loginError"];
+
+            ViewData["createUserSuccess"] = TempData["createUserSuccess"];
 
             return View();
         }
@@ -70,7 +67,14 @@ namespace ShoppingCartWebApp.Controllers
                 TempData["loginError"] = "Invalid username or password";
                 return RedirectToAction("Index", "Login");
             }
-            
+            if (user == null)
+            {
+                TempData["loginError"] = "Fields cannot be empty";
+                return RedirectToAction("Index", "Login");
+            }
+
+            TempData["loginError"] = null;
+
             if (Request.Cookies["SessionId"] != null)// if session Id exists
             {
                 Debug.WriteLine("Existing session:");
@@ -123,13 +127,9 @@ namespace ShoppingCartWebApp.Controllers
                 return RedirectToAction("Index", "Gallery");
             }
 
-            if (user == null)
-            {
-                TempData["loginError"] = "Fields cannot be empty";
-                return RedirectToAction("Index", "Login");
-            }
+          
 
-            TempData["loginError"] = null;
+          
 
             Session session = new Session()
             {

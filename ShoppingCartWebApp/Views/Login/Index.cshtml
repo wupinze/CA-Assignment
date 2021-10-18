@@ -1,12 +1,23 @@
-@{
+@{ 
     string loginError = (string)ViewData["loginError"];
+    string createSuccess = (string)ViewData["createUserSuccess"];
 }
+
 
 @if (loginError != null)
 {
     <script type="text/javascript">
-  var message = '@loginError';
-  if(message)
+var message = '@loginError';
+if(message)
+    alert(message);
+    </script>
+}
+
+@if (createSuccess != null)
+{
+    <script type="text/javascript">
+    var message = '@createSuccess';
+if(message)
     alert(message);
     </script>
 }
@@ -25,7 +36,7 @@
 
         <p></p>
 
-        <button class="login-form__button" type="submit" formaction="/Register/Create" id="signupbutton">Sign up</button>
+        <button class="login-form__button" type="submit" formaction="/Register/Index" id="signupbutton">Sign up</button>
 
     </div>
 </form>

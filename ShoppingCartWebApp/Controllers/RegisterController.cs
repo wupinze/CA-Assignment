@@ -19,26 +19,10 @@ namespace ShoppingCartWebApp.Controllers
             this.dbContext = dbContext;
         }
 
-        public IActionResult Index(bool? proceedStatus)
+        public IActionResult Index()
         {
-            Session session = GetSession();
+            ViewData["nullFieldPresent"] = TempData["nullFieldPresent"];
 
-            if (proceedStatus.HasValue)
-            {
-                if (proceedStatus == false)
-                {
-                    ViewData["nullFields"] = "Fields cannot be empty";
-                    ViewData["createSuccess"] = null;
-                    return View();
-                }
-                else if (proceedStatus == true)
-                {
-                    ViewData["nullFields"] = null;
-                    ViewData["createSuccess"] = "User successfully created";
-                    return View();
-                }
-            }
-            
             return View();
         }
 
@@ -56,16 +40,17 @@ namespace ShoppingCartWebApp.Controllers
 
         public IActionResult Create(IFormCollection form)
         {
-            //string name = form["name"];
+            string name = form["name"];
             string username = form["username"];
             string password = form["password"];
 
-            bool proceedStatus;
 
-            if (username == "" || password == "" /*|| name == "" */)
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password)
+             || string.IsNullOrEmpty(name))
             {
-                proceedStatus = false;
-                return RedirectToAction("Index", "Register", proceedStatus);
+                TempData["nullFieldPresent"] = "Fields cannot be empty";
+                TempData["createUserSuccess"] = null;
+                return RedirectToAction("Index", "Register");
             }
 
             HashAlgorithm sha = SHA256.Create();
@@ -73,14 +58,15 @@ namespace ShoppingCartWebApp.Controllers
 
             dbContext.Add(new User
             {
-                //Name = name;
+                //Name = name,
                 Username = username,
                 PassHash = hash
             });
 
             dbContext.SaveChanges();
-            proceedStatus = true;
-            return RedirectToAction("Index", "Register", proceedStatus);
+            TempData["nullFieldPresent"] = null;
+            TempData["createUserSuccess"] = "User successfully created";
+            return RedirectToAction("Index", "Login");
         }
 
         public Session GetSession()
