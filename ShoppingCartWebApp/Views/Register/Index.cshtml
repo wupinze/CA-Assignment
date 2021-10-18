@@ -1,6 +1,5 @@
 ﻿@{ 
-    string nullFields = (string) ViewData["nullFields"];
-    string createSuccess = (string) ViewData["createSuccess"];
+    string nullFields = (string) ViewData["nullFieldPresent"];
 }
 
 @if (nullFields != null)
@@ -11,13 +10,7 @@ if(message)
     alert(message);
 </script>}
 
-@if (createSuccess != null)
-{
-<script type="text/javascript">
-    var message = '@createSuccess';
-if(message)
-    alert(message);
-</script>}
+
 
 <script>
     window.onload = function () {

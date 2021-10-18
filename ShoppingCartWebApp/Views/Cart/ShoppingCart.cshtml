@@ -6,14 +6,13 @@
     string tp = (string)ViewData["tp"];
     double totalprice = double.Parse(tp);
     string nameOfUser = (string)ViewData["username"];
-    string name = string.Format(nameOfUser.Substring(0, 1).ToUpper() + nameOfUser.Substring(1).ToLower());
     string empty = "Your Cart is empty.";}
     
 
 
 
     <div class="greeting-div">
-        <h3>Hello, @name</h3>
+        <h3>Hello, @nameOfUser</h3>
         <p><a href="/Gallery/Index">Continue Shopping</a> @*| <a href="/MyPurchases/Summary">Past Purchases</a></p>*@
     </div>
     
