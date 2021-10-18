@@ -32,19 +32,17 @@ namespace ShoppingCartWebApp.Controllers
                 x.Id == sessionId);
                 string username = session.User.Username;
                 ViewData["username"] = username;
+
                 if (clickedBtn == null)
                 {
-
-                    //string username = session.User.Username;
-                    //string userId = session.User.Id;
                     var tupList = db.getCartViewList(sessionId);
                     List<int> QuantityList = tupList.Item1;
                     List<Product> ProductList = tupList.Item2;
                     ViewData["ProductList"] = ProductList;
                     ViewData["QuantityList"] = QuantityList;
+                    //Calculation of total price "tp" means total price
                     double tp = 0;
                     double pp;
-
                     List<float> pricelist = new List<float>();
                     foreach (var product in ProductList)
                     {
@@ -63,11 +61,7 @@ namespace ShoppingCartWebApp.Controllers
                 else
                 {
 
-                    //string username = session.User.Username;
-                    //string userId = session.User.Id;
                     string startStr = clickedBtn.Substring(0, 1);
-
-                    //string username = "john";
                     //add 
                     if (startStr == "a")
                     {
@@ -129,15 +123,14 @@ namespace ShoppingCartWebApp.Controllers
                 x.Id == sessionId
             );
 
+            //must be login before checkout
             string username = session.User.Username;
             if(username == "guest")
             {
                 return RedirectToAction("Index", "Login");
             }
-            //string username = "jean";
+            
             db.checkOutCartView(sessionId);
-            //db.checkOutCartView(user.Id);
-            //return RedirectToAction("Summary", "MyPurchases", new { sessionId = sessionId });
             return RedirectToAction("Index", "Recommend");
         }
     }

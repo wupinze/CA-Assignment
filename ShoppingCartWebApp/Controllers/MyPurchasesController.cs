@@ -57,19 +57,18 @@ namespace ShoppingCartWebApp.Controllers
             {
                 string sessionId = Request.Cookies["SessionId"];
                 int shopcartNumber = db.AddLibraryToCart(sessionId, productId);
-                return RedirectToAction("ShoppingCart", "Cart"); 
+                return RedirectToAction("ShoppingCart", "Cart");
             }
 
             User user1 = dbContext.Users.FirstOrDefault(x => x.Username == username);
 
-            /* Replacement code after link-up complete */
             Session session = dbContext.Sessions.FirstOrDefault(x => x.User == user1);
             List<PurchasesItem> purchases = db.getPurchaseHistory(session.Id);
 
-            // Test code <start> - to be removed after link up
-            //List<PurchasesItem> purchases = db.getPurchaseHistory2(user1.Id);
-            // Test code <end>
+            int count = db.getCarViewTotalQuantity(session.Id);
 
+
+            ViewData["cartcount"] = count;
             ViewData["date"] = date;
             ViewData["username"] = username;
             ViewData["purchases"] = purchases;

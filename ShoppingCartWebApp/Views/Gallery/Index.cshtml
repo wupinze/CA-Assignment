@@ -18,9 +18,8 @@
 <div class="gallery-header">
     <div class="greeting-div">
         <h3> Hello, @nameOfUser</h3>
-        <p><a href="/MyPurchases/Summary?sessionId=@sessionId">My Purchases</a> | <a href="/Logout/Index">Logout</a></p>
+        @*<p><a href="/MyPurchases/Summary?sessionId=@sessionId">My Purchases</a> | <a href="/Logout/Index">Logout</a></p>*@
     </div>
-    @*<button class="cart_button" type="button" onclick="window.location='@Url.Action("ShoppingCart", "Cart")'">*@
         <a href="/Cart/ShoppingCart" class="text-dark"> 
             <div class="cart-div">
                 <img src="../image/cart_logo.png" class="cart-logo" alt="Alternate Text" />

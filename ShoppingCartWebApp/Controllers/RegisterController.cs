@@ -22,7 +22,6 @@ namespace ShoppingCartWebApp.Controllers
         public IActionResult Index(bool? proceedStatus)
         {
             Session session = GetSession();
-            ViewData["sessionId"] = session.Id;
 
             if (proceedStatus.HasValue)
             {

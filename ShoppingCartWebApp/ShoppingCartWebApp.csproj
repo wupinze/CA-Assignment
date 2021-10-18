@@ -25,10 +25,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Cart\backup.cshtml" />
-    <None Include="Views\Cart\Index.cshtml" />
     <None Include="Views\Cart\ShoppingCart.cshtml" />
     <None Include="Views\Gallery\Index.cshtml" />
-    <None Include="Views\Gallery\Search.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\Home\Privacy.cshtml" />
     <None Include="Views\Login\Index.cshtml" />

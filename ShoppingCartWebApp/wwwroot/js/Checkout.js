@@ -1,3 +1,3 @@
 ﻿function checkoutalert() {
-    alert('Please add products into carts!');
+    alert('Your cart is empty , please add some products into carts!');
 }
