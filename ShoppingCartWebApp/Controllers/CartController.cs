@@ -107,6 +107,10 @@ namespace ShoppingCartWebApp.Controllers
                 }
 
             }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
             return View();
 
         }
