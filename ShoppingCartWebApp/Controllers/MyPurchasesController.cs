@@ -18,14 +18,9 @@ namespace ShoppingCartWebApp.Controllers
             db = new DB(this.dbContext); 
         }
 
-        public IActionResult Summary(string sessionId)
+        public IActionResult Summary()
         {
-            // Test code <start> - to be removed after link up 
-            //string username = "john";
-            //User user1 = dbContext.Users.FirstOrDefault(x => x.Username == username);
-            // Test code <end>
-
-            /* Replacement code after link-up complete */
+            string sessionId = Request.Cookies["SessionId"]; 
             Session session = dbContext.Sessions.FirstOrDefault(
                 x => x.Id == sessionId
                 );
@@ -35,7 +30,7 @@ namespace ShoppingCartWebApp.Controllers
 
             User user1 = dbContext.Users.FirstOrDefault(x => x.Username == username);
 
-            List<PurchasesItem> purchases = db.getPurchaseHistory2(user1.Id);
+            List<PurchasesItem> purchases = db.getPurchaseHistory(session.Id);
   
             ViewData["purchases"] = purchases;
 
@@ -56,8 +51,15 @@ namespace ShoppingCartWebApp.Controllers
         }
 
 
-        public IActionResult List(string date, string username)
+        public IActionResult List(string date, string username, string productId)
         {
+            if (productId != null)
+            {
+                string sessionId = Request.Cookies["SessionId"];
+                int shopcartNumber = db.AddLibraryToCart(sessionId, productId);
+                return RedirectToAction("ShoppingCart", "Cart"); 
+            }
+
             User user1 = dbContext.Users.FirstOrDefault(x => x.Username == username);
 
             /* Replacement code after link-up complete */
