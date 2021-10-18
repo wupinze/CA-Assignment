@@ -9,11 +9,25 @@
                     where pur.PurchaseDate == date
                     select pur;
 
+    int count = (int)ViewData["cartcount"];
     ViewData["title"] = "My Purchases";
 }
-<div class="greeting-div">
-    <h3>Hello, @name</h3>
-    <p><a href="/MyPurchases/Summary">My Purchases</a> | <a href="/Logout/Index">Logout</a></p>
+
+@section Scripts {
+    <script src="~/js/Gallery.js"></script>
+}
+
+<div class="gallery-header">
+    <div class="greeting-div">
+        <h3>Hello, @name</h3>
+        <p><a href="/MyPurchases/Summary">My Purchases</a> | <a href="/Logout/Index">Logout</a></p>
+    </div>
+    <a href="/Cart/ShoppingCart" class="text-dark">
+        <div class="cart-div">
+            <img src="/Image/cart_logo.png" class="cart-logo"alt="Alternate Text" />
+            <p id="count" class="cart-quantity">@count</p>
+        </div>
+    </a>
 </div>
 <br />
 <h4>Purchase Details</h4>
@@ -56,7 +70,7 @@
                                 <br />
                             }
                         }
-                        <button type="submit" class="btn btn-outline-secondary btn-sm" formaction="List?productId=@purchase.product.Id">Buy Again</button>
+                        <button id=@purchase.product.Id type="button" class="@purchase.product.ProductName btn btn-outline-secondary btn-sm add-to-cart">Buy Again</button>
                     </div>
                 </div>
             </form>
