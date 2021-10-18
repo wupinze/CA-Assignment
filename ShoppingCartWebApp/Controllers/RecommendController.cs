@@ -55,40 +55,6 @@ namespace ShoppingCartWebApp.Controllers
             return View();
         }
 
-
-        public IActionResult AddProductToCart([FromBody] PdtToCart product)
-        {
-            Session session = GetSession();
-
-
-            ViewData["session"] = session;
-
-            string productId = product.ProductId;
-
-            string productName = product.ProductName;
-
-            Product productData = dbContext.products.FirstOrDefault(x =>
-                x.Id == productId.ToString());
-
-            if (productData == null)
-            {
-                return Json(new { status = "fail" });
-            }
-
-            Cart cart = new Cart
-            {
-            };
-
-            productData.carts.Add(cart);
-            session.User.carts.Add(cart);
-
-
-
-            dbContext.SaveChanges();
-
-            return Json(new { status = "success" });
-        }
-
         public int CartCount()
         {
 
@@ -108,11 +74,6 @@ namespace ShoppingCartWebApp.Controllers
             return count;
         }
 
-        public IActionResult GoToCart()
-        {
-            return RedirectToAction("Index", "Cart");
-        }
-
         public Session GetSession()
         {
             // return session from database which corresponds to cookie in http request from client
@@ -128,52 +89,6 @@ namespace ShoppingCartWebApp.Controllers
             );
 
             return session;
-        }
-
-        /*private Cart GetCart()
-        {
-            if (Request.Cookies["CartId"] == null)
-            {
-                return null;
-            }
-
-            string cartId = Guid.Parse(Request.Cookies["CartId"]);
-            Cart cart = dbContext.carts.FirstOrDefault(x =>
-                x.Id == cartId.ToString()
-            );
-
-            return cart;
-        }*/
-
-        //TEMP SESSION
-        private Session CreateTempSession()
-        {
-            User tempuser = CreateTempUser();
-
-            Session tempsession = new Session
-            {
-                User = tempuser
-            };
-
-            return tempsession;
-        }
-
-        private User CreateTempUser()
-        {
-            HashAlgorithm sha = SHA256.Create();
-            byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes("temp"));
-            User tempuser = new User
-            {
-                Id = Guid.NewGuid().ToString(),
-                Username = "guest",
-                PassHash = hash
-            };
-
-            dbContext.Add(tempuser);
-
-            dbContext.SaveChanges();
-
-            return tempuser;
         }
 
     }
