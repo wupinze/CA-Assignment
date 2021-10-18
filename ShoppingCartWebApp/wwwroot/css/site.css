@@ -388,6 +388,7 @@ body {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    background-color: ghostwhite;
 }
 
 .rec-card {
@@ -400,6 +401,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
     font-size: var(--font-size);
+    background-color: white;
 }
 
     .rec-card > * {
@@ -421,4 +423,8 @@ body {
     }
 
     .rec-card > p {
+    }
+
+    h1.medium{
+        font-size: 30px;
     }
