@@ -2,7 +2,6 @@
     ViewData["title"] = "My Purchases";
 
     string nameOfUser = (string)ViewData["username"];
-    string name = string.Format(nameOfUser.Substring(0, 1).ToUpper() + nameOfUser.Substring(1).ToLower());
 
     List<PurchasesItem> purchases = (List<PurchasesItem>)ViewData["purchases"];
 
@@ -32,8 +31,7 @@
 }
 
 <div class="greeting-div">
-    <h3>Hello, @name</h3>
-    @*<p><a href="/Gallery/Index">Gallery</a> | <a href="/Logout/Index">Logout</a></p>*@
+    <h3>Hello, @nameOfUser</h3>
 </div>
 <br />
 <h4>Purchase Summary</h4>
