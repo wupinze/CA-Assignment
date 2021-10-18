@@ -21,13 +21,13 @@
         if (ProductList.Any())
         {
         
-            <p style="font-size:34px; font-weight:500; margin-right:50px" align="right" class="tp" id="price-product"> Total: $ @totalprice <a style="text-decoration: none; padding-block: auto; background-color: #7cbdd5; border: 3px solid transparent; border-color: black; border-radius: 10px; color: black" href="/Cart/Checkout">Checkout</a></p>
+            <p style="font-size:34px; font-weight:500; margin-right:50px" align="right" class="tp" id="price-product"> Total: $ @totalprice <a style="text-align: center; padding-left: 0.35rem; padding-right: 0.4rem; padding-bottom: 0.3rem; text-decoration: none; padding-block: auto; background-color: #7cbdd5; border: 3px solid transparent; border-color: black; border-radius: 10px; color: black" href="/Cart/Checkout">Checkout</a></p>
         
         }
         else
         {
             <script src="~/js/Checkout.js"></script>
-            <p style="font-size:34px; font-weight:500" align="right" class="tp" id="price-product"> Total: $ @totalprice <a style="text-decoration: none; padding-block: auto; background-color: #7cbdd5; border: 3px solid transparent; border-color: black; border-radius: 10px; color: black" href="" onclick="checkoutalert()">Checkout</a></p>
+            <p style="font-size:34px; font-weight:500" align="right" class="tp" id="price-product"> Total: $ @totalprice <a style="text-align:center; padding-left:0.35rem; padding-right:0.4rem; padding-bottom:0.3rem; text-decoration: none; padding-block: auto; background-color: #7cbdd5; border: 3px solid transparent; border-color: black; border-radius: 10px; color: black" href="" onclick="checkoutalert()">Checkout</a></p>
         }
     }
    

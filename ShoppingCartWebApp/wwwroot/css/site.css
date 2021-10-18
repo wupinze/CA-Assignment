@@ -365,6 +365,9 @@ body {
     margin-block: 7px;
     border-radius: 10px;
     background-color: #7cbdd5;
+    justify-content:center;
+    align-content: center;
+
 }
 
 
