@@ -26,8 +26,6 @@ namespace ShoppingCartWebApp.Controllers
         public IActionResult Index(string searchStr)
         {
             
-            Debug.WriteLine("Start of Gallery/Index");
-            Debug.WriteLine($"Gallery/Index, user: {Request.Cookies["Username"]}, session: {Request.Cookies["SessionId"]}");
             Session session = GetSession();
             if (session == null)
             {
@@ -39,12 +37,6 @@ namespace ShoppingCartWebApp.Controllers
                 };
                 dbContext.Sessions.Add(session);
                 dbContext.SaveChanges();
-                Debug.WriteLine("Creating new session for guest");
-                Debug.WriteLine($"Gallery/Index, user: {user.Username}, session: {session.Id}");
-
-                
-            
-
                 Response.Cookies.Append("SessionId", session.Id.ToString());
                 Response.Cookies.Append("Username", user.Username);
                 ViewData["username"] = user.Username;

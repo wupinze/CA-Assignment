@@ -77,8 +77,7 @@ namespace ShoppingCartWebApp.Controllers
 
             if (Request.Cookies["SessionId"] != null)// if session Id exists
             {
-                Debug.WriteLine("Existing session:");
-                Debug.WriteLine($"Login/Login, user: {Request.Cookies["Username"]}, session: {Request.Cookies["SessionId"]}");
+           
 
                 //update cookies
                 Response.Cookies.Delete("Username");// delete guest username
@@ -97,12 +96,7 @@ namespace ShoppingCartWebApp.Controllers
                 // Change entries to user who is logging in
                 foreach (var row in currentCart)
                 {
-                
-                    Debug.WriteLine($"user: {row.user.Username}, product: {row.product.ProductName}");
                     row.user = user; // Change entries to user who is logging in
-                    Debug.WriteLine("Change to: ");
-                    Debug.WriteLine($"user: {row.user.Username}, product: {row.product.ProductName}");
-
                 }
                 // change session user first
                 User guestUser = currentSession.User;
@@ -111,8 +105,6 @@ namespace ShoppingCartWebApp.Controllers
 
                 // Delete temporary user from Users table
 
-                // get all users
-                List<User> users = dbContext.Users.ToList();
                 // get guest user
                 List<User> guestUsers = dbContext.Users.Where(x => x.Id == guestUser.Id).ToList();
                 foreach(var user1 in guestUsers)
@@ -140,8 +132,7 @@ namespace ShoppingCartWebApp.Controllers
 
             Response.Cookies.Append("SessionId", session.Id.ToString());
             Response.Cookies.Append("Username", user.Username);
-            Debug.WriteLine("Create New session");
-            Debug.WriteLine($"Login/Login, user: {Request.Cookies["Username"]}, session: {Request.Cookies["SessionId"]}");
+
             return RedirectToAction("Index", "Gallery");
         }
     }
