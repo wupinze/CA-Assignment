@@ -32,17 +32,6 @@ namespace ShoppingCartWebApp.Controllers
             if (session == null)
             {
                 //start new session if session is null
-                // will probably have to create temp user
-
-
-                //string username = "guest";
-                //string password = username;
-                //HashAlgorithm sha = SHA256.Create();
-                //byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(username + password));
-                //User user = dbContext.Users.FirstOrDefault(x =>
-                //    x.Username == username && x.PassHash == hash);
-
-
                 User user = CreateTempUser();
                 session = new Session()
                 {
@@ -53,19 +42,15 @@ namespace ShoppingCartWebApp.Controllers
                 Debug.WriteLine("Creating new session for guest");
                 Debug.WriteLine($"Gallery/Index, user: {user.Username}, session: {session.Id}");
 
-                //Create persistent cookie
+                
             
 
                 Response.Cookies.Append("SessionId", session.Id.ToString());
                 Response.Cookies.Append("Username", user.Username);
                 ViewData["username"] = user.Username;
-                //session = GetSession();
-                //return RedirectToAction("Index", "Logout");
             }
             else
             {
-                Debug.WriteLine("Else block in gallery controller");
-                Debug.WriteLine(Request.Cookies["Username"]);
                 ViewData["username"] = Request.Cookies["Username"];
             }
 
